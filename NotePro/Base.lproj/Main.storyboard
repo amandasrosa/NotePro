@@ -53,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="476" y="133.5832083958021"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Subject List TableVC-->
         <scene sceneID="ybd-PO-cKw">
             <objects>
-                <tableViewController id="A4m-xR-1Ve" sceneMemberID="viewController">
+                <tableViewController id="A4m-xR-1Ve" customClass="SubjectListTableVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="aSW-TB-BVQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

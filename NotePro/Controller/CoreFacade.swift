@@ -30,7 +30,6 @@ public class CoreFacade {
     }
     
     public func getSubjectList() -> [Subject] {
-        print("getSubjectList")
         return self.subjectController.getSubjects()
     }
 }

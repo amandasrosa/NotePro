@@ -19,19 +19,28 @@
                 <rect key="frame" x="0.0" y="0.0" width="358" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jBe-Me-MwA">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBe-Me-MwA">
                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="BIx-r5-93c"/>
+                            <constraint firstAttribute="height" constant="80" id="FuW-8r-EVw"/>
+                        </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJA-F7-khJ">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJA-F7-khJ">
                         <rect key="frame" x="88" y="29" width="59" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="jBe-Me-MwA" firstAttribute="centerY" secondItem="VJA-F7-khJ" secondAttribute="centerY" id="3Bm-is-NGd"/>
+                    <constraint firstItem="VJA-F7-khJ" firstAttribute="leading" secondItem="jBe-Me-MwA" secondAttribute="trailing" constant="8" symbolic="YES" id="53E-pU-LWr"/>
+                    <constraint firstItem="jBe-Me-MwA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="FlL-XY-CYG"/>
+                    <constraint firstItem="jBe-Me-MwA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Kg6-yA-ITR"/>
+                    <constraint firstItem="jBe-Me-MwA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="bFK-aB-ihq"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>

@@ -53,7 +53,7 @@ class SubjectListTableVC: UITableViewController {
             print("Error while retrieving cell \(cellNameAndId)")
             return rawCell
         }
-        print(indexPath.row)
+        
         cell.setColor(CoreFacade.shared.getSubjectList()[indexPath.row].color)
         cell.setSubject(CoreFacade.shared.getSubjectList()[indexPath.row].subject)
 
