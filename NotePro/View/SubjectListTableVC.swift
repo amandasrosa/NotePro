@@ -20,6 +20,8 @@ class SubjectListTableVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        tableView.register(UINib(nibName: cellNameAndId, bundle: nil), forCellReuseIdentifier: cellNameAndId)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,15 +40,19 @@ class SubjectListTableVC: UITableViewController {
         return subjectList.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: cellNameAndId, for: indexPath)
 
-        // Configure the cell...
+        guard let cell = rawCell as? SubjectViewCell else {
+            print("Error while retrieving cell \(cellNameAndId)")
+            return rawCell
+        }
+        
+        cell.setColor(subjectList[indexPath.row].color)
+        cell.setSubject(subjectList[indexPath.row].subject)
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
