@@ -14,14 +14,20 @@ public class CoreFacade {
     
     // MARK: Controllers
     private let subjectController: SubjectController
+    private let noteController: NoteController
     
     // MARK: Entities
     public var subjects: [Subject] {
         return self.subjectController.getSubjects()
     }
+    
+    public var notes: [Note] {
+        return self.noteController.getAllNotes()
+    }
 
     private init() {
         self.subjectController = SubjectController()
+        self.noteController = NoteController()
     }
     
     // MARK: Public Methods
@@ -31,5 +37,13 @@ public class CoreFacade {
     
     public func getSubjectList() -> [Subject] {
         return self.subjectController.getSubjects()
+    }
+    
+    public func fetchNoteList() {
+        return self.noteController.fetchNotes()
+    }
+    
+    public func getNotesBySubject(_ subject: Subject) -> [Note] {
+        return self.noteController.getNotesBySubject(subject)
     }
 }
