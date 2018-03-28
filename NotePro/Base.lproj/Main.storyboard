@@ -22,7 +22,7 @@
                                 <rect key="frame" x="147" y="318" width="81" height="30"/>
                                 <state key="normal" title="Subject List"/>
                                 <connections>
-                                    <segue destination="A4m-xR-1Ve" kind="show" id="vcI-Cl-jPy"/>
+                                    <segue destination="A4m-xR-1Ve" kind="show" id="SIu-Qt-1eT"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERk-Sd-nEa">
@@ -53,7 +53,7 @@
             </objects>
             <point key="canvasLocation" x="476" y="133.5832083958021"/>
         </scene>
-        <!--Subject List TableVC-->
+        <!--Subject List-->
         <scene sceneID="ybd-PO-cKw">
             <objects>
                 <tableViewController id="A4m-xR-1Ve" customClass="SubjectListTableVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
@@ -76,10 +76,13 @@
                             <outlet property="delegate" destination="A4m-xR-1Ve" id="y04-TC-SeK"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Subject List" id="nm5-FH-63N">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjI-vB-cfI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1308" y="134"/>
+            <point key="canvasLocation" x="1230" y="134"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sNI-pK-swn">
