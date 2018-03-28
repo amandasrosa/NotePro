@@ -8,13 +8,17 @@
 
 import UIKit
 
-public class Subject {
+public class Subject: Equatable {
     public private(set) var subject: String
     public private(set) var color: UIColor
     
     init(_ subject: String, _ color: UIColor) {
         self.subject = subject
         self.color = color
+    }
+    
+    public static func ==(lhs: Subject, rhs: Subject) -> Bool {
+        return lhs.subject == rhs.subject
     }
     
     public func setSubject(_ subject: String) {

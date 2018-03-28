@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-public class Note {
+public class Note: Equatable {
     public private(set) var title: String
     public private(set) var description: String
     public private(set) var subject: Subject
@@ -23,6 +23,10 @@ public class Note {
         self.description = description
         self.subject = subject
         self.dateTime = dateTime
+    }
+    
+    public static func ==(lhs: Note, rhs: Note) -> Bool {
+        return lhs.title == rhs.title && lhs.description == rhs.description && lhs.subject == rhs.subject
     }
     
     public func setTitle(_ title: String) {
