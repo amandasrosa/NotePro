@@ -54,8 +54,7 @@ class SubjectListTableVC: UITableViewController {
             return rawCell
         }
         
-        cell.setColor(CoreFacade.shared.getSubjectList()[indexPath.row].color)
-        cell.setSubject(CoreFacade.shared.getSubjectList()[indexPath.row].subject)
+        cell.configureCell(CoreFacade.shared.getSubjectList()[indexPath.row])
 
         return cell
     }

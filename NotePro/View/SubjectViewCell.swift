@@ -11,7 +11,7 @@ import UIKit
 class SubjectViewCell: UITableViewCell {
     @IBOutlet weak private var colorView: UIView!
     @IBOutlet weak private var subjectLabel: UILabel!
-    
+    private var subject: Subject!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,13 +21,12 @@ class SubjectViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        colorView.backgroundColor = subject.color
     }
     
-    public func setSubject(_ subject: String) {
-        subjectLabel.text = subject
-    }
-    
-    public func setColor(_ color: UIColor) {
-        colorView.backgroundColor = color
+    public func configureCell(_ subject: Subject) {
+        self.subject = subject
+        subjectLabel.text = subject.subject
+        colorView.backgroundColor = subject.color
     }
 }
