@@ -77,12 +77,32 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Subject List" id="nm5-FH-63N">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX">
+                            <connections>
+                                <segue destination="Ary-yV-NNj" kind="show" id="FAv-e5-dJT"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjI-vB-cfI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1230" y="134"/>
+        </scene>
+        <!--Add Subject-->
+        <scene sceneID="evh-yv-p5O">
+            <objects>
+                <viewController id="Ary-yV-NNj" customClass="AddSubjectVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dyw-zG-qOB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Kgw-Af-fpR"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Subject" id="nwA-oI-qyU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Ku-P2-FNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1230" y="865"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sNI-pK-swn">
