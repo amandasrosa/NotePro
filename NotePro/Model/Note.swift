@@ -1,0 +1,52 @@
+//
+//  Note.swift
+//  NotePro
+//
+//  Created by Araceli Teixeira on 28/03/18.
+//  Copyright © 2018 Orion Team. All rights reserved.
+//
+
+import UIKit
+import MapKit
+
+public class Note {
+    public private(set) var title: String
+    public private(set) var description: String
+    public private(set) var subject: Subject
+    public private(set) var dateTime: Date
+    public private(set) var photos: [UIImage] = []
+    public private(set) var location: CLLocationCoordinate2D?
+    public private(set) var address: String?
+    
+    init(_ title: String, _ description: String, _ subject: Subject, _ dateTime: Date) {
+        self.title = title
+        self.description = description
+        self.subject = subject
+        self.dateTime = dateTime
+    }
+    
+    public func setTitle(_ title: String) {
+        self.title = title
+    }
+    public func setdescription(_ description: String) {
+        self.description = description
+    }
+    public func setsubject(_ subject: Subject) {
+        self.subject = subject
+    }
+    public func setdateTime(_ dateTime: Date) {
+        self.dateTime = dateTime
+    }
+    public func setphotos(_ photos: [UIImage]) {
+        self.photos = photos
+    }
+    public func setlocation(_ location: CLLocationCoordinate2D) {
+        self.location = location
+    }
+    public func setaddress(_ address: String) {
+        self.address = address
+    }
+    public func addphoto(_ photo: UIImage) {
+        self.photos.append(photo)
+    }
+}
