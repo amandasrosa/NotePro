@@ -10,3 +10,4 @@ import Foundation
 
 public let kNOTIFICATION_SUBJECT_LIST_CHANGED: String = "subjectListUpdatedNotification"
 public let kNOTIFICATION_NOTE_LIST_CHANGED: String = "noteListUpdatedNotification"
+public let kDATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"

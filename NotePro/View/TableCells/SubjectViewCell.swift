@@ -12,6 +12,7 @@ class SubjectViewCell: UITableViewCell {
     @IBOutlet weak private var colorView: UIView!
     @IBOutlet weak private var subjectLabel: UILabel!
     private var subject: Subject!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,6 +27,7 @@ class SubjectViewCell: UITableViewCell {
     
     public func configureCell(_ subject: Subject) {
         self.subject = subject
+        
         subjectLabel.text = subject.subject
         colorView.backgroundColor = subject.color
     }

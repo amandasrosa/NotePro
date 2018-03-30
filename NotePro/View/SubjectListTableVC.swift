@@ -42,8 +42,7 @@ class SubjectListTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return CoreFacade.shared.getSubjectList().count
+        return CoreFacade.shared.subjects.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,9 +53,13 @@ class SubjectListTableVC: UITableViewController {
             return rawCell
         }
         
-        cell.configureCell(CoreFacade.shared.getSubjectList()[indexPath.row])
+        cell.configureCell(CoreFacade.shared.subjects[indexPath.row])
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "showNotesOfSubject", sender: tableView.cellForRow(at: indexPath))
     }
 
     /*
@@ -94,14 +97,24 @@ class SubjectListTableVC: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier ?? "" {
+        case "showNotesOfSubject":
+            guard let destination = segue.destination as? NoteListTableVC else {
+                print("Destination isn't a NoteListTableVC")
+                return
+            }
+            guard let index = tableView.indexPathForSelectedRow?.row else {
+                print("Invalid index")
+                return
+            }
+            destination.subject = CoreFacade.shared.subjects[index]
+        default:
+            break
+        }
+        
     }
-    */
-
 }

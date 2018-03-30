@@ -13,6 +13,7 @@
 		16393848206C35FC0081323F /* NoteViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16393846206C35FC0081323F /* NoteViewCell.xib */; };
 		1639384A206C3D120081323F /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393849206C3D120081323F /* Note.swift */; };
 		1639384C206C427F0081323F /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639384B206C427F0081323F /* NoteController.swift */; };
+		16393852206C547A0081323F /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393851206C547A0081323F /* DateUtil.swift */; };
 		163BEA922069740D005D23E4 /* SubjectListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BEA912069740D005D23E4 /* SubjectListTableVC.swift */; };
 		163BEA952069744C005D23E4 /* SubjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BEA932069744C005D23E4 /* SubjectViewCell.swift */; };
 		163BEA962069744C005D23E4 /* SubjectViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 163BEA942069744C005D23E4 /* SubjectViewCell.xib */; };
@@ -53,6 +54,7 @@
 		16393846206C35FC0081323F /* NoteViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewCell.xib; sourceTree = "<group>"; };
 		16393849206C3D120081323F /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		1639384B206C427F0081323F /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
+		16393851206C547A0081323F /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		163BEA912069740D005D23E4 /* SubjectListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListTableVC.swift; sourceTree = "<group>"; };
 		163BEA932069744C005D23E4 /* SubjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectViewCell.swift; sourceTree = "<group>"; };
 		163BEA942069744C005D23E4 /* SubjectViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectViewCell.xib; sourceTree = "<group>"; };
@@ -100,17 +102,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16393850206C52D70081323F /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				163BEA932069744C005D23E4 /* SubjectViewCell.swift */,
+				163BEA942069744C005D23E4 /* SubjectViewCell.xib */,
+				16393845206C35FC0081323F /* NoteViewCell.swift */,
+				16393846206C35FC0081323F /* NoteViewCell.xib */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
 		163BEA8E206973C3005D23E4 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				1690674B20667C4A009B659F /* ViewController.swift */,
 				163BEA912069740D005D23E4 /* SubjectListTableVC.swift */,
-				163BEA932069744C005D23E4 /* SubjectViewCell.swift */,
-				163BEA942069744C005D23E4 /* SubjectViewCell.xib */,
 				16393820206C29760081323F /* AddSubjectVC.swift */,
 				16393822206C2A990081323F /* NoteListTableVC.swift */,
-				16393845206C35FC0081323F /* NoteViewCell.swift */,
-				16393846206C35FC0081323F /* NoteViewCell.xib */,
+				16393850206C52D70081323F /* TableCells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -138,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				163BEAA0206986FC005D23E4 /* Constants.swift */,
+				16393851206C547A0081323F /* DateUtil.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -345,6 +356,7 @@
 				1690674A20667C4A009B659F /* AppDelegate.swift in Sources */,
 				163BEAA1206986FC005D23E4 /* Constants.swift in Sources */,
 				1639384A206C3D120081323F /* Note.swift in Sources */,
+				16393852206C547A0081323F /* DateUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

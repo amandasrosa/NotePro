@@ -9,6 +9,8 @@
 import UIKit
 
 class NoteListTableVC: UITableViewController {
+    private let cellNameAndId: String = String(describing: NoteViewCell.self)
+    public var subject: Subject?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,25 @@ class NoteListTableVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        tableView.register(UINib(nibName: cellNameAndId, bundle: nil), forCellReuseIdentifier: cellNameAndId)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableList),
+                                               name: NSNotification.Name(rawValue: kNOTIFICATION_NOTE_LIST_CHANGED), object: nil)
+        
+        CoreFacade.shared.fetchNoteList()
+        
+        guard let _ = subject else {
+            print("Invalid subject")
+            return
+        }
+    }
+    
+    @objc func updateTableList() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.contentOffset = .zero
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,24 +49,29 @@ class NoteListTableVC: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        guard let subject = self.subject else {
+            return 0
+        }
+        
+        return CoreFacade.shared.getNotesBySubject(subject).count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: cellNameAndId, for: indexPath)
+        
+        guard let cell = rawCell as? NoteViewCell, let subject = self.subject else {
+            print("Error while retrieving cell \(cellNameAndId)")
+            return rawCell
+        }
+        print("Configuring row \(indexPath.row)")
+        cell.configureCell(CoreFacade.shared.getNotesBySubject(subject)[indexPath.row])
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

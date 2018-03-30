@@ -20,18 +20,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hZF-Ca-8Cm">
-                        <rect key="frame" x="0.0" y="0.0" width="148.5" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="143.5" height="80.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBe-Me-MwA">
-                                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="75" height="80.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="BIx-r5-93c"/>
-                                    <constraint firstAttribute="height" constant="80" id="FuW-8r-EVw"/>
+                                    <constraint firstAttribute="width" constant="75" id="BIx-r5-93c"/>
+                                    <constraint firstAttribute="height" constant="75" id="FuW-8r-EVw"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJA-F7-khJ">
-                                <rect key="frame" x="90" y="30" width="58.5" height="20.5"/>
+                                <rect key="frame" x="85" y="30" width="58.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="hZF-Ca-8Cm" secondAttribute="bottom" constant="-0.5" id="2B8-CP-nyk"/>
+                    <constraint firstAttribute="bottom" secondItem="hZF-Ca-8Cm" secondAttribute="bottom" constant="5" id="2B8-CP-nyk"/>
                     <constraint firstItem="hZF-Ca-8Cm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3Ea-RZ-taW"/>
                     <constraint firstItem="hZF-Ca-8Cm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="C9L-U1-YHI"/>
                 </constraints>

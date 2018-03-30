@@ -36,13 +36,14 @@ internal class NoteController {
     }
     
     internal func fetchNotes() {
+        noteList = []
         createNoteStub()
     }
     
     private func createNoteStub() {
         for subject in createSubjectStub() {
             for i in 1...3 {
-                noteList.append(Note("Note \(i)", "Description of note \(i)", subject, Date()))
+                noteList.append(Note("Note \(i)", "Description of note \(i) of \(subject.subject)", subject, Date()))
             }
         }
     }

@@ -70,7 +70,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="YXH-To-ZrV" kind="show" id="GB3-gN-GSU"/>
+                                    <segue destination="YXH-To-ZrV" kind="show" identifier="showNotesOfSubject" id="trt-Ob-yNZ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -80,11 +80,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Subject List" id="nm5-FH-63N">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX">
-                            <connections>
-                                <segue destination="Ary-yV-NNj" kind="show" id="FAv-e5-dJT"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjI-vB-cfI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -118,7 +114,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffY-h0-Psm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2015" y="134"/>
+            <point key="canvasLocation" x="2036" y="134"/>
         </scene>
         <!--Add Subject-->
         <scene sceneID="evh-yv-p5O">
