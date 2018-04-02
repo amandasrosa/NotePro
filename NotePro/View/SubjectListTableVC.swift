@@ -34,6 +34,20 @@ class SubjectListTableVC: UITableViewController {
             self.tableView.contentOffset = .zero
         }
     }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            // delete item at indexPath
+        }
+        
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
+            // share item at indexPath
+        }
+        
+        edit.backgroundColor = UIColor.blue
+        
+        return [delete, edit]
+    }
 
     // MARK: - Table view data source
 
