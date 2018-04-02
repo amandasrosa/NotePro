@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XfA-MR-wcH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XfA-MR-wcH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -80,7 +80,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Subject List" id="nm5-FH-63N">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX">
+                            <connections>
+                                <segue destination="Ary-yV-NNj" kind="show" id="CND-ZI-RoW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjI-vB-cfI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -123,14 +127,69 @@
                     <view key="view" contentMode="scaleToFill" id="Dyw-zG-qOB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Vo-F8-gCm">
+                                <rect key="frame" x="37" y="214" width="300" height="238"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JW-s1-5yF">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zjV-EA-ENA">
+                                        <rect key="frame" x="0.0" y="30.5" width="300" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pF6-lz-KUA">
+                                        <rect key="frame" x="0.0" y="70.5" width="300" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LCh-ec-uIr">
+                                        <rect key="frame" x="0.0" y="101" width="300" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="A1C-s4-mlF"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJb-x2-DLM" customClass="HSBColorPicker" customModule="NotePro" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="141" width="300" height="97"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="R4X-mZ-UIQ"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23b-UK-PKj">
+                                <rect key="frame" x="170" y="617" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="23b-UK-PKj" firstAttribute="centerX" secondItem="4Vo-F8-gCm" secondAttribute="centerX" id="1uW-aR-VFX"/>
+                            <constraint firstAttribute="bottom" secondItem="23b-UK-PKj" secondAttribute="bottom" constant="20" symbolic="YES" id="ELC-QX-msc"/>
+                            <constraint firstItem="4Vo-F8-gCm" firstAttribute="centerY" secondItem="Dyw-zG-qOB" secondAttribute="centerY" id="IWj-8e-d3J"/>
+                            <constraint firstItem="4Vo-F8-gCm" firstAttribute="centerX" secondItem="Dyw-zG-qOB" secondAttribute="centerX" id="WKq-0X-lfA"/>
+                            <constraint firstItem="4Vo-F8-gCm" firstAttribute="top" secondItem="Kgw-Af-fpR" secondAttribute="top" constant="150" id="apM-H4-adK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Kgw-Af-fpR"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Subject" id="nwA-oI-qyU"/>
+                    <connections>
+                        <outlet property="colorPicker" destination="KJb-x2-DLM" id="CPZ-0L-upX"/>
+                        <outlet property="colorView" destination="LCh-ec-uIr" id="hF4-4F-xaW"/>
+                        <outlet property="subjectTextField" destination="zjV-EA-ENA" id="8DY-ga-L2a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ku-P2-FNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1230" y="865"/>
+            <point key="canvasLocation" x="1229.5999999999999" y="864.91754122938539"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sNI-pK-swn">

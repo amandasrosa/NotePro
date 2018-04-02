@@ -28,6 +28,7 @@
 		1690675420667C4A009B659F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1690675220667C4A009B659F /* LaunchScreen.storyboard */; };
 		1690675F20667C4A009B659F /* NoteProTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690675E20667C4A009B659F /* NoteProTests.swift */; };
 		1690676A20667C4A009B659F /* NoteProUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690676920667C4A009B659F /* NoteProUITests.swift */; };
+		16F2BCF12072AE5E006DA059 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F2BCF02072AE5E006DA059 /* ColorPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		1690676520667C4A009B659F /* NoteProUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteProUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1690676920667C4A009B659F /* NoteProUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteProUITests.swift; sourceTree = "<group>"; };
 		1690676B20667C4A009B659F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16F2BCF02072AE5E006DA059 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			children = (
 				163BEAA0206986FC005D23E4 /* Constants.swift */,
 				16393851206C547A0081323F /* DateUtil.swift */,
+				16F2BCF02072AE5E006DA059 /* ColorPicker.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 			files = (
 				163BEA9B20697F61005D23E4 /* SubjectController.swift in Sources */,
 				16393823206C2A990081323F /* NoteListTableVC.swift in Sources */,
+				16F2BCF12072AE5E006DA059 /* ColorPicker.swift in Sources */,
 				163BEA9D2069810C005D23E4 /* CoreFacade.swift in Sources */,
 				163BEA922069740D005D23E4 /* SubjectListTableVC.swift in Sources */,
 				163BEA982069780B005D23E4 /* Subject.swift in Sources */,
