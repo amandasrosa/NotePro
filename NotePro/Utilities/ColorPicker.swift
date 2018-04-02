@@ -1,6 +1,6 @@
 //
 //  ColorPicker.swift
-//  TravelJournal
+//  NotePro
 //
 //  Created by Joel Teply on Dec 7 '15. Swift 3.0 version by Christen Ward on Jan 5 '17.
 //  https://stackoverflow.com/questions/27208386/simple-swift-color-picker-popover-ios
