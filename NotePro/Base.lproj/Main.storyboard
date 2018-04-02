@@ -132,7 +132,7 @@
         <!--New Subject-->
         <scene sceneID="evh-yv-p5O">
             <objects>
-                <viewController id="Ary-yV-NNj" customClass="AddSubjectVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Ary-yV-NNj" customClass="SubjectVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dyw-zG-qOB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16393821206C29760081323F /* AddSubjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393820206C29760081323F /* AddSubjectVC.swift */; };
+		16393821206C29760081323F /* SubjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393820206C29760081323F /* SubjectVC.swift */; };
 		16393823206C2A990081323F /* NoteListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393822206C2A990081323F /* NoteListTableVC.swift */; };
 		16393847206C35FC0081323F /* NoteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393845206C35FC0081323F /* NoteViewCell.swift */; };
 		16393848206C35FC0081323F /* NoteViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16393846206C35FC0081323F /* NoteViewCell.xib */; };
@@ -29,6 +29,7 @@
 		1690675F20667C4A009B659F /* NoteProTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690675E20667C4A009B659F /* NoteProTests.swift */; };
 		1690676A20667C4A009B659F /* NoteProUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690676920667C4A009B659F /* NoteProUITests.swift */; };
 		16F2BCF12072AE5E006DA059 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F2BCF02072AE5E006DA059 /* ColorPicker.swift */; };
+		16F2BCF32072B9F8006DA059 /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F2BCF22072B9F8006DA059 /* NoteVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		16393820206C29760081323F /* AddSubjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubjectVC.swift; sourceTree = "<group>"; };
+		16393820206C29760081323F /* SubjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectVC.swift; sourceTree = "<group>"; };
 		16393822206C2A990081323F /* NoteListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListTableVC.swift; sourceTree = "<group>"; };
 		16393845206C35FC0081323F /* NoteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewCell.swift; sourceTree = "<group>"; };
 		16393846206C35FC0081323F /* NoteViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteViewCell.xib; sourceTree = "<group>"; };
@@ -77,6 +78,7 @@
 		1690676920667C4A009B659F /* NoteProUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteProUITests.swift; sourceTree = "<group>"; };
 		1690676B20667C4A009B659F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16F2BCF02072AE5E006DA059 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		16F2BCF22072B9F8006DA059 /* NoteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +122,9 @@
 			children = (
 				1690674B20667C4A009B659F /* ViewController.swift */,
 				163BEA912069740D005D23E4 /* SubjectListTableVC.swift */,
-				16393820206C29760081323F /* AddSubjectVC.swift */,
+				16393820206C29760081323F /* SubjectVC.swift */,
 				16393822206C2A990081323F /* NoteListTableVC.swift */,
+				16F2BCF22072B9F8006DA059 /* NoteVC.swift */,
 				16393850206C52D70081323F /* TableCells */,
 			);
 			path = View;
@@ -352,10 +355,11 @@
 				163BEA9D2069810C005D23E4 /* CoreFacade.swift in Sources */,
 				163BEA922069740D005D23E4 /* SubjectListTableVC.swift in Sources */,
 				163BEA982069780B005D23E4 /* Subject.swift in Sources */,
+				16F2BCF32072B9F8006DA059 /* NoteVC.swift in Sources */,
 				16393847206C35FC0081323F /* NoteViewCell.swift in Sources */,
 				163BEA952069744C005D23E4 /* SubjectViewCell.swift in Sources */,
 				1639384C206C427F0081323F /* NoteController.swift in Sources */,
-				16393821206C29760081323F /* AddSubjectVC.swift in Sources */,
+				16393821206C29760081323F /* SubjectVC.swift in Sources */,
 				1690674C20667C4A009B659F /* ViewController.swift in Sources */,
 				1690674A20667C4A009B659F /* AppDelegate.swift in Sources */,
 				163BEAA1206986FC005D23E4 /* Constants.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  AddSubjectVC.swift
+//  SubjectVC.swift
 //  NotePro
 //
 //  Created by Araceli Teixeira on 28/03/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddSubjectVC: UIViewController, UITextFieldDelegate, HSBColorPickerDelegate {
+class SubjectVC: UIViewController, UITextFieldDelegate, HSBColorPickerDelegate {
     @IBOutlet weak var subjectTextField: UITextField!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var colorPicker: HSBColorPicker!
