@@ -32,8 +32,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fG-mt-x1h">
-                                <rect key="frame" x="144" y="405" width="87" height="30"/>
-                                <state key="normal" title="New Subject"/>
+                                <rect key="frame" x="154" y="405" width="68" height="30"/>
+                                <state key="normal" title="New Note"/>
+                                <connections>
+                                    <segue destination="fvQ-tl-edM" kind="show" id="RIq-j9-N7G"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -114,13 +117,19 @@
                             <outlet property="delegate" destination="YXH-To-ZrV" id="CiB-Lt-dua"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Note List" id="XPK-Gp-hJR"/>
+                    <navigationItem key="navigationItem" title="Note List" id="XPK-Gp-hJR">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Nnz-GH-wyY">
+                            <connections>
+                                <segue destination="fvQ-tl-edM" kind="show" id="nxb-yP-TL0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffY-h0-Psm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2036" y="134"/>
         </scene>
-        <!--Add Subject-->
+        <!--New Subject-->
         <scene sceneID="evh-yv-p5O">
             <objects>
                 <viewController id="Ary-yV-NNj" customClass="AddSubjectVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
@@ -180,7 +189,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Kgw-Af-fpR"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Subject" id="nwA-oI-qyU"/>
+                    <navigationItem key="navigationItem" title="New Subject" id="nwA-oI-qyU"/>
                     <connections>
                         <outlet property="colorPicker" destination="KJb-x2-DLM" id="CPZ-0L-upX"/>
                         <outlet property="colorView" destination="LCh-ec-uIr" id="hF4-4F-xaW"/>
@@ -190,6 +199,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ku-P2-FNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1229.5999999999999" y="864.91754122938539"/>
+        </scene>
+        <!--New Note-->
+        <scene sceneID="jrK-nB-FSk">
+            <objects>
+                <viewController id="fvQ-tl-edM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NQA-rA-o2c">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="IkM-k8-9Ua"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Note" id="JmY-kV-ycM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mmk-2c-s5W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2036" y="865"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sNI-pK-swn">
@@ -201,6 +226,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="W5k-HP-C75">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="9gj-jx-6Or"/>
                     </connections>
@@ -210,4 +238,7 @@
             <point key="canvasLocation" x="-319" y="134"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="RIq-j9-N7G"/>
+    </inferredMetricsTieBreakers>
 </document>
