@@ -129,6 +129,13 @@ class SubjectListTableVC: UITableViewController {
         default:
             break
         }
-        
+    }
+    
+    @IBAction func unwindToSubjectList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? SubjectVC {
+            if let subject = sourceViewController.subject {
+                print("Insert/update subject")
+            }
+        }
     }
 }
