@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NoteVC: UIViewController {
+class NoteVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
