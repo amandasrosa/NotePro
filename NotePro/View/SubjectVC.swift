@@ -93,6 +93,8 @@ class SubjectVC: UIViewController, UITextFieldDelegate, HSBColorPickerDelegate {
                 } else {
                     subject = Subject(txtSubject, color)
                 }
+                
+                CoreFacade.shared.saveSubject(subject)
             }
         }
     }

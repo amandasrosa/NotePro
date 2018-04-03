@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11074D312072CD1A00BBEBD6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 11074D302072CD1A00BBEBD6 /* libsqlite3.tbd */; };
+		11074D372072CDBC00BBEBD6 /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11074D362072CDBC00BBEBD6 /* DatabaseController.swift */; };
 		16393821206C29760081323F /* SubjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393820206C29760081323F /* SubjectVC.swift */; };
 		16393823206C2A990081323F /* NoteListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393822206C2A990081323F /* NoteListTableVC.swift */; };
 		16393847206C35FC0081323F /* NoteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393845206C35FC0081323F /* NoteViewCell.swift */; };
@@ -50,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11074D302072CD1A00BBEBD6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		11074D322072CD5600BBEBD6 /* NotePro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotePro-Bridging-Header.h"; sourceTree = "<group>"; };
+		11074D362072CDBC00BBEBD6 /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 		16393820206C29760081323F /* SubjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectVC.swift; sourceTree = "<group>"; };
 		16393822206C2A990081323F /* NoteListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListTableVC.swift; sourceTree = "<group>"; };
 		16393845206C35FC0081323F /* NoteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewCell.swift; sourceTree = "<group>"; };
@@ -86,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11074D312072CD1A00BBEBD6 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +112,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11074D2F2072CD1A00BBEBD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11074D302072CD1A00BBEBD6 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		16393850206C52D70081323F /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +159,7 @@
 				163BEA9A20697F61005D23E4 /* SubjectController.swift */,
 				163BEA9C2069810C005D23E4 /* CoreFacade.swift */,
 				1639384B206C427F0081323F /* NoteController.swift */,
+				11074D362072CDBC00BBEBD6 /* DatabaseController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -166,6 +181,7 @@
 				1690675D20667C4A009B659F /* NoteProTests */,
 				1690676820667C4A009B659F /* NoteProUITests */,
 				1690674720667C4A009B659F /* Products */,
+				11074D2F2072CD1A00BBEBD6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -191,6 +207,7 @@
 				1690675020667C4A009B659F /* Assets.xcassets */,
 				1690675220667C4A009B659F /* LaunchScreen.storyboard */,
 				1690675520667C4A009B659F /* Info.plist */,
+				11074D322072CD5600BBEBD6 /* NotePro-Bridging-Header.h */,
 			);
 			path = NotePro;
 			sourceTree = "<group>";
@@ -281,6 +298,7 @@
 				TargetAttributes = {
 					1690674520667C4A009B659F = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 					};
 					1690675920667C4A009B659F = {
@@ -363,6 +381,7 @@
 				1690674C20667C4A009B659F /* ViewController.swift in Sources */,
 				1690674A20667C4A009B659F /* AppDelegate.swift in Sources */,
 				163BEAA1206986FC005D23E4 /* Constants.swift in Sources */,
+				11074D372072CDBC00BBEBD6 /* DatabaseController.swift in Sources */,
 				1639384A206C3D120081323F /* Note.swift in Sources */,
 				16393852206C547A0081323F /* DateUtil.swift in Sources */,
 			);
@@ -530,11 +549,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = NotePro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orion.NotePro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NotePro/NotePro-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -544,11 +566,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = NotePro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orion.NotePro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NotePro/NotePro-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

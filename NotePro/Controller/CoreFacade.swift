@@ -15,6 +15,7 @@ public class CoreFacade {
     // MARK: Controllers
     private let subjectController: SubjectController
     private let noteController: NoteController
+    private let databaseController: DatabaseController
     
     // MARK: Entities
     public var subjects: [Subject] {
@@ -28,6 +29,7 @@ public class CoreFacade {
     private init() {
         self.subjectController = SubjectController()
         self.noteController = NoteController()
+        self.databaseController = DatabaseController()
     }
     
     // MARK: Public Methods
@@ -45,5 +47,29 @@ public class CoreFacade {
     
     public func getNotesBySubject(_ subject: Subject) -> [Note] {
         return self.noteController.getNotesBySubject(subject)
+    }
+    
+    public func createTables() {
+        return self.databaseController.createTables()
+    }
+    
+    public func selectSubjects() -> [Subject] {
+        return self.databaseController.selectSubjects()
+    }
+    
+    public func saveSubject(_ subject: Subject) {
+        return self.databaseController.addSubject(subject)
+    }
+    
+    public func selectNotesBySybject(_ subject: Subject) -> [Note] {
+        return self.databaseController.selectNotesBySubject(subject)
+    }
+    
+    public func selectNotes() -> [Note] {
+        return self.databaseController.selectNotes()
+    }
+    
+    public func saveSubject(_ note: Note) {
+        return self.databaseController.addNote(note)
     }
 }
