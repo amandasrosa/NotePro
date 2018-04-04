@@ -81,7 +81,6 @@ class NoteListTableVC: UITableViewController {
             print("Error while retrieving cell \(cellNameAndId)")
             return rawCell
         }
-        print("Configuring row \(indexPath.row)")
         cell.configureCell(CoreFacade.shared.getNotesBySubject(subject)[indexPath.row])
         
         return cell
