@@ -9,6 +9,8 @@
 import UIKit
 
 internal class NoteController {
+    private let databaseController: DatabaseController
+    
     internal fileprivate(set) var noteList: [Note] {
         didSet {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNOTIFICATION_NOTE_LIST_CHANGED), object: nil)
@@ -17,6 +19,7 @@ internal class NoteController {
     
     init() {
         noteList = []
+        databaseController = DatabaseController()
     }
     
     internal func getAllNotes() -> [Note] {
@@ -24,36 +27,15 @@ internal class NoteController {
     }
     
     internal func getNotesBySubject(_ subject: Subject) -> [Note] {
-        var filteredNotes: [Note] = []
-        
-        for note in noteList {
-            if note.subject == subject {
-                filteredNotes.append(note)
-            }
-        }
-        
-        return filteredNotes
+        return self.databaseController.selectNotesBySubject(subject)
     }
     
     internal func fetchNotes() {
-        noteList = []
-        createNoteStub()
+        noteList = self.databaseController.selectNotes()
     }
     
-    private func createNoteStub() {
-        for subject in createSubjectStub() {
-            for i in 1...3 {
-                noteList.append(Note("Note \(i)", "Description of note \(i) of \(subject.subject)", subject, Date()))
-            }
-        }
-    }
-    
-    private func createSubjectStub() -> [Subject] {
-        let subjectList = CoreFacade.shared.selectSubjects()
-        //let colors = [UIColor.blue, UIColor.orange, UIColor.green]
-        //for i in (1...3) {
-            //subjectList.append(Subject("Subject \(i)", colors[i-1]))
-        //}
-        return subjectList
+    public func saveNote(_ note: Note) {
+        self.databaseController.addNote(note)
+        self.fetchNotes()
     }
 }

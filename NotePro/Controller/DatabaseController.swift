@@ -40,7 +40,7 @@ class DatabaseController: NSObject {
         }
     }
     
-    func createTables() {
+    func initDatabase() {
         openDatabase()
         let createSubjectSQL = "CREATE TABLE IF NOT EXISTS SUBJECT " +
         "(SUBJECT_ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPTION TEXT NOT NULL, " +
@@ -60,6 +60,16 @@ class DatabaseController: NSObject {
         if (sqlite3_exec(database, createNoteSQL, nil, nil, &errMsg) != SQLITE_OK) {
             sqlite3_close(database)
             print("Failed to create table Note")
+            return
+        }
+        
+        let createPicturesSQL = "CREATE TABLE IF NOT EXISTS PICTURE " +
+            "(PICTURE_ID INTEGER PRIMARY KEY AUTOINCREMENT, NOTE_ID INTEGER NOT NULL, PICTURE BLOB NOT NULL, " +
+        " FOREIGN KEY (NOTE_ID) REFERENCES NOTE(NOTE_ID));"
+        
+        if (sqlite3_exec(database, createPicturesSQL, nil, nil, &errMsg) != SQLITE_OK) {
+            sqlite3_close(database)
+            print("Failed to create table Picture")
             return
         }
     }
@@ -87,7 +97,7 @@ class DatabaseController: NSObject {
         
     }
     
-    
+    //Amanda
     func selectNotesBySubject(_ subject: Subject) -> [Note] {
         openDatabase()
         var notes: [Note] = []
@@ -103,9 +113,9 @@ class DatabaseController: NSObject {
         
     }
     
-    func selectSubjectById(_ subjectId: Int) -> Subject {
+    func selectSubjectById(_ subjectId: Int) -> Subject? {
         openDatabase()
-        var subjectObj = Subject(nil, nil)
+        var subjectObj: Subject?
         let query = "SELECT * FROM SUBJECT WHERE SUBJECT_ID = \(subjectId);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
@@ -115,10 +125,7 @@ class DatabaseController: NSObject {
                 let color = sqlite3_column_text(statement, 2)
                 let active = Int(sqlite3_column_int(statement, 3))
                 let colorUI = UIColor.StringToUIColor(string: String(cString:color!))
-                subjectObj.setSubjectId(subjectId)
-                subjectObj.setSubject(subject)
-                subjectObj.setColor(colorUI)
-                subjectObj.setActive(active)
+                subjectObj = Subject(subjectId, subject, colorUI, active)
             }
             sqlite3_finalize(statement)
         } else {
@@ -152,7 +159,7 @@ class DatabaseController: NSObject {
                     DispatchQueue.main.async {
                 
                         let address = " \(placemark.thoroughfare) \(placemark.subThoroughfare) \(placemark.locality) \(placemark.administrativeArea) \(placemark.postalCode) \(placemark.country)"
-                        notes.append(Note(noteId, title, description, subject, datetime, location, address))
+                        notes.append(Note(noteId, title, description, subject!, datetime, location, address))
                     }
                 }
             }
@@ -163,6 +170,28 @@ class DatabaseController: NSObject {
         }
         sqlite3_close(database)
         return notes
+    }
+    
+    //Araceli
+    func selectPicturesByNote(_ note: Note) -> [UIImage] {
+        openDatabase()
+        var pictures: [UIImage] = []
+        let query = "SELECT * FROM PICTURES WHERE NOTE_ID = \(note.noteId)"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let pictureId = Int(sqlite3_column_int(statement, 0))
+                let noteId = Int(sqlite3_column_int(statement, 1))
+                let picture = sqlite3_column_blob(statement, 2)
+                //pictures.append()
+            }
+            sqlite3_finalize(statement)
+        } else {
+            print("Failed to return rows from table Subject")
+        }
+        sqlite3_close(database)
+        return pictures
+        
     }
 
     func dataFilePath() -> String {
@@ -217,6 +246,36 @@ class DatabaseController: NSObject {
         }
         sqlite3_finalize(statement)
         sqlite3_close(database)
+    }
+    
+    //Araceli
+    func addPictures()
+    {
+        
+    }
+    
+    //Amanda
+    func updateNote()
+    {
+        
+    }
+    
+    //Amanda
+    func updateSubject()
+    {
+        
+    }
+    
+    //Amanda
+    func deleteNote()
+    {
+        
+    }
+    
+    //Araceli
+    func deletePictures()
+    {
+        
     }
     
     func getAddressFromGeocodeCoordinate(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?, Error?) -> ())  {

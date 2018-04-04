@@ -15,7 +15,7 @@ public class Note: Equatable {
     public private(set) var description: String
     public private(set) var subject: Subject
     public private(set) var dateTime: Date
-    //public private(set) var photos: [UIImage] = []
+    public private(set) var photos: [UIImage] = []
     public private(set) var location: CLLocationCoordinate2D?
     public private(set) var address: String?
     
@@ -50,16 +50,14 @@ public class Note: Equatable {
     public func setdateTime(_ dateTime: Date) {
         self.dateTime = dateTime
     }
-    //public func setphotos(_ photos: [UIImage]) {
-        //self.photos = photos
-    //}
+    public func setphotos(_ photos: [UIImage]) {
+        self.photos = photos
+    }
     public func setlocation(_ location: CLLocationCoordinate2D) {
         self.location = location
     }
     public func setaddress(_ address: String) {
         self.address = address
     }
-    //public func addphoto(_ photo: UIImage) {
-        //self.photos.append(photo)
-    //}
+
 }

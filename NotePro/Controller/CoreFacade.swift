@@ -49,27 +49,19 @@ public class CoreFacade {
         return self.noteController.getNotesBySubject(subject)
     }
     
-    public func createTables() {
-        return self.databaseController.createTables()
-    }
-    
-    public func selectSubjects() -> [Subject] {
-        return self.databaseController.selectSubjects()
+    public func initDatabase() {
+        return self.databaseController.initDatabase()
     }
     
     public func saveSubject(_ subject: Subject) {
-        return self.databaseController.addSubject(subject)
+        return self.subjectController.saveSubject(subject)
     }
     
-    public func selectNotesBySybject(_ subject: Subject) -> [Note] {
-        return self.databaseController.selectNotesBySubject(subject)
+    public func getNoteList() -> [Note] {
+        return self.noteController.getAllNotes()
     }
     
-    public func selectNotes() -> [Note] {
-        return self.databaseController.selectNotes()
-    }
-    
-    public func saveSubject(_ note: Note) {
-        return self.databaseController.addNote(note)
+    public func saveNote(_ note: Note) {
+        return self.noteController.saveNote(note)
     }
 }

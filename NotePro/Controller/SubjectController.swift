@@ -9,6 +9,8 @@
 import UIKit
 
 internal class SubjectController {
+    private let databaseController: DatabaseController
+    
     internal fileprivate(set) var subjectList: [Subject] {
         didSet {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNOTIFICATION_SUBJECT_LIST_CHANGED), object: nil)
@@ -17,6 +19,7 @@ internal class SubjectController {
     
     init() {
         subjectList = []
+        databaseController = DatabaseController()
     }
     
     internal func getSubjects() -> [Subject]{
@@ -24,11 +27,11 @@ internal class SubjectController {
     }
     
     internal func fetchSubjects() {
-        subjectList = CoreFacade.shared.selectSubjects()
-        //subjectList = []
-        //let colors = [UIColor.blue, UIColor.orange, UIColor.green]
-        //for i in (1...3) {
-            //subjectList.append(Subject("Subject \(i)", colors[i-1]))
-        //}
+        subjectList = self.databaseController.selectSubjects()
+    }
+    
+    public func saveSubject(_ subject: Subject) {
+        self.databaseController.addSubject(subject)
+        self.fetchSubjects()
     }
 }
