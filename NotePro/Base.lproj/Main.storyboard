@@ -177,6 +177,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23b-UK-PKj">
                                 <rect key="frame" x="170" y="617" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <segue destination="6x4-no-lB2" kind="unwind" unwindAction="unwindToSubjectListWithSender:" id="8te-TG-cyv"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -191,12 +194,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Subject" id="nwA-oI-qyU"/>
                     <connections>
+                        <outlet property="btnSave" destination="23b-UK-PKj" id="LbC-ec-h1L"/>
                         <outlet property="colorPicker" destination="KJb-x2-DLM" id="CPZ-0L-upX"/>
                         <outlet property="colorView" destination="LCh-ec-uIr" id="hF4-4F-xaW"/>
                         <outlet property="subjectTextField" destination="zjV-EA-ENA" id="8DY-ga-L2a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ku-P2-FNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6x4-no-lB2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1229.5999999999999" y="864.91754122938539"/>
         </scene>

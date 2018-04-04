@@ -24,10 +24,11 @@ internal class SubjectController {
     }
     
     internal func fetchSubjects() {
-        subjectList = []
-        let colors = [UIColor.blue, UIColor.orange, UIColor.green]
-        for i in (1...3) {
-            subjectList.append(Subject("Subject \(i)", colors[i-1]))
-        }
+        subjectList = CoreFacade.shared.selectSubjects()
+        //subjectList = []
+        //let colors = [UIColor.blue, UIColor.orange, UIColor.green]
+        //for i in (1...3) {
+            //subjectList.append(Subject("Subject \(i)", colors[i-1]))
+        //}
     }
 }

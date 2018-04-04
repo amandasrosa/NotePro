@@ -49,11 +49,11 @@ internal class NoteController {
     }
     
     private func createSubjectStub() -> [Subject] {
-        var subjectList: [Subject] = []
-        let colors = [UIColor.blue, UIColor.orange, UIColor.green]
-        for i in (1...3) {
-            subjectList.append(Subject("Subject \(i)", colors[i-1]))
-        }
+        let subjectList = CoreFacade.shared.selectSubjects()
+        //let colors = [UIColor.blue, UIColor.orange, UIColor.green]
+        //for i in (1...3) {
+            //subjectList.append(Subject("Subject \(i)", colors[i-1]))
+        //}
         return subjectList
     }
 }
