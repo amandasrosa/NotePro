@@ -255,19 +255,19 @@ class DatabaseController: NSObject {
     }
     
     //Amanda
-    func updateNote()
+    func updateNote(_ note: Note)
     {
         
     }
     
     //Amanda
-    func updateSubject()
+    func updateSubject(_ subject: Subject)
     {
         
     }
     
     //Amanda
-    func deleteNote()
+    func deleteNote(_ note: Note)
     {
         
     }

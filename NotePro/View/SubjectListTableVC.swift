@@ -130,11 +130,9 @@ class SubjectListTableVC: UITableViewController {
                 print("Destination isn't a SubjectVC")
                 return
             }
-            guard let indexPath = sender as? IndexPath else {
-                print("Invalid index")
-                return
+            if let indexPath = sender as? IndexPath {
+                destination.subject = CoreFacade.shared.subjects[indexPath.row]
             }
-            destination.subject = CoreFacade.shared.subjects[indexPath.row]
         default:
             break
         }
