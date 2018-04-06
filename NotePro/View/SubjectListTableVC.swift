@@ -36,7 +36,6 @@ class SubjectListTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            print("Deleted \(indexPath.row)\n")
             let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this subject?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
                 CoreFacade.shared.deleteSubject(CoreFacade.shared.subjects[indexPath.row]);
@@ -44,13 +43,11 @@ class SubjectListTableVC: UITableViewController {
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            
         }
         
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
             self.performSegue(withIdentifier: "addSubject", sender: indexPath)
         }
-        
         edit.backgroundColor = UIColor.blue
         
         return [delete, edit]

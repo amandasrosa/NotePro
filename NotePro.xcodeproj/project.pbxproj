@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11074D312072CD1A00BBEBD6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 11074D302072CD1A00BBEBD6 /* libsqlite3.tbd */; };
 		11074D372072CDBC00BBEBD6 /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11074D362072CDBC00BBEBD6 /* DatabaseController.swift */; };
+		11074D75207821F000BBEBD6 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11074D74207821F000BBEBD6 /* MapVC.swift */; };
 		16393821206C29760081323F /* SubjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393820206C29760081323F /* SubjectVC.swift */; };
 		16393823206C2A990081323F /* NoteListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393822206C2A990081323F /* NoteListTableVC.swift */; };
 		16393847206C35FC0081323F /* NoteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393845206C35FC0081323F /* NoteViewCell.swift */; };
@@ -55,6 +56,7 @@
 		11074D302072CD1A00BBEBD6 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		11074D322072CD5600BBEBD6 /* NotePro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotePro-Bridging-Header.h"; sourceTree = "<group>"; };
 		11074D362072CDBC00BBEBD6 /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
+		11074D74207821F000BBEBD6 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		16393820206C29760081323F /* SubjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectVC.swift; sourceTree = "<group>"; };
 		16393822206C2A990081323F /* NoteListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListTableVC.swift; sourceTree = "<group>"; };
 		16393845206C35FC0081323F /* NoteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewCell.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				16393822206C2A990081323F /* NoteListTableVC.swift */,
 				16F2BCF22072B9F8006DA059 /* NoteVC.swift */,
 				16393850206C52D70081323F /* TableCells */,
+				11074D74207821F000BBEBD6 /* MapVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				16393847206C35FC0081323F /* NoteViewCell.swift in Sources */,
 				163BEA952069744C005D23E4 /* SubjectViewCell.swift in Sources */,
 				1639384C206C427F0081323F /* NoteController.swift in Sources */,
+				11074D75207821F000BBEBD6 /* MapVC.swift in Sources */,
 				16393821206C29760081323F /* SubjectVC.swift in Sources */,
 				1690674C20667C4A009B659F /* ViewController.swift in Sources */,
 				1690674A20667C4A009B659F /* AppDelegate.swift in Sources */,
