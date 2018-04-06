@@ -97,14 +97,36 @@ class DatabaseController: NSObject {
         
     }
     
-    //Amanda
     func selectNotesBySubject(_ subject: Subject) -> [Note] {
         openDatabase()
         var notes: [Note] = []
         let query = "SELECT * FROM NOTE WHERE SUBJECT_ID = \(subject.subjectId) ORDER BY TITLE"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
-            
+            //
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let noteId = Int(sqlite3_column_int(statement, 0))
+                let title = String(cString:sqlite3_column_text(statement, 1))
+                let description = String(cString:sqlite3_column_text(statement, 2))
+                let datetimeString = String(cString:sqlite3_column_text(statement, 3))
+                let latitude = Double(sqlite3_column_double(statement, 4))
+                let longitude = Double(sqlite3_column_double(statement, 5))
+                let subjectId = Int(sqlite3_column_int(statement, 6))
+                
+                let location = CLLocationCoordinate2DMake(latitude, longitude)
+                let subject = selectSubjectById(subjectId)
+                let datetime = stringToDate(datetimeString)
+                
+                getAddressFromGeocodeCoordinate(latitude: latitude, longitude: longitude) { placemark, error in
+                    guard let placemark = placemark, error == nil else { return }
+                    DispatchQueue.main.async {
+                        
+                        let address = " \(placemark.thoroughfare) \(placemark.subThoroughfare) \(placemark.locality) \(placemark.administrativeArea) \(placemark.postalCode) \(placemark.country)"
+                        notes.append(Note(noteId, title, description, subject!, datetime, location, address))
+                    }
+                }
+            }
+            sqlite3_finalize(statement)
         } else {
             print("Failed to return rows from table Note BY Subject")
         }
@@ -112,11 +134,11 @@ class DatabaseController: NSObject {
         return notes
         
     }
-    
+
     func selectSubjectById(_ subjectId: Int) -> Subject? {
         openDatabase()
         var subjectObj: Subject?
-        let query = "SELECT * FROM SUBJECT WHERE SUBJECT_ID = \(subjectId);"
+        let query = "SELECT * FROM SUBJECT WHERE SUBJECT_ID = \(subjectId) AND ACTIVE = 1;"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
             while sqlite3_step(statement) == SQLITE_ROW {
@@ -225,7 +247,6 @@ class DatabaseController: NSObject {
     
     func addNote(_ note: Note) {
         openDatabase()
-        
         let insert = "INSERT INTO NOTE (TITLE, DESCRIPTION, DATETIME, LATITUDE, LONGITUDE, SUBJECT_ID) " +
         "VALUES (?, ?, ?, ?, ?, ?);"
         var statement:OpaquePointer? = nil
@@ -249,33 +270,121 @@ class DatabaseController: NSObject {
     }
     
     //Araceli
-    func addPictures()
-    {
-        
+    func addPictures(_ pictures: [UIImage], _ note: Note ) {
+        openDatabase()
+        let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) " +
+            "VALUES (?, ?);"
+        var statement:OpaquePointer? = nil
+        for pic in pictures {
+            if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_int(statement, 1, Int32(note.noteId))
+                //Converter UIImage pra Blob
+                //sqlite3_bind_blob(statement, 2, pic, -1, nil)
+            }
+            if sqlite3_step(statement) != SQLITE_DONE {
+                print("Error adding note")
+                sqlite3_close(database)
+                return
+            }
+        }
+        sqlite3_finalize(statement)
+        sqlite3_close(database)
     }
     
-    //Amanda
-    func updateNote(_ note: Note)
-    {
-        
+    func updateNote(_ note: Note) {
+        openDatabase()
+        let update = "UPDATE NOTE SET TITLE = ?, DESCRIPTION = ?, DATETIME = ?, LATITUDE = ?, LONGITUDE = ?, SUBJECT_ID = ?) " +
+        "WHERE NOTE_ID = \(note.noteId);"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, update, -1, &statement, nil) == SQLITE_OK {
+            
+            let dateString = dateToString(note.dateTime)
+            sqlite3_bind_text(statement, 1, note.title, -1, nil)
+            sqlite3_bind_text(statement, 2, note.description, -1, nil)
+            sqlite3_bind_text(statement, 3, dateString, -1, nil)
+            sqlite3_bind_double(statement, 4, (note.location?.latitude)!)
+            sqlite3_bind_double(statement, 5, (note.location?.longitude)!)
+            sqlite3_bind_int(statement, 6, Int32(note.subject.subjectId))
+        }
+        if sqlite3_step(statement) != SQLITE_DONE {
+            print("Error updating note")
+            sqlite3_close(database)
+            return
+        }
+        sqlite3_finalize(statement)
+        sqlite3_close(database)
     }
     
-    //Amanda
-    func updateSubject(_ subject: Subject)
-    {
+    func updateSubject(_ subject: Subject) {
+        openDatabase()
+        let colorText = UIColor.UIColorToString(color: subject.color)
         
+        let update = "UPDATE SUBJECT SET DESCRIPTION = ?, COLOR = ? " +
+        "WHERE SUBJECT_ID = \(subject.subjectId);"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, update, -1, &statement, nil) == SQLITE_OK {
+            
+            sqlite3_bind_text(statement, 1, subject.subject, -1, nil)
+            sqlite3_bind_text(statement, 2, colorText, -1, nil)
+        }
+        if sqlite3_step(statement) != SQLITE_DONE {
+            print("Error adding subject")
+            sqlite3_close(database)
+            return
+        }
+        sqlite3_finalize(statement)
+        sqlite3_close(database)
     }
     
-    //Amanda
-    func deleteNote(_ note: Note)
-    {
-        
+    func deleteNote(_ note: Note) {
+        openDatabase()
+        let delete = "DELETE FROM NOTE WHERE NOTE_ID = \(note.noteId);"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, delete, -1, &statement, nil) == SQLITE_OK {
+            print("Note row deleted")
+        }
+        if sqlite3_step(statement) != SQLITE_DONE {
+            print("Error deleting note")
+            sqlite3_close(database)
+            return
+        }
+        sqlite3_finalize(statement)
+        sqlite3_close(database)
+    }
+    
+    func deleteSubject(_ subject: Subject) {
+        openDatabase()
+        let delete = "UPDATE SUBJECT SET ACTIVE = 0" +
+        "WHERE SUBJECT_ID = \(subject.subjectId);"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, delete, -1, &statement, nil) == SQLITE_OK {
+            print("Subject row deleted")
+        }
+        if sqlite3_step(statement) != SQLITE_DONE {
+            print("Error adding subject")
+            sqlite3_close(database)
+            return
+        }
+        sqlite3_finalize(statement)
+        sqlite3_close(database)
     }
     
     //Araceli
-    func deletePictures()
+    func deletePictures(_ pictureId: Int)
     {
-        
+        openDatabase()
+        let delete = "DELETE FROM PICTURE WHERE PICTURE_ID = \(pictureId);"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, delete, -1, &statement, nil) == SQLITE_OK {
+            print("Picture row deleted")
+        }
+        if sqlite3_step(statement) != SQLITE_DONE {
+            print("Error deleting picture")
+            sqlite3_close(database)
+            return
+        }
+        sqlite3_finalize(statement)
+        sqlite3_close(database)
     }
     
     func getAddressFromGeocodeCoordinate(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?, Error?) -> ())  {
