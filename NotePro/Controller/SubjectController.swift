@@ -38,4 +38,8 @@ internal class SubjectController {
         }
         self.fetchSubjects()
     }
+    
+    public func deleteSubject(_ subject: Subject) {
+        self.databaseController.deleteSubject(subject)
+    }
 }

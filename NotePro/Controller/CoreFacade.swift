@@ -57,11 +57,19 @@ public class CoreFacade {
         return self.subjectController.saveSubject(subject)
     }
     
+    public func deleteSubject(_ subject: Subject) {
+        return self.subjectController.deleteSubject(subject)
+    }
+    
     public func getNoteList() -> [Note] {
         return self.noteController.getAllNotes()
     }
     
     public func saveNote(_ note: Note) {
         return self.noteController.saveNote(note)
+    }
+    
+    public func deleteNote(_ note: Note) {
+        return self.noteController.deleteNote(note)
     }
 }

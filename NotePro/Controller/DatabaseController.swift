@@ -77,7 +77,7 @@ class DatabaseController: NSObject {
     func selectSubjects() -> [Subject] {
         openDatabase()
         var subjects: [Subject] = []
-        let query = "SELECT * FROM SUBJECT ORDER BY DESCRIPTION"
+        let query = "SELECT * FROM SUBJECT WHERE ACTIVE = 1 ORDER BY DESCRIPTION"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
             while sqlite3_step(statement) == SQLITE_ROW {
@@ -138,7 +138,7 @@ class DatabaseController: NSObject {
     func selectSubjectById(_ subjectId: Int) -> Subject? {
         openDatabase()
         var subjectObj: Subject?
-        let query = "SELECT * FROM SUBJECT WHERE SUBJECT_ID = \(subjectId) AND ACTIVE = 1;"
+        let query = "SELECT * FROM SUBJECT WHERE SUBJECT_ID = \(subjectId);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
             while sqlite3_step(statement) == SQLITE_ROW {
@@ -354,14 +354,13 @@ class DatabaseController: NSObject {
     
     func deleteSubject(_ subject: Subject) {
         openDatabase()
-        let delete = "UPDATE SUBJECT SET ACTIVE = 0" +
-        "WHERE SUBJECT_ID = \(subject.subjectId);"
+        let delete = "UPDATE SUBJECT SET ACTIVE = 0 WHERE SUBJECT_ID = \(subject.subjectId);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, delete, -1, &statement, nil) == SQLITE_OK {
             print("Subject row deleted")
         }
         if sqlite3_step(statement) != SQLITE_DONE {
-            print("Error adding subject")
+            print("Error deleting subject")
             sqlite3_close(database)
             return
         }
