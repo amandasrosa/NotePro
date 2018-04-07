@@ -232,8 +232,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCl-fG-TCl">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCl-fG-TCl">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -369,6 +370,7 @@
                     <connections>
                         <outlet property="dateField" destination="3TM-me-jod" id="Rv8-dQ-H4Q"/>
                         <outlet property="descriptionField" destination="Okb-eY-e0d" id="JKa-Z9-6lY"/>
+                        <outlet property="noteImageView" destination="hCl-fG-TCl" id="Nmg-oG-AdR"/>
                         <outlet property="subjectField" destination="IUd-yZ-rB0" id="92e-f1-DoJ"/>
                         <outlet property="titleField" destination="JtV-cZ-eAP" id="vD8-EI-xoz"/>
                     </connections>

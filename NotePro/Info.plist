@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>Will you allow this app to always know your location?</string>
+    <string>Would you allow the NotePro to know your location to show your note in a Map?</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Do you allow this app to know your current location?</string>
+    <string>Would you allow the NotePro to know your current location to show your note in a Map?</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Would you allow the NotePro to access the camera to save images for your note?</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

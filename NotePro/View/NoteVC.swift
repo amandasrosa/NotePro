@@ -8,6 +8,9 @@
 
 import UIKit
 import CoreLocation
+import AVKit
+import AVFoundation
+import MobileCoreServices
 
 class NoteVC: UITableViewController {
     
@@ -15,16 +18,26 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var subjectField: UITextField!
     @IBOutlet weak var dateField: UITextField!
+    @IBOutlet weak var noteImageView: UIImageView!
     
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let locationManager = CLLocationManager()
     private var subjectPickerView: SubjectPickerView?
     private var userLocation: CLLocationCoordinate2D?
+    
+    @objc var lastChosenMediaType: String?
+    @objc var noteImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initScreen()
         determineUserCurrentLocation(locationManager)
+        configureTapGestures()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateDisplay()
     }
     
     fileprivate func initScreen() {
@@ -33,6 +46,30 @@ class NoteVC: UITableViewController {
     
     fileprivate func setDefaultDate() {
         self.dateField.text = DateUtil.convertDateToString(Date(), .medium, .short)
+    }
+    
+    fileprivate func configureTapGestures() {
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            print("Camera it is not available")
+        } else {
+            configureTapGestureToTakePickture()
+        }
+        
+        configureTapGestureToUsePicktureFromPhotoLibrary()
+    }
+    
+    fileprivate func configureTapGestureToTakePickture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.shootPicture(sender:)))
+        tap.delegate = self
+        tap.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    fileprivate func configureTapGestureToUsePicktureFromPhotoLibrary() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.selectExistingPicture))
+        tap.delegate = self
+        tap.numberOfTapsRequired = 2
+        self.view.addGestureRecognizer(tap)
     }
     
     @IBAction func saveNote(_ sender: UIBarButtonItem) {
@@ -225,4 +262,68 @@ extension NoteVC: CLLocationManagerDelegate {
     {
         print("Error to get user location: \(error)")
     }
+}
+
+extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @objc func shootPicture(sender: UIButton) {
+        pickMediaFromSource(UIImagePickerControllerSourceType.camera)
+    }
+    
+    @objc func selectExistingPicture(sender: UIButton) {
+        pickMediaFromSource(UIImagePickerControllerSourceType.photoLibrary)
+    }
+    
+    @objc func updateDisplay() {
+        if let mediaType = lastChosenMediaType {
+            if mediaType == (kUTTypeImage as NSString) as String {
+                noteImageView.image = noteImage!
+                noteImageView.isHidden = false
+            } else {
+                print("Error to compare kUTTypeImage")
+            }
+        }
+    }
+    
+    @objc func pickMediaFromSource(_ sourceType:UIImagePickerControllerSourceType) {
+        let mediaTypes =
+            UIImagePickerController.availableMediaTypes(for: sourceType)!
+        if UIImagePickerController.isSourceTypeAvailable(sourceType)
+            && mediaTypes.count > 0 {
+            let picker = UIImagePickerController()
+            picker.mediaTypes = mediaTypes
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.sourceType = sourceType
+            present(picker, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title:"Error accessing media",
+                                                    message: "Unsupported media source.",
+                                                    preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "OK",
+                                         style: UIAlertActionStyle.cancel, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        lastChosenMediaType = info[UIImagePickerControllerMediaType] as? String
+        if let mediaType = lastChosenMediaType {
+            if mediaType == (kUTTypeImage as NSString) as String {
+                noteImage = info[UIImagePickerControllerEditedImage] as? UIImage
+            } else {
+                print("Error to compare kUTTypeImage")
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion:nil)
+    }
+}
+
+extension NoteVC: UIGestureRecognizerDelegate {
+    
 }
