@@ -54,6 +54,9 @@ public class Note: Equatable {
     public func setPhotos(_ photos: [Picture]) {
         self.photos = photos
     }
+    public func addPhoto(_ photo: Picture) {
+        self.photos.append(photo)
+    }
     public func setLocation(_ location: CLLocationCoordinate2D) {
         self.location = location
     }
