@@ -15,7 +15,6 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var subjectField: UITextField!
     @IBOutlet weak var dateField: UITextField!
     
-    
     let datePickerView: UIDatePicker = UIDatePicker()
     var subjectPickerView: SubjectPickerView?
 
@@ -31,10 +30,24 @@ class NoteVC: UITableViewController {
     fileprivate func setDefaultDate() {
         self.dateField.text = DateUtil.convertDateToString(Date(), .medium, .short)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    
+    @IBAction func saveNote(_ sender: UIBarButtonItem) {
+        if let title = titleField.text,
+           let description = descriptionField.text,
+           let subject = subjectPickerView?.selectedSubject,
+           let dateTime = dateField.text {
+            
+            guard let dateTimeToObject = DateUtil.convertStringToDate(dateTime, .medium, .short) else {
+                print("Error to parse the date")
+                return
+            }
+            
+            let newNote = Note(title, description, subject, dateTimeToObject)
+            CoreFacade.shared.saveNote(newNote)
+        }
+        
     }
+    
     
     @IBAction func handleSubjectPicker(_ sender: UITextField) {
         createSubjectPicker(sender)
@@ -143,9 +156,16 @@ class NoteVC: UITableViewController {
 
 class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var subjects: [String] = ["Travel", "Sports", "Home", "Work", "Study"]
+    var subjects: [Subject] = [
+        Subject(1, "Travel", UIColor.black, 1),
+        Subject(2, "Sports", UIColor.blue, 1),
+        Subject(3, "Home", UIColor.red, 1),
+        Subject(4, "Work", UIColor.yellow, 1),
+        Subject(5, "Study", UIColor.cyan, 1)
+    ]
     var pickerView: UIPickerView = UIPickerView()
     var subjectField: UITextField
+    var selectedSubject: Subject?
     
     init(subjectField: UITextField) {
         self.subjectField = subjectField
@@ -166,10 +186,11 @@ class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return subjects[row]
+        return subjects[row].subject
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.subjectField.text = subjects[row]
+        self.subjectField.text = subjects[row].subject
+        self.selectedSubject = subjects[row]
     }
 }

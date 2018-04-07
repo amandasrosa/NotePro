@@ -39,6 +39,12 @@ class DateUtil {
         return dateFormatter.string(from: date!)
     }
     
+    static func convertStringToDate(_ stringDate: String, _ dateFormat: DateFormatter.Style, _ timeFormat: DateFormatter.Style) -> Date? {
+        dateFormatter.dateStyle = dateFormat
+        dateFormatter.timeStyle = timeFormat
+        return dateFormatter.date(from: stringDate)
+    }
+    
     static func convertDateToString(_ date: Date?, _ dateFormat: DateFormatter.Style, _ timeFormat: DateFormatter.Style) -> String {
         if date == nil {
             return ""
