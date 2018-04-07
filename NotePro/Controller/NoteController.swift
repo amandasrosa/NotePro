@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 internal class NoteController {
     private let databaseController: DatabaseController
@@ -20,6 +21,21 @@ internal class NoteController {
     init() {
         noteList = []
         databaseController = DatabaseController()
+        /*let subjectsList = databaseController.selectSubjects()
+        var count = 0
+        let location = CLLocationCoordinate2D(latitude: 43.773263, longitude: -79.335923)
+        let pictures: [Picture] = []
+        
+        for eachSub in subjectsList {
+            noteList.append(Note(count,"Note Exemplo Sub \(eachSub.subjectId)", "description \(eachSub.subjectId)", eachSub, Date(), location, "address qlqr", pictures))
+            noteList.append(Note(count+1,"Note Exemplo Sub \(eachSub.subjectId)", "description \(eachSub.subjectId)", eachSub, Date(), location, "address qlqr", pictures))
+            count += 2
+        }
+        for note in noteList {
+            databaseController.addNote(note)
+            print("adicionou \(note.noteId)")
+        }
+        fetchNotes()*/
     }
     
     internal func getAllNotes() -> [Note] {
