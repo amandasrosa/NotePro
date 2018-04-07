@@ -32,7 +32,7 @@ class DatabaseController: NSObject {
         }
     }
     
-    func dataFilePath() -> String {
+    private func dataFilePath() -> String {
         let urls = FileManager.default.urls(for:
             .documentDirectory, in: .userDomainMask)
         var url:String?
@@ -40,7 +40,13 @@ class DatabaseController: NSObject {
         return url!
     }
     
+    private func deleteDatabase() {
+        let fileManager = FileManager.default
+        try? fileManager.removeItem(atPath: dataFilePath())
+    }
+    
     func initDatabase() {
+        // deleteDatabase()
         openDatabase()
         let createSubjectSQL = "CREATE TABLE IF NOT EXISTS SUBJECT " +
         "(SUBJECT_ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPTION TEXT NOT NULL, " +
