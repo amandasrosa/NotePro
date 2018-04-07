@@ -30,18 +30,21 @@ class NoteVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initScreen()
         determineUserCurrentLocation(locationManager)
         configureTapGestures()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateDisplay()
+        initScreen()
     }
     
+    // MARK: - Init and Configure Screen
     fileprivate func initScreen() {
         setDefaultDate()
+        CoreFacade.shared.fetchSubjectList()
+        createSubjectPicker(self.subjectField)
+        updateNoteImageDisplay()
     }
     
     fileprivate func setDefaultDate() {
@@ -54,7 +57,6 @@ class NoteVC: UITableViewController {
         } else {
             configureTapGestureToTakePickture()
         }
-        
         configureTapGestureToUsePicktureFromPhotoLibrary()
     }
     
@@ -71,36 +73,6 @@ class NoteVC: UITableViewController {
         tap.numberOfTapsRequired = 2
         self.view.addGestureRecognizer(tap)
     }
-    
-    @IBAction func saveNote(_ sender: UIBarButtonItem) {
-        print("Prepare to Save Note")
-        if let title = titleField.text,
-           let description = descriptionField.text,
-           let subject = subjectPickerView?.selectedSubject,
-           let dateTime = dateField.text,
-           let userLocation = self.userLocation {
-
-            guard let dateTimeToObject = DateUtil.convertStringToDate(dateTime, .medium, .short) else {
-                print("Error to parse the date")
-                return
-            }
-            let newNote = Note(title, description, subject, dateTimeToObject)
-            newNote.setLocation(userLocation)
-            CoreFacade.shared.saveNote(newNote)
-            print("Note saved")
-            performSegueToReturnBack()
-        } else {
-            print("Error to get informations")
-        }
-    }
-    
-    fileprivate func performSegueToReturnBack()  {
-        if let nav = self.navigationController {
-            nav.popViewController(animated: true)
-        } else {
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
 
     @IBAction func handleSubjectPicker(_ sender: UITextField) {
         createSubjectPicker(sender)
@@ -110,10 +82,6 @@ class NoteVC: UITableViewController {
         subjectPickerView = SubjectPickerView(subjectField: sender)
         sender.inputView = subjectPickerView?.pickerView
         subjectField.inputAccessoryView = createToolBarForSubject()
-    }
-    
-    @IBAction func handleDatePicker(_ sender: UITextField) {
-        createDataPicker(sender)
     }
     
     fileprivate func createDataPicker(_ sender: UITextField) {
@@ -194,22 +162,62 @@ class NoteVC: UITableViewController {
     @objc func cancelClickForSubject() {
         subjectField.resignFirstResponder()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - Save Note
+    @IBAction func saveNote(_ sender: UIBarButtonItem) {
+        print("Prepare to Save Note")
+        if let title = titleField.text,
+            let description = descriptionField.text,
+            let subject = subjectPickerView?.selectedSubject,
+            let dateTime = dateField.text,
+            let userLocation = self.userLocation {
+            
+            guard let dateTimeToObject = DateUtil.convertStringToDate(dateTime, .medium, .short) else {
+                print("Error to parse the date")
+                return
+            }
+            
+            let newNote = Note(title, description, subject, dateTimeToObject)
+            newNote.setLocation(userLocation)
+            
+            /* Implement save image
+             if let newNoteImage = noteImage {
+             
+             //newNote.addPhoto(Picture())
+             }
+             */
+            
+            CoreFacade.shared.saveNote(newNote)
+            print("Note saved")
+            performSegueToReturnBack()
+        } else {
+            print("Error to get informations")
+        }
     }
-    */
+    
+    // MARK: - Navigation
+    fileprivate func performSegueToReturnBack()  {
+        if let nav = self.navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    /*
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 
 }
 
+// MARK: - Subject Picker View
 class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var subjects: [Subject] = CoreFacade.shared.getSubjectList()
+    var subjects: [Subject] = []
     var pickerView: UIPickerView = UIPickerView()
     var subjectField: UITextField
     var selectedSubject: Subject?
@@ -221,6 +229,16 @@ class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource 
         self.pickerView.isUserInteractionEnabled = true
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
+        self.subjects = CoreFacade.shared.getSubjectList()
+        self.pickerView.selectedRow(inComponent: 0)
+        setDefaultSubject()
+    }
+    
+    func setDefaultSubject() {
+        if subjects.count > 0 {
+            self.selectedSubject = subjects[0]
+            self.subjectField.text = subjects[0].subject
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -241,6 +259,7 @@ class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource 
     }
 }
 
+// MARK: - Location Manager Delegate
 extension NoteVC: CLLocationManagerDelegate {
     
     func determineUserCurrentLocation(_ locationManager: CLLocationManager) {
@@ -264,6 +283,7 @@ extension NoteVC: CLLocationManagerDelegate {
     }
 }
 
+// MARK: - Image Picker Delegate
 extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @objc func shootPicture(sender: UIButton) {
@@ -274,7 +294,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         pickMediaFromSource(UIImagePickerControllerSourceType.photoLibrary)
     }
     
-    @objc func updateDisplay() {
+    @objc func updateNoteImageDisplay() {
         if let mediaType = lastChosenMediaType {
             if mediaType == (kUTTypeImage as NSString) as String {
                 noteImageView.image = noteImage!
@@ -324,6 +344,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
 }
 
+// MARK: - Gesture Delegate
 extension NoteVC: UIGestureRecognizerDelegate {
     
 }
