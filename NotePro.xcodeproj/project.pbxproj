@@ -10,6 +10,7 @@
 		11074D312072CD1A00BBEBD6 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 11074D302072CD1A00BBEBD6 /* libsqlite3.tbd */; };
 		11074D372072CDBC00BBEBD6 /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11074D362072CDBC00BBEBD6 /* DatabaseController.swift */; };
 		11074D75207821F000BBEBD6 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11074D74207821F000BBEBD6 /* MapVC.swift */; };
+		16391BBE2078426700E26487 /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16391BBD2078426700E26487 /* Picture.swift */; };
 		16393821206C29760081323F /* SubjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393820206C29760081323F /* SubjectVC.swift */; };
 		16393823206C2A990081323F /* NoteListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393822206C2A990081323F /* NoteListTableVC.swift */; };
 		16393847206C35FC0081323F /* NoteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16393845206C35FC0081323F /* NoteViewCell.swift */; };
@@ -57,6 +58,7 @@
 		11074D322072CD5600BBEBD6 /* NotePro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotePro-Bridging-Header.h"; sourceTree = "<group>"; };
 		11074D362072CDBC00BBEBD6 /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 		11074D74207821F000BBEBD6 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		16391BBD2078426700E26487 /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
 		16393820206C29760081323F /* SubjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectVC.swift; sourceTree = "<group>"; };
 		16393822206C2A990081323F /* NoteListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListTableVC.swift; sourceTree = "<group>"; };
 		16393845206C35FC0081323F /* NoteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewCell.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				163BEA972069780B005D23E4 /* Subject.swift */,
 				16393849206C3D120081323F /* Note.swift */,
+				16391BBD2078426700E26487 /* Picture.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				1690674A20667C4A009B659F /* AppDelegate.swift in Sources */,
 				163BEAA1206986FC005D23E4 /* Constants.swift in Sources */,
 				11074D372072CDBC00BBEBD6 /* DatabaseController.swift in Sources */,
+				16391BBE2078426700E26487 /* Picture.swift in Sources */,
 				1639384A206C3D120081323F /* Note.swift in Sources */,
 				16393852206C547A0081323F /* DateUtil.swift in Sources */,
 			);

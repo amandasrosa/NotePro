@@ -15,16 +15,17 @@ public class Note: Equatable {
     public private(set) var description: String
     public private(set) var subject: Subject
     public private(set) var dateTime: Date
-    public private(set) var photos: [UIImage] = []
+    public private(set) var photos: [Picture] = []
     public private(set) var location: CLLocationCoordinate2D?
     public private(set) var address: String?
     
-    init(_ id: Int, _ title: String, _ description: String, _ subject: Subject, _ dateTime: Date, _ location: CLLocationCoordinate2D, _ address: String) {
+    init(_ id: Int, _ title: String, _ description: String, _ subject: Subject, _ dateTime: Date, _ location: CLLocationCoordinate2D, _ address: String, _ photos: [Picture]) {
         self.noteId = id
         self.title = title
         self.description = description
         self.subject = subject
         self.dateTime = dateTime
+        self.photos = photos
     }
     
     init(_ title: String, _ description: String, _ subject: Subject, _ dateTime: Date) {
@@ -41,22 +42,22 @@ public class Note: Equatable {
     public func setTitle(_ title: String) {
         self.title = title
     }
-    public func setdescription(_ description: String) {
+    public func setDescription(_ description: String) {
         self.description = description
     }
-    public func setsubject(_ subject: Subject) {
+    public func setSubject(_ subject: Subject) {
         self.subject = subject
     }
-    public func setdateTime(_ dateTime: Date) {
+    public func setDateTime(_ dateTime: Date) {
         self.dateTime = dateTime
     }
-    public func setphotos(_ photos: [UIImage]) {
+    public func setPhotos(_ photos: [Picture]) {
         self.photos = photos
     }
-    public func setlocation(_ location: CLLocationCoordinate2D) {
+    public func setLocation(_ location: CLLocationCoordinate2D) {
         self.location = location
     }
-    public func setaddress(_ address: String) {
+    public func setAddress(_ address: String) {
         self.address = address
     }
 

@@ -48,7 +48,7 @@ class NoteVC: UITableViewController {
                 return
             }
             let newNote = Note(title, description, subject, dateTimeToObject)
-            newNote.setlocation(userLocation)
+            newNote.setLocation(userLocation)
             CoreFacade.shared.saveNote(newNote)
             print("Note saved")
             performSegueToReturnBack()

@@ -27,23 +27,40 @@ internal class NoteController {
     }
     
     internal func getNotesBySubject(_ subject: Subject) -> [Note] {
-        return self.databaseController.selectNotesBySubject(subject)
+        return databaseController.selectNotesBySubject(subject)
     }
     
     internal func fetchNotes() {
-        noteList = self.databaseController.selectNotes()
+        noteList = databaseController.selectNotes()
     }
     
     public func saveNote(_ note: Note) {
         if note.noteId < 0 {
-            self.databaseController.addNote(note)
+            databaseController.addNote(note)
         } else {
-            self.databaseController.updateNote(note)
+            databaseController.updateNote(note)
+            updatePhotos(note)
         }
-        self.fetchNotes()
+        fetchNotes()
     }
     
     public func deleteNote(_ note: Note) {
-        self.databaseController.deleteNote(note)
+        databaseController.deleteNote(note)
+        databaseController.deletePicturesByNoteId(note.noteId)
+    }
+    
+    public func updatePhotos(_ note: Note) {
+        var picturesInDB = databaseController.selectPicturesByNoteId(note.noteId)
+        for photo in note.photos {
+            let index = picturesInDB.index(of: photo)
+            if index == nil { // if photo ins't in db, insert it
+                databaseController.addPicture(note.noteId, photo.picture)
+            } else { // if photo is in db, remove it from the list
+                picturesInDB.remove(at: index!)
+            }
+        }
+        for picture in picturesInDB { // remaining pictures are to be deleted
+            databaseController.deletePicture(picture.pictureId)
+        }
     }
 }
