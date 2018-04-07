@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class NoteVC: UITableViewController {
     
@@ -15,12 +16,15 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var subjectField: UITextField!
     @IBOutlet weak var dateField: UITextField!
     
-    let datePickerView: UIDatePicker = UIDatePicker()
-    var subjectPickerView: SubjectPickerView?
+    private let datePickerView: UIDatePicker = UIDatePicker()
+    private let locationManager = CLLocationManager()
+    private var subjectPickerView: SubjectPickerView?
+    private var userLocation: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initScreen()
+        determineUserCurrentLocation(locationManager)
     }
     
     fileprivate func initScreen() {
@@ -32,23 +36,35 @@ class NoteVC: UITableViewController {
     }
     
     @IBAction func saveNote(_ sender: UIBarButtonItem) {
+        print("Prepare to Save Note")
         if let title = titleField.text,
            let description = descriptionField.text,
            let subject = subjectPickerView?.selectedSubject,
-           let dateTime = dateField.text {
-            
+           let dateTime = dateField.text,
+           let userLocation = self.userLocation {
+
             guard let dateTimeToObject = DateUtil.convertStringToDate(dateTime, .medium, .short) else {
                 print("Error to parse the date")
                 return
             }
-            
             let newNote = Note(title, description, subject, dateTimeToObject)
+            newNote.setlocation(userLocation)
             CoreFacade.shared.saveNote(newNote)
+            print("Note saved")
+            performSegueToReturnBack()
+        } else {
+            print("Error to get informations")
         }
-        
     }
     
-    
+    fileprivate func performSegueToReturnBack()  {
+        if let nav = self.navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+
     @IBAction func handleSubjectPicker(_ sender: UITextField) {
         createSubjectPicker(sender)
     }
@@ -156,13 +172,7 @@ class NoteVC: UITableViewController {
 
 class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var subjects: [Subject] = [
-        Subject(1, "Travel", UIColor.black, 1),
-        Subject(2, "Sports", UIColor.blue, 1),
-        Subject(3, "Home", UIColor.red, 1),
-        Subject(4, "Work", UIColor.yellow, 1),
-        Subject(5, "Study", UIColor.cyan, 1)
-    ]
+    var subjects: [Subject] = CoreFacade.shared.getSubjectList()
     var pickerView: UIPickerView = UIPickerView()
     var subjectField: UITextField
     var selectedSubject: Subject?
@@ -174,7 +184,6 @@ class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource 
         self.pickerView.isUserInteractionEnabled = true
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
-        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -192,5 +201,28 @@ class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.subjectField.text = subjects[row].subject
         self.selectedSubject = subjects[row]
+    }
+}
+
+extension NoteVC: CLLocationManagerDelegate {
+    
+    func determineUserCurrentLocation(_ locationManager: CLLocationManager) {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.userLocation = locations[0].coordinate
+        
+        if self.userLocation != nil {
+            locationManager.stopUpdatingLocation();
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error to get user location: \(error)")
     }
 }

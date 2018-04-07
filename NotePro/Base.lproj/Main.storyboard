@@ -353,7 +353,7 @@
                     <navigationItem key="navigationItem" title="Title" id="pWK-MU-6WO">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Yb2-eI-wKp">
                             <connections>
-                                <action selector="saveNote:" destination="Adh-Op-1C8" id="GRZ-zm-rBa"/>
+                                <action selector="saveNote:" destination="Adh-Op-1C8" id="Gax-ZP-PW0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
