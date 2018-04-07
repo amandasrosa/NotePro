@@ -12,6 +12,7 @@ import CoreLocation
 class DatabaseController: NSObject {
 
     var database:OpaquePointer? = nil
+    var isDatabaseCreated = false
     var isDatabaseOpen = false
     
     func openDatabase() {
@@ -33,10 +34,8 @@ class DatabaseController: NSObject {
     }
     
     private func dataFilePath() -> String {
-        let urls = FileManager.default.urls(for:
-            .documentDirectory, in: .userDomainMask)
-        var url:String?
-        url = urls.first?.appendingPathComponent("data.plist").path
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let url = urls.first?.appendingPathComponent("data.plist").path
         return url!
     }
     
@@ -45,9 +44,20 @@ class DatabaseController: NSObject {
         try? fileManager.removeItem(atPath: dataFilePath())
     }
     
+    func checkIfDatabaseFileExists() {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let url = urls.first?.appendingPathComponent("data.plist")
+        if let _ = try? url?.checkResourceIsReachable() {
+            isDatabaseCreated = true
+        }
+    }
+    
     func initDatabase() {
         // deleteDatabase()
+        
+        checkIfDatabaseFileExists()
         openDatabase()
+        
         let createSubjectSQL = "CREATE TABLE IF NOT EXISTS SUBJECT " +
         "(SUBJECT_ID INTEGER PRIMARY KEY AUTOINCREMENT, DESCRIPTION TEXT NOT NULL, " +
             "COLOR TEXT NOT NULL, ACTIVE INTEGER DEFAULT 1);"
@@ -77,6 +87,10 @@ class DatabaseController: NSObject {
             closeDatabase()
             print("Failed to create table Picture")
             return
+        }
+        
+        if !isDatabaseCreated {
+            addSubject(Subject("Personal", UIColor.blue))
         }
     }
     
@@ -291,20 +305,22 @@ class DatabaseController: NSObject {
                 print("Error inserting note")
                 closeDatabase()
                 return
+            } else {
+                addPicturesToNewestNote(note.photos)
             }
             sqlite3_finalize(statement)
         }
         closeDatabase()
     }
     
-    func addPicturesToNewestNote(_ pictures: [UIImage])
+    func addPicturesToNewestNote(_ pictures: [Picture])
     {
         let noteId = selectNewestNoteId()
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             for p in pictures {
-                let imageData = UIImageJPEGRepresentation(p, 100.0)!
+                let imageData = UIImageJPEGRepresentation(p.picture, 100.0)!
                 let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
                 
                 sqlite3_bind_text(statement, 1, strBase64, -1, nil)
