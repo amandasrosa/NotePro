@@ -227,7 +227,7 @@ class DatabaseController: NSObject {
     func selectPicturesByNoteId(_ noteId: Int, _ singleExecution: Bool = true) -> [Picture] {
         openDatabase()
         var pictures: [Picture] = []
-        let query = "SELECT * FROM PICTURES WHERE NOTE_ID = \(noteId)"
+        let query = "SELECT * FROM PICTURE WHERE NOTE_ID = \(noteId)"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
             while sqlite3_step(statement) == SQLITE_ROW {
