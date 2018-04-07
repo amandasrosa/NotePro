@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,7 +36,7 @@
                                 <rect key="frame" x="154" y="405" width="68" height="30"/>
                                 <state key="normal" title="New Note"/>
                                 <connections>
-                                    <segue destination="Adh-Op-1C8" kind="show" id="ZBn-YD-GVS"/>
+                                    <segue destination="Adh-Op-1C8" kind="show" identifier="addNote" id="ZBn-YD-GVS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -85,7 +86,7 @@
                     <navigationItem key="navigationItem" title="Subject List" id="nm5-FH-63N">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="zHn-eF-xGX">
                             <connections>
-                                <segue destination="Ary-yV-NNj" kind="show" id="CND-ZI-RoW"/>
+                                <segue destination="Ary-yV-NNj" kind="show" identifier="addSubject" id="CND-ZI-RoW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -203,7 +204,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ku-P2-FNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6x4-no-lB2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1229.5999999999999" y="864.91754122938539"/>
+            <point key="canvasLocation" x="1230" y="949"/>
         </scene>
         <!--Title-->
         <scene sceneID="PSW-m1-5Ou">
@@ -213,6 +214,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="obz-ZU-5Jr">
+                            <rect key="frame" x="0.0" y="572" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Show Map"/>
+                            <connections>
+                                <segue destination="7Rc-fh-4Nk" kind="show" identifier="showMap" id="d7E-5F-CX6"/>
+                            </connections>
+                        </button>
                         <sections>
                             <tableViewSection headerTitle="Take Picture" id="5FY-c7-qJi">
                                 <cells>
@@ -366,7 +375,36 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O9N-zL-fhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2005.5999999999999" y="893.70314842578716"/>
+            <point key="canvasLocation" x="1990" y="881"/>
+        </scene>
+        <!--MapVC-->
+        <scene sceneID="wDf-dv-fgs">
+            <objects>
+                <viewController id="7Rc-fh-4Nk" customClass="MapVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lXu-Zw-44G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hlv-ua-8ek">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hlv-ua-8ek" secondAttribute="trailing" id="evf-mA-i6n"/>
+                            <constraint firstItem="hlv-ua-8ek" firstAttribute="leading" secondItem="lXu-Zw-44G" secondAttribute="leading" id="g8u-s1-cwf"/>
+                            <constraint firstItem="hlv-ua-8ek" firstAttribute="top" secondItem="lXu-Zw-44G" secondAttribute="topMargin" constant="-44" id="nWm-iL-DSD"/>
+                            <constraint firstItem="hlv-ua-8ek" firstAttribute="bottom" secondItem="PZl-VB-Ohf" secondAttribute="bottom" id="q6e-rS-Trs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PZl-VB-Ohf"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="hlv-ua-8ek" id="06S-xG-p44"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="llL-Q2-BUr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2828" y="895.50224887556226"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sNI-pK-swn">
@@ -391,6 +429,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="BCo-0i-RXc"/>
+        <segue reference="ZBn-YD-GVS"/>
     </inferredMetricsTieBreakers>
 </document>

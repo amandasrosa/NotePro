@@ -10,7 +10,7 @@ import UIKit
 
 class SubjectListTableVC: UITableViewController {
     private let cellNameAndId: String = String(describing: SubjectViewCell.self)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,7 +24,6 @@ class SubjectListTableVC: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableList),
                                                name: NSNotification.Name(rawValue: kNOTIFICATION_SUBJECT_LIST_CHANGED), object: nil)
-        
         CoreFacade.shared.fetchSubjectList()
     }
 
@@ -37,16 +36,25 @@ class SubjectListTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            // delete item at indexPath
+            let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this subject?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
+                CoreFacade.shared.deleteSubject(CoreFacade.shared.subjects[indexPath.row]);
+                CoreFacade.shared.fetchSubjectList()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
-            // share item at indexPath
+            self.performSegue(withIdentifier: "addSubject", sender: indexPath)
         }
-        
         edit.backgroundColor = UIColor.blue
         
         return [delete, edit]
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 
     // MARK: - Table view data source
@@ -126,16 +134,20 @@ class SubjectListTableVC: UITableViewController {
                 return
             }
             destination.subject = CoreFacade.shared.subjects[index]
+        case "addSubject":
+            guard let destination = segue.destination as? SubjectVC else {
+                print("Destination isn't a SubjectVC")
+                return
+            }
+            if let indexPath = sender as? IndexPath {
+                destination.subject = CoreFacade.shared.subjects[indexPath.row]
+            }
         default:
             break
         }
     }
     
     @IBAction func unwindToSubjectList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? SubjectVC {
-            if let subject = sourceViewController.subject {
-                print("Insert/update subject")
-            }
-        }
+        
     }
 }

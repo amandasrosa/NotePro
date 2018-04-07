@@ -48,13 +48,18 @@ class NoteListTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            // delete item at indexPath
+            let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
+                CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row]);
+                CoreFacade.shared.fetchNoteList()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
-            // share item at indexPath
+            self.performSegue(withIdentifier: "addNote", sender: indexPath)
         }
-        
         edit.backgroundColor = UIColor.blue
         
         return [delete, edit]
@@ -81,7 +86,6 @@ class NoteListTableVC: UITableViewController {
             print("Error while retrieving cell \(cellNameAndId)")
             return rawCell
         }
-        print("Configuring row \(indexPath.row)")
         cell.configureCell(CoreFacade.shared.getNotesBySubject(subject)[indexPath.row])
         
         return cell

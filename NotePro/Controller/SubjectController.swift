@@ -31,7 +31,15 @@ internal class SubjectController {
     }
     
     public func saveSubject(_ subject: Subject) {
-        self.databaseController.addSubject(subject)
+        if subject.subjectId < 0 {
+            self.databaseController.addSubject(subject)
+        } else {
+            self.databaseController.updateSubject(subject)
+        }
         self.fetchSubjects()
+    }
+    
+    public func deleteSubject(_ subject: Subject) {
+        self.databaseController.deleteSubject(subject)
     }
 }

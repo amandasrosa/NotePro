@@ -35,7 +35,15 @@ internal class NoteController {
     }
     
     public func saveNote(_ note: Note) {
-        self.databaseController.addNote(note)
+        if note.noteId < 0 {
+            self.databaseController.addNote(note)
+        } else {
+            self.databaseController.updateNote(note)
+        }
         self.fetchNotes()
+    }
+    
+    public func deleteNote(_ note: Note) {
+        self.databaseController.deleteNote(note)
     }
 }
