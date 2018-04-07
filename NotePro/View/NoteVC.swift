@@ -21,6 +21,15 @@ class NoteVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        initScreen()
+    }
+    
+    fileprivate func initScreen() {
+        setDefaultDate()
+    }
+    
+    fileprivate func setDefaultDate() {
+        self.dateField.text = DateUtil.convertDateToString(Date(), .medium, .short)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,7 +82,7 @@ class NoteVC: UITableViewController {
         let dateTimeFormatter = DateFormatter()
         dateTimeFormatter.dateStyle = .medium
         dateTimeFormatter.timeStyle = .short
-        dateField.text = dateTimeFormatter.string(from: datePickerView.date)
+        dateField.text = DateUtil.convertDateToString(datePickerView.date, .medium, .short)
     }
     
     fileprivate func createButtons() -> [UIBarButtonItem] {

@@ -38,4 +38,13 @@ class DateUtil {
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: date!)
     }
+    
+    static func convertDateToString(_ date: Date?, _ dateFormat: DateFormatter.Style, _ timeFormat: DateFormatter.Style) -> String {
+        if date == nil {
+            return ""
+        }
+        dateFormatter.dateStyle = dateFormat
+        dateFormatter.timeStyle = timeFormat
+        return dateFormatter.string(from: date!)
+    }
 }
