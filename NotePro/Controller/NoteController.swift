@@ -11,6 +11,7 @@ import CoreLocation
 
 internal class NoteController {
     private let databaseController: DatabaseController
+    private var subject: Subject?
     
     internal fileprivate(set) var noteList: [Note] {
         didSet {
@@ -21,24 +22,25 @@ internal class NoteController {
     init() {
         noteList = []
         databaseController = DatabaseController()
+        
         /*let subjectsList = databaseController.selectSubjects()
         var count = 0
         let location = CLLocationCoordinate2D(latitude: 43.773263, longitude: -79.335923)
         let pictures: [Picture] = []
         
         for eachSub in subjectsList {
-            noteList.append(Note(count,"Note Exemplo Sub \(eachSub.subjectId)", "description \(eachSub.subjectId)", eachSub, Date(), location, "address qlqr", pictures))
-            noteList.append(Note(count+1,"Note Exemplo Sub \(eachSub.subjectId)", "description \(eachSub.subjectId)", eachSub, Date(), location, "address qlqr", pictures))
+            noteList.append(Note(count,"Note Exemplo Sub \(eachSub.subjectId)", "description \(eachSub.subjectId)", eachSub, Date(), location, pictures))
+            noteList.append(Note(count+1,"Note Exemplo Sub \(eachSub.subjectId)", "description \(eachSub.subjectId)", eachSub, Date(), location, pictures))
             count += 2
         }
         for note in noteList {
             databaseController.addNote(note)
             print("adicionou \(note.noteId)")
         }
-        fetchNotes()*/
+        fetchNotes(nil)*/
     }
     
-    internal func getAllNotes() -> [Note] {
+    internal func getNotes() -> [Note] {
         return noteList
     }
     
@@ -46,8 +48,13 @@ internal class NoteController {
         return databaseController.selectNotesBySubject(subject)
     }
     
-    internal func fetchNotes() {
-        noteList = databaseController.selectNotes()
+    internal func fetchNotes(_ subject: Subject?) {
+        self.subject = subject
+        if let subject = subject {
+            noteList = databaseController.selectNotesBySubject(subject)
+        } else {
+            noteList = databaseController.selectNotes()
+        }
     }
     
     public func saveNote(_ note: Note) {
@@ -57,7 +64,7 @@ internal class NoteController {
             databaseController.updateNote(note)
             updatePhotos(note)
         }
-        fetchNotes()
+        fetchNotes(note.subject)
     }
     
     public func deleteNote(_ note: Note) {

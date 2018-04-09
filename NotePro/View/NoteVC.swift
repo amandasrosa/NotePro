@@ -20,6 +20,8 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var dateField: UITextField!
     @IBOutlet weak var noteImageView: UIImageView!
     
+    public var note: Note?
+    
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let locationManager = CLLocationManager()
     private var subjectPickerView: SubjectPickerView?
@@ -229,7 +231,7 @@ class SubjectPickerView: NSObject, UIPickerViewDelegate, UIPickerViewDataSource 
         self.pickerView.isUserInteractionEnabled = true
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
-        self.subjects = CoreFacade.shared.getSubjectList()
+        self.subjects = CoreFacade.shared.subjects
         self.pickerView.selectedRow(inComponent: 0)
         setDefaultSubject()
     }

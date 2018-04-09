@@ -19,12 +19,13 @@ public class Note: Equatable {
     public private(set) var location: CLLocationCoordinate2D?
     public private(set) var address: String?
     
-    init(_ id: Int, _ title: String, _ description: String, _ subject: Subject, _ dateTime: Date, _ location: CLLocationCoordinate2D, _ address: String, _ photos: [Picture]) {
+    init(_ id: Int, _ title: String, _ description: String, _ subject: Subject, _ dateTime: Date, _ location: CLLocationCoordinate2D, _ photos: [Picture]) {
         self.noteId = id
         self.title = title
         self.description = description
         self.subject = subject
         self.dateTime = dateTime
+        self.location = location
         self.photos = photos
     }
     

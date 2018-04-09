@@ -23,7 +23,7 @@ public class CoreFacade {
     }
     
     public var notes: [Note] {
-        return self.noteController.getAllNotes()
+        return self.noteController.getNotes()
     }
 
     private init() {
@@ -37,16 +37,8 @@ public class CoreFacade {
         return self.subjectController.fetchSubjects()
     }
     
-    public func getSubjectList() -> [Subject] {
-        return self.subjectController.getSubjects()
-    }
-    
-    public func fetchNoteList() {
-        return self.noteController.fetchNotes()
-    }
-    
-    public func getNotesBySubject(_ subject: Subject) -> [Note] {
-        return self.noteController.getNotesBySubject(subject)
+    public func fetchNoteList(_ subject: Subject?) {
+        return self.noteController.fetchNotes(subject)
     }
     
     public func initDatabase() {
@@ -59,10 +51,6 @@ public class CoreFacade {
     
     public func deleteSubject(_ subject: Subject) {
         return self.subjectController.deleteSubject(subject)
-    }
-    
-    public func getNoteList() -> [Note] {
-        return self.noteController.getAllNotes()
     }
     
     public func saveNote(_ note: Note) {

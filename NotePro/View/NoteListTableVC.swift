@@ -26,12 +26,7 @@ class NoteListTableVC: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableList),
                                                name: NSNotification.Name(rawValue: kNOTIFICATION_NOTE_LIST_CHANGED), object: nil)
         
-        CoreFacade.shared.fetchNoteList()
-        
-        guard let _ = subject else {
-            print("Invalid subject")
-            return
-        }
+        CoreFacade.shared.fetchNoteList(subject)
     }
     
     @objc func updateTableList() {
@@ -51,7 +46,7 @@ class NoteListTableVC: UITableViewController {
             let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
                 CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row]);
-                CoreFacade.shared.fetchNoteList()
+                CoreFacade.shared.fetchNoteList(self.subject)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -72,23 +67,23 @@ class NoteListTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let subject = self.subject else {
-            return 0
-        }
-        
-        return CoreFacade.shared.getNotesBySubject(subject).count
+        return CoreFacade.shared.notes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rawCell = tableView.dequeueReusableCell(withIdentifier: cellNameAndId, for: indexPath)
         
-        guard let cell = rawCell as? NoteViewCell, let subject = self.subject else {
+        guard let cell = rawCell as? NoteViewCell else {
             print("Error while retrieving cell \(cellNameAndId)")
             return rawCell
         }
-        cell.configureCell(CoreFacade.shared.getNotesBySubject(subject)[indexPath.row])
+        cell.configureCell(CoreFacade.shared.notes[indexPath.row])
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "showNoteDetails", sender: tableView.cellForRow(at: indexPath))
     }
 
     /*
@@ -126,14 +121,24 @@ class NoteListTableVC: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier ?? "" {
+        case "showNoteDetails":
+            guard let destination = segue.destination as? NoteVC else {
+                print("Destination isn't a NoteVC")
+                return
+            }
+            guard let index = tableView.indexPathForSelectedRow?.row else {
+                print("Invalid index")
+                return
+            }
+            destination.note = CoreFacade.shared.notes[index]
+        default:
+            break
+        }
     }
-    */
 
 }

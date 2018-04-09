@@ -91,6 +91,8 @@ class DatabaseController: NSObject {
         
         if !isDatabaseCreated {
             addSubject(Subject("Personal", UIColor.blue))
+            addSubject(Subject("Work", UIColor.orange))
+            addSubject(Subject("College", UIColor.green))
         }
     }
     
@@ -162,14 +164,7 @@ class DatabaseController: NSObject {
                 let datetime = stringToDate(datetimeString)
                 let pictures = selectPicturesByNoteId(noteId, false)
                 
-                getAddressFromGeocodeCoordinate(latitude: latitude, longitude: longitude) { placemark, error in
-                    guard let placemark = placemark, error == nil else { return }
-                    DispatchQueue.main.async {
-                        
-                        let address = " \(placemark.thoroughfare) \(placemark.subThoroughfare) \(placemark.locality) \(placemark.administrativeArea) \(placemark.postalCode) \(placemark.country)"
-                        notes.append(Note(noteId, title, description, subject!, datetime, location, address, pictures))
-                    }
-                }
+                notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
             }
             sqlite3_finalize(statement)
         } else {
@@ -194,21 +189,13 @@ class DatabaseController: NSObject {
                 let latitude = Double(sqlite3_column_double(statement, 4))
                 let longitude = Double(sqlite3_column_double(statement, 5))
                 let subjectId = Int(sqlite3_column_int(statement, 6))
-                
+                print(title)
                 let location = CLLocationCoordinate2DMake(latitude, longitude)
                 let subject = selectSubjectById(subjectId)
                 let datetime = stringToDate(datetimeString)
                 let pictures = selectPicturesByNoteId(noteId, false)
                 
-                getAddressFromGeocodeCoordinate(latitude: latitude, longitude: longitude) { placemark, error in
-                    guard let placemark = placemark, error == nil else { return }
-                    DispatchQueue.main.async {
-                
-                        let address = " \(placemark.thoroughfare) \(placemark.subThoroughfare) \(placemark.locality) \(placemark.administrativeArea) \(placemark.postalCode) \(placemark.country)"
-                        notes.append(Note(noteId, title, description, subject!, datetime, location, address, pictures))
-                    }
-                }
-                
+                notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
             }
             sqlite3_finalize(statement)
             
