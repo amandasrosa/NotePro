@@ -32,6 +32,7 @@ class NoteVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        CoreFacade.shared.fetchSubjectList()
         determineUserCurrentLocation(locationManager)
         configureTapGestures()
     }
@@ -39,14 +40,24 @@ class NoteVC: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         initScreen()
+        prepareToEditNote()
     }
     
     // MARK: - Init and Configure Screen
     fileprivate func initScreen() {
         setDefaultDate()
-        CoreFacade.shared.fetchSubjectList()
         createSubjectPicker(self.subjectField)
         updateNoteImageDisplay()
+    }
+    
+    fileprivate func prepareToEditNote() {
+        if let note = note {
+            titleField.text = note.title
+            descriptionField.text = note.description
+            subjectPickerView?.selectedSubject = note.subject
+            subjectField.text = note.subject.subject
+            dateField.text = DateUtil.convertDateToString(note.dateTime, .medium, .short)
+        }
     }
     
     fileprivate func setDefaultDate() {
@@ -84,6 +95,10 @@ class NoteVC: UITableViewController {
         subjectPickerView = SubjectPickerView(subjectField: sender)
         sender.inputView = subjectPickerView?.pickerView
         subjectField.inputAccessoryView = createToolBarForSubject()
+    }
+    
+    @IBAction func handleDatePicker(_ sender: UITextField) {
+        createDataPicker(sender)
     }
     
     fileprivate func createDataPicker(_ sender: UITextField) {
@@ -179,9 +194,17 @@ class NoteVC: UITableViewController {
                 return
             }
             
-            let newNote = Note(title, description, subject, dateTimeToObject)
-            newNote.setLocation(userLocation)
+            var upsertNode: Note
+            if let note = note {
+                upsertNode = Note(note.noteId, title, description, subject, datePickerView.date, userLocation, [])
+            } else {
+                upsertNode = Note(title, description, subject, dateTimeToObject)
+                upsertNode.setLocation(userLocation)
+            }
             
+            CoreFacade.shared.saveNote(upsertNode)
+            self.note = upsertNode
+
             /* Implement save image
              if let newNoteImage = noteImage {
              
@@ -189,9 +212,8 @@ class NoteVC: UITableViewController {
              }
              */
             
-            CoreFacade.shared.saveNote(newNote)
             print("Note saved")
-            performSegueToReturnBack()
+            self.performSegue(withIdentifier: "unwindNotesOfSubject", sender: self)
         } else {
             print("Error to get informations")
         }
@@ -205,14 +227,20 @@ class NoteVC: UITableViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    /*
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier ?? "" {
+        case "unwindNotesOfSubject":
+            guard let destination = segue.destination as? NoteListTableVC else {
+                print("Destination isn't a NoteListTableVC")
+                return
+            }
+            destination.subject = subjectPickerView?.selectedSubject
+        default:
+            break
+        }
      }
-     */
+    
 
 }
 

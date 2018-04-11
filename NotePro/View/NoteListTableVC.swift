@@ -140,5 +140,17 @@ class NoteListTableVC: UITableViewController {
             break
         }
     }
+    
+    @IBAction func unwindToNoteList(sender: UIStoryboardSegue) {
+        guard let destination = sender.source as? NoteVC else {
+            print("Destination isn't a NoteVC")
+            return
+        }
+        guard let subjectFromNote = destination.note?.subject else {
+            print("Invalid Subject")
+            return
+        }
+        subject = subjectFromNote
+    }
 
 }

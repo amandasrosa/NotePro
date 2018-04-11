@@ -130,10 +130,13 @@
                     <navigationItem key="navigationItem" title="Note List" id="XPK-Gp-hJR">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Nnz-GH-wyY">
                             <connections>
-                                <segue destination="Adh-Op-1C8" kind="show" id="BCo-0i-RXc"/>
+                                <segue destination="Adh-Op-1C8" kind="show" identifier="" id="BCo-0i-RXc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Adh-Op-1C8" kind="show" identifier="showNoteDetails" id="DH0-Q2-Ssx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffY-h0-Psm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -382,9 +385,11 @@
                         <outlet property="noteImageView" destination="hCl-fG-TCl" id="Nmg-oG-AdR"/>
                         <outlet property="subjectField" destination="IUd-yZ-rB0" id="92e-f1-DoJ"/>
                         <outlet property="titleField" destination="JtV-cZ-eAP" id="vD8-EI-xoz"/>
+                        <segue destination="70t-WK-m5v" kind="unwind" identifier="unwindNotesOfSubject" unwindAction="unwindToNoteListWithSender:" id="4Di-7c-hYW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O9N-zL-fhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="70t-WK-m5v" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1990" y="881"/>
         </scene>
@@ -440,7 +445,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZBn-YD-GVS"/>
-        <segue reference="tbS-hU-OJH"/>
+        <segue reference="BCo-0i-RXc"/>
+        <segue reference="trt-Ob-yNZ"/>
     </inferredMetricsTieBreakers>
 </document>
