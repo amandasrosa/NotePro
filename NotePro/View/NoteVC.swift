@@ -26,7 +26,7 @@ class NoteVC: UITableViewController {
     private let locationManager = CLLocationManager()
     private var subjectPickerView: SubjectPickerView?
     private var userLocation: CLLocationCoordinate2D?
-    private var notePhotos = [UIImage]()
+    private var notePhotos = [Picture]()
     
     @objc var lastChosenMediaType: String?
 
@@ -200,17 +200,9 @@ class NoteVC: UITableViewController {
                 upsertNode = Note(title, description, subject, dateTimeToObject)
                 upsertNode.setLocation(userLocation)
             }
-            
+            upsertNode.setPhotos(notePhotos)
             CoreFacade.shared.saveNote(upsertNode)
             self.note = upsertNode
-
-            /* Implement save image
-             if let newNoteImage = noteImage {
-             
-             //newNote.addPhoto(Picture())
-             }
-             */
-            
             print("Note saved")
             self.performSegue(withIdentifier: "unwindNotesOfSubject", sender: self)
         } else {
@@ -239,8 +231,6 @@ class NoteVC: UITableViewController {
             break
         }
      }
-    
-
 }
 
 // MARK: - Subject Picker View
@@ -353,7 +343,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                     print("It was not possible to get selected image")
                     return
                 }
-                notePhotos.append(newImage)
+                notePhotos.append(Picture(newImage))
                 addNewImageToPhotosScrollView(newImage: newImage)
                 
             } else {

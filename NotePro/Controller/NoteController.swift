@@ -83,7 +83,11 @@ internal class NoteController {
             }
         }
         for picture in picturesInDB { // remaining pictures are to be deleted
-            databaseController.deletePicture(picture.pictureId)
+            guard let pictureId = picture.pictureId else {
+                print("PictureId does not exist")
+                return
+            }
+            databaseController.deletePicture(pictureId)
         }
     }
 }

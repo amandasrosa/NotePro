@@ -10,9 +10,13 @@ import UIKit
 import MapKit
 
 public class Picture: Equatable {
-    public private(set) var pictureId: Int
-    public private(set) var noteId: Int
+    public private(set) var pictureId: Int?
+    public private(set) var noteId: Int?
     public private(set) var picture: UIImage
+    
+    init(_ picture: UIImage) {
+        self.picture = picture
+    }
     
     init(_ pictureId: Int, _ noteId: Int, _ picture: UIImage) {
         self.pictureId = pictureId
