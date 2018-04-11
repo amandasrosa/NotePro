@@ -18,7 +18,7 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var subjectField: UITextField!
     @IBOutlet weak var dateField: UITextField!
-    @IBOutlet weak var noteImageView: UIImageView!
+    @IBOutlet weak var photosScrollView: UIScrollView!
     
     public var note: Note?
     
@@ -26,9 +26,9 @@ class NoteVC: UITableViewController {
     private let locationManager = CLLocationManager()
     private var subjectPickerView: SubjectPickerView?
     private var userLocation: CLLocationCoordinate2D?
+    private var notePhotos = [UIImage]()
     
     @objc var lastChosenMediaType: String?
-    @objc var noteImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,6 @@ class NoteVC: UITableViewController {
     fileprivate func initScreen() {
         setDefaultDate()
         createSubjectPicker(self.subjectField)
-        updateNoteImageDisplay()
     }
     
     fileprivate func prepareToEditNote() {
@@ -324,17 +323,6 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         pickMediaFromSource(UIImagePickerControllerSourceType.photoLibrary)
     }
     
-    @objc func updateNoteImageDisplay() {
-        if let mediaType = lastChosenMediaType {
-            if mediaType == (kUTTypeImage as NSString) as String {
-                noteImageView.image = noteImage!
-                noteImageView.isHidden = false
-            } else {
-                print("Error to compare kUTTypeImage")
-            }
-        }
-    }
-    
     @objc func pickMediaFromSource(_ sourceType:UIImagePickerControllerSourceType) {
         let mediaTypes =
             UIImagePickerController.availableMediaTypes(for: sourceType)!
@@ -361,12 +349,29 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         lastChosenMediaType = info[UIImagePickerControllerMediaType] as? String
         if let mediaType = lastChosenMediaType {
             if mediaType == (kUTTypeImage as NSString) as String {
-                noteImage = info[UIImagePickerControllerEditedImage] as? UIImage
+                guard let newImage = info[UIImagePickerControllerEditedImage] as? UIImage else {
+                    print("It was not possible to get selected image")
+                    return
+                }
+                notePhotos.append(newImage)
+                addNewImageToPhotosScrollView(newImage: newImage)
+                
             } else {
                 print("Error to compare kUTTypeImage")
             }
         }
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    private func addNewImageToPhotosScrollView(newImage: UIImage) {
+        let newImageView = UIImageView()
+        newImageView.image = newImage
+        newImageView.contentMode = .scaleAspectFit
+        let xPosition = self.view.frame.width * CGFloat(notePhotos.count - 1)
+        newImageView.frame = CGRect(x: xPosition, y: 0, width: self.photosScrollView.frame.width, height: self.photosScrollView.frame.height)
+        
+        photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(notePhotos.count)
+        photosScrollView.addSubview(newImageView)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

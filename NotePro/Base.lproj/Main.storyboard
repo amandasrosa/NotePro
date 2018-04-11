@@ -244,16 +244,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCl-fG-TCl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </imageView>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeP-6c-Ujo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                                </scrollView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="hCl-fG-TCl" secondAttribute="bottom" id="2oE-Om-oXN"/>
-                                                <constraint firstItem="hCl-fG-TCl" firstAttribute="top" secondItem="Kxf-D5-cxd" secondAttribute="top" id="9OI-T6-B1Y"/>
-                                                <constraint firstItem="hCl-fG-TCl" firstAttribute="leading" secondItem="Kxf-D5-cxd" secondAttribute="leading" id="VOO-Iy-9AL"/>
-                                                <constraint firstAttribute="trailing" secondItem="hCl-fG-TCl" secondAttribute="trailing" id="aJP-EV-nYy"/>
+                                                <constraint firstItem="EeP-6c-Ujo" firstAttribute="top" secondItem="Kxf-D5-cxd" secondAttribute="top" id="6KU-zP-QfV"/>
+                                                <constraint firstAttribute="bottom" secondItem="EeP-6c-Ujo" secondAttribute="bottom" id="Esa-HF-GMj"/>
+                                                <constraint firstAttribute="trailing" secondItem="EeP-6c-Ujo" secondAttribute="trailing" id="GYe-4y-Y6L"/>
+                                                <constraint firstItem="EeP-6c-Ujo" firstAttribute="leading" secondItem="Kxf-D5-cxd" secondAttribute="leading" id="w0Q-i5-dbq"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -382,7 +381,7 @@
                     <connections>
                         <outlet property="dateField" destination="3TM-me-jod" id="Rv8-dQ-H4Q"/>
                         <outlet property="descriptionField" destination="Okb-eY-e0d" id="JKa-Z9-6lY"/>
-                        <outlet property="noteImageView" destination="hCl-fG-TCl" id="Nmg-oG-AdR"/>
+                        <outlet property="photosScrollView" destination="EeP-6c-Ujo" id="xRg-R1-R2e"/>
                         <outlet property="subjectField" destination="IUd-yZ-rB0" id="92e-f1-DoJ"/>
                         <outlet property="titleField" destination="JtV-cZ-eAP" id="vD8-EI-xoz"/>
                         <segue destination="70t-WK-m5v" kind="unwind" identifier="unwindNotesOfSubject" unwindAction="unwindToNoteListWithSender:" id="4Di-7c-hYW"/>
