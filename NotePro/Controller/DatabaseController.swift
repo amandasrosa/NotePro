@@ -118,7 +118,6 @@ class DatabaseController: NSObject {
         }
         closeDatabase()
         return subjects
-        
     }
     
     func selectSubjectById(_ subjectId: Int) -> Subject? {
@@ -149,7 +148,6 @@ class DatabaseController: NSObject {
         let query = "SELECT * FROM NOTE WHERE SUBJECT_ID = \(subject.subjectId) ORDER BY TITLE"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
-            //
             while sqlite3_step(statement) == SQLITE_ROW {
                 let noteId = Int(sqlite3_column_int(statement, 0))
                 let title = String(cString:sqlite3_column_text(statement, 1))
@@ -231,7 +229,7 @@ class DatabaseController: NSObject {
             sqlite3_finalize(statement)
             
         } else {
-            print("Failed to return rows from table Note")
+            print("Failed to return rows from table Note searched by title")
         }
         closeDatabase()
         return notes
@@ -262,7 +260,7 @@ class DatabaseController: NSObject {
             sqlite3_finalize(statement)
             
         } else {
-            print("Failed to return rows from table Note")
+            print("Failed to return rows from table Note searched by keyword")
         }
         closeDatabase()
         return notes
@@ -362,8 +360,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func addPicturesToNewestNote(_ pictures: [Picture])
-    {
+    func addPicturesToNewestNote(_ pictures: [Picture]) {
         let noteId = selectNewestNoteId()
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
@@ -386,8 +383,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func addPicture(_ noteId: Int, _ picture: UIImage)
-    {
+    func addPicture(_ noteId: Int, _ picture: UIImage) {
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
@@ -490,8 +486,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func deletePicture(_ pictureId: Int)
-    {
+    func deletePicture(_ pictureId: Int) {
         openDatabase()
         let delete = "DELETE FROM PICTURE WHERE PICTURE_ID = \(pictureId);"
         var statement:OpaquePointer? = nil
@@ -499,7 +494,7 @@ class DatabaseController: NSObject {
             print("Picture row deleted")
             
             if sqlite3_step(statement) != SQLITE_DONE {
-                print("Error deleting picture")
+                print("Error deleting picture by pictureId")
                 closeDatabase()
                 return
             }
@@ -508,8 +503,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func deletePicturesByNoteId(_ noteId: Int)
-    {
+    func deletePicturesByNoteId(_ noteId: Int) {
         openDatabase()
         let delete = "DELETE FROM PICTURE WHERE NOTE_ID = \(noteId);"
         var statement:OpaquePointer? = nil
@@ -517,7 +511,7 @@ class DatabaseController: NSObject {
             print("Picture rows deleted")
             
             if sqlite3_step(statement) != SQLITE_DONE {
-                print("Error deleting pictures")
+                print("Error deleting pictures by noteId")
                 closeDatabase()
                 return
             }
