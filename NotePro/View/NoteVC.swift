@@ -41,6 +41,7 @@ class NoteVC: UITableViewController {
         super.viewDidAppear(animated)
         initScreen()
         prepareToEditNote()
+        
     }
     
     // MARK: - Init and Configure Screen
@@ -56,6 +57,8 @@ class NoteVC: UITableViewController {
             subjectPickerView?.selectedSubject = note.subject
             subjectField.text = note.subject.subject
             dateField.text = DateUtil.convertDateToString(note.dateTime, .medium, .short)
+            notePhotos = note.photos
+            loadImagesToPhotosScrollView()
         }
     }
     
@@ -344,7 +347,8 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                     return
                 }
                 notePhotos.append(Picture(newImage))
-                addNewImageToPhotosScrollView(newImage: newImage)
+//                addNewImageToPhotosScrollView(newImage: newImage)
+                loadImagesToPhotosScrollView()
                 
             } else {
                 print("Error to compare kUTTypeImage")
@@ -362,6 +366,20 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         
         photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(notePhotos.count)
         photosScrollView.addSubview(newImageView)
+        photosScrollView.setNeedsDisplay()
+    }
+    
+    private func loadImagesToPhotosScrollView() {
+        for i in 0..<notePhotos.count {
+            let newImageView = UIImageView()
+            newImageView.image = notePhotos[i].picture
+            newImageView.contentMode = .scaleAspectFit
+            let xPosition = self.view.frame.width * CGFloat(i)
+            newImageView.frame = CGRect(x: xPosition, y: 0, width: self.photosScrollView.frame.width, height: self.photosScrollView.frame.height)
+            
+            photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
+            photosScrollView.addSubview(newImageView)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

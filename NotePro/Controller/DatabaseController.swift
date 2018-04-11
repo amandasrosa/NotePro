@@ -235,7 +235,7 @@ class DatabaseController: NSObject {
                 let pictureId = Int(sqlite3_column_int(statement, 0))
                 let noteId = Int(sqlite3_column_int(statement, 1))
                 let strBase64 = String(cString: sqlite3_column_text(statement, 2))
-                let dataDecoded = NSData(base64Encoded: strBase64, options: NSData.Base64DecodingOptions(rawValue: 0))!
+                let dataDecoded:Data = Data(base64Encoded: strBase64)!
                 let picture = UIImage(data: dataDecoded as Data)!
                 pictures.append(Picture(pictureId, noteId, picture))
             }
@@ -308,7 +308,7 @@ class DatabaseController: NSObject {
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             for p in pictures {
                 let imageData = UIImageJPEGRepresentation(p.picture, 100.0)!
-                let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+                let strBase64 = imageData.base64EncodedString()
                 
                 sqlite3_bind_text(statement, 1, strBase64, -1, nil)
                 
