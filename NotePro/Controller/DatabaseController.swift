@@ -206,6 +206,68 @@ class DatabaseController: NSObject {
         return notes
     }
     
+    func selectNotesByTitle(_ search: String) -> [Note] {
+        openDatabase()
+        var notes: [Note] = []
+        let query = "SELECT * FROM NOTE WHERE TITLE LIKE '%\(search)%' ORDER BY TITLE"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let noteId = Int(sqlite3_column_int(statement, 0))
+                let title = String(cString:sqlite3_column_text(statement, 1))
+                let description = String(cString:sqlite3_column_text(statement, 2))
+                let datetimeString = String(cString:sqlite3_column_text(statement, 3))
+                let latitude = Double(sqlite3_column_double(statement, 4))
+                let longitude = Double(sqlite3_column_double(statement, 5))
+                let subjectId = Int(sqlite3_column_int(statement, 6))
+                print(title)
+                let location = CLLocationCoordinate2DMake(latitude, longitude)
+                let subject = selectSubjectById(subjectId)
+                let datetime = stringToDate(datetimeString)
+                let pictures = selectPicturesByNoteId(noteId, false)
+                
+                notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
+            }
+            sqlite3_finalize(statement)
+            
+        } else {
+            print("Failed to return rows from table Note")
+        }
+        closeDatabase()
+        return notes
+    }
+    
+    func selectNotesByKeyword(_ search: String) -> [Note] {
+        openDatabase()
+        var notes: [Note] = []
+        let query = "SELECT * FROM NOTE WHERE DESCRIPTION LIKE '%\(search)%' ORDER BY TITLE"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let noteId = Int(sqlite3_column_int(statement, 0))
+                let title = String(cString:sqlite3_column_text(statement, 1))
+                let description = String(cString:sqlite3_column_text(statement, 2))
+                let datetimeString = String(cString:sqlite3_column_text(statement, 3))
+                let latitude = Double(sqlite3_column_double(statement, 4))
+                let longitude = Double(sqlite3_column_double(statement, 5))
+                let subjectId = Int(sqlite3_column_int(statement, 6))
+                print(title)
+                let location = CLLocationCoordinate2DMake(latitude, longitude)
+                let subject = selectSubjectById(subjectId)
+                let datetime = stringToDate(datetimeString)
+                let pictures = selectPicturesByNoteId(noteId, false)
+                
+                notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
+            }
+            sqlite3_finalize(statement)
+            
+        } else {
+            print("Failed to return rows from table Note")
+        }
+        closeDatabase()
+        return notes
+    }
+    
     private func selectNewestNoteId() -> Int {
         openDatabase()
         var noteId = -1
