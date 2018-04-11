@@ -118,7 +118,6 @@ class DatabaseController: NSObject {
         }
         closeDatabase()
         return subjects
-        
     }
     
     func selectSubjectById(_ subjectId: Int) -> Subject? {
@@ -149,7 +148,6 @@ class DatabaseController: NSObject {
         let query = "SELECT * FROM NOTE WHERE SUBJECT_ID = \(subject.subjectId) ORDER BY TITLE"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
-            //
             while sqlite3_step(statement) == SQLITE_ROW {
                 let noteId = Int(sqlite3_column_int(statement, 0))
                 let title = String(cString:sqlite3_column_text(statement, 1))
@@ -201,6 +199,68 @@ class DatabaseController: NSObject {
             
         } else {
             print("Failed to return rows from table Note")
+        }
+        closeDatabase()
+        return notes
+    }
+    
+    func selectNotesByTitle(_ search: String) -> [Note] {
+        openDatabase()
+        var notes: [Note] = []
+        let query = "SELECT * FROM NOTE WHERE TITLE LIKE '%\(search)%' ORDER BY TITLE"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let noteId = Int(sqlite3_column_int(statement, 0))
+                let title = String(cString:sqlite3_column_text(statement, 1))
+                let description = String(cString:sqlite3_column_text(statement, 2))
+                let datetimeString = String(cString:sqlite3_column_text(statement, 3))
+                let latitude = Double(sqlite3_column_double(statement, 4))
+                let longitude = Double(sqlite3_column_double(statement, 5))
+                let subjectId = Int(sqlite3_column_int(statement, 6))
+                print(title)
+                let location = CLLocationCoordinate2DMake(latitude, longitude)
+                let subject = selectSubjectById(subjectId)
+                let datetime = stringToDate(datetimeString)
+                let pictures = selectPicturesByNoteId(noteId, false)
+                
+                notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
+            }
+            sqlite3_finalize(statement)
+            
+        } else {
+            print("Failed to return rows from table Note searched by title")
+        }
+        closeDatabase()
+        return notes
+    }
+    
+    func selectNotesByKeyword(_ search: String) -> [Note] {
+        openDatabase()
+        var notes: [Note] = []
+        let query = "SELECT * FROM NOTE WHERE DESCRIPTION LIKE '%\(search)%' ORDER BY TITLE"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let noteId = Int(sqlite3_column_int(statement, 0))
+                let title = String(cString:sqlite3_column_text(statement, 1))
+                let description = String(cString:sqlite3_column_text(statement, 2))
+                let datetimeString = String(cString:sqlite3_column_text(statement, 3))
+                let latitude = Double(sqlite3_column_double(statement, 4))
+                let longitude = Double(sqlite3_column_double(statement, 5))
+                let subjectId = Int(sqlite3_column_int(statement, 6))
+                print(title)
+                let location = CLLocationCoordinate2DMake(latitude, longitude)
+                let subject = selectSubjectById(subjectId)
+                let datetime = stringToDate(datetimeString)
+                let pictures = selectPicturesByNoteId(noteId, false)
+                
+                notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
+            }
+            sqlite3_finalize(statement)
+            
+        } else {
+            print("Failed to return rows from table Note searched by keyword")
         }
         closeDatabase()
         return notes
@@ -300,8 +360,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func addPicturesToNewestNote(_ pictures: [Picture])
-    {
+    func addPicturesToNewestNote(_ pictures: [Picture]) {
         let noteId = selectNewestNoteId()
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
@@ -324,8 +383,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func addPicture(_ noteId: Int, _ picture: UIImage)
-    {
+    func addPicture(_ noteId: Int, _ picture: UIImage) {
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
@@ -428,8 +486,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func deletePicture(_ pictureId: Int)
-    {
+    func deletePicture(_ pictureId: Int) {
         openDatabase()
         let delete = "DELETE FROM PICTURE WHERE PICTURE_ID = \(pictureId);"
         var statement:OpaquePointer? = nil
@@ -437,7 +494,7 @@ class DatabaseController: NSObject {
             print("Picture row deleted")
             
             if sqlite3_step(statement) != SQLITE_DONE {
-                print("Error deleting picture")
+                print("Error deleting picture by pictureId")
                 closeDatabase()
                 return
             }
@@ -446,8 +503,7 @@ class DatabaseController: NSObject {
         closeDatabase()
     }
     
-    func deletePicturesByNoteId(_ noteId: Int)
-    {
+    func deletePicturesByNoteId(_ noteId: Int) {
         openDatabase()
         let delete = "DELETE FROM PICTURE WHERE NOTE_ID = \(noteId);"
         var statement:OpaquePointer? = nil
@@ -455,7 +511,7 @@ class DatabaseController: NSObject {
             print("Picture rows deleted")
             
             if sqlite3_step(statement) != SQLITE_DONE {
-                print("Error deleting pictures")
+                print("Error deleting pictures by noteId")
                 closeDatabase()
                 return
             }

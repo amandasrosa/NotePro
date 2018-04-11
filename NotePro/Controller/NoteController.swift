@@ -12,6 +12,7 @@ import CoreLocation
 internal class NoteController {
     private let databaseController: DatabaseController
     private var subject: Subject?
+    private var originalNoteList: [Note]
     
     internal fileprivate(set) var noteList: [Note] {
         didSet {
@@ -21,6 +22,8 @@ internal class NoteController {
     
     init() {
         noteList = []
+        originalNoteList = []
+
         databaseController = DatabaseController()
         
         /*let subjectsList = databaseController.selectSubjects()
@@ -55,6 +58,7 @@ internal class NoteController {
         } else {
             noteList = databaseController.selectNotes()
         }
+        originalNoteList = noteList
     }
     
     public func saveNote(_ note: Note) {
@@ -90,4 +94,26 @@ internal class NoteController {
             databaseController.deletePicture(pictureId)
         }
     }
+    
+    public func sortByTitle() -> [Note] {
+        noteList = noteList.sorted(by: {
+            $0.title > $1.title
+        })
+        return noteList
+    }
+    public func sortByDate() -> [Note] {
+        noteList = noteList.sorted(by: {
+            $0.dateTime > $1.dateTime
+        })
+        return noteList
+    }
+    public func searchNoteByTitle(_ search: String) -> [Note] {
+        noteList = databaseController.selectNotesByTitle(search)
+        return noteList
+    }
+    public func searchNoteByKeyword(_ search: String) -> [Note] {
+        noteList = databaseController.selectNotesByKeyword(search)
+        return noteList
+    }
+    
 }
