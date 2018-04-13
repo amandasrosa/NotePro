@@ -60,4 +60,21 @@ public class CoreFacade {
     public func deleteNote(_ note: Note) {
         return self.noteController.deleteNote(note)
     }
+    
+    public func sortNoteByTitle() {
+        return self.noteController.sortNoteByTitle()
+    }
+    
+    public func sortNoteByDate() {
+        return self.noteController.sortNoteByDate()
+    }
+    
+    public func searchNoteByTitle(_ search: String, _ subject: Subject?) {
+        return self.noteController.searchNoteByTitle(search, subject)
+    }
+    
+    public func searchNoteByKeyword(_ search: String, _ subject: Subject?) {
+        return self.noteController.searchNoteByKeyword(search, subject)
+    }
+    
 }

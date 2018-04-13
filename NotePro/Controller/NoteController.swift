@@ -95,25 +95,21 @@ internal class NoteController {
         }
     }
     
-    public func sortByTitle() -> [Note] {
+    public func sortNoteByTitle() {
         noteList = noteList.sorted(by: {
             $0.title > $1.title
         })
-        return noteList
     }
-    public func sortByDate() -> [Note] {
+    public func sortNoteByDate() {
         noteList = noteList.sorted(by: {
             $0.dateTime > $1.dateTime
         })
-        return noteList
     }
-    public func searchNoteByTitle(_ search: String) -> [Note] {
-        noteList = databaseController.selectNotesByTitle(search)
-        return noteList
+    public func searchNoteByTitle(_ search: String, _ subject: Subject?) {
+        noteList = databaseController.selectNotesByTitle(search, subject)
     }
-    public func searchNoteByKeyword(_ search: String) -> [Note] {
-        noteList = databaseController.selectNotesByKeyword(search)
-        return noteList
+    public func searchNoteByKeyword(_ search: String, _ subject: Subject?) {
+        noteList = databaseController.selectNotesByKeyword(search, subject)
     }
     
 }
