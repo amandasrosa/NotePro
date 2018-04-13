@@ -218,7 +218,7 @@
             </objects>
             <point key="canvasLocation" x="1230" y="949"/>
         </scene>
-        <!--Title-->
+        <!--Note-->
         <scene sceneID="PSW-m1-5Ou">
             <objects>
                 <tableViewController id="Adh-Op-1C8" customClass="NoteVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
@@ -371,7 +371,7 @@
                             <outlet property="delegate" destination="Adh-Op-1C8" id="5bN-UX-Ndv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="pWK-MU-6WO">
+                    <navigationItem key="navigationItem" title="Note" id="pWK-MU-6WO">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Yb2-eI-wKp">
                             <connections>
                                 <action selector="saveNote:" destination="Adh-Op-1C8" id="Gax-ZP-PW0"/>
