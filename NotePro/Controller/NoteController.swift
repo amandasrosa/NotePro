@@ -69,7 +69,7 @@ internal class NoteController {
             databaseController.updateNote(note)
             updatePhotos(note)
         }
-        fetchNotes(note.subject)
+        fetchNotes(note.subject, true)
     }
     
     public func deleteNote(_ note: Note) {

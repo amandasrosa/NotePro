@@ -384,7 +384,13 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                     print("It was not possible to get selected image")
                     return
                 }
-                notePhotos.append(Picture(newImage))
+                guard let imageURL = info[UIImagePickerControllerReferenceURL] as? NSURL else {
+                    print("It was not possible to get the path of selected image")
+                    return
+                }
+                let picture = Picture(newImage, imageURL.absoluteString!)
+                notePhotos.append(picture)
+                
                 
             } else {
                 print("Error to compare kUTTypeImage")

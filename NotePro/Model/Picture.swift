@@ -25,6 +25,11 @@ public class Picture: Equatable {
         self.path = path
     }
     
+    init(_ picture: UIImage, _ path: String) {
+        self.picture = picture
+        self.path = path
+    }
+    
     init(_ pictureId: Int, _ noteId: Int, _ picture: UIImage) {
         self.pictureId = pictureId
         self.noteId = noteId

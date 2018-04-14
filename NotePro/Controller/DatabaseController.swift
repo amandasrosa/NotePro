@@ -315,9 +315,9 @@ class DatabaseController: NSObject {
                     print("Image could not be retrieved!")
                     continue
                 }
-                let dataDecoded:Data = Data(base64Encoded: strBase64)!
-                let picture = UIImage(data: dataDecoded as Data)!
-                pictures.append(Picture(pictureId, noteId, picture))
+                //let dataDecoded:Data = Data(base64Encoded: strBase64)!
+                //let picture = UIImage(data: dataDecoded as Data)!
+                pictures.append(Picture(pictureId, noteId, strBase64))
             }
             sqlite3_finalize(statement)
         } else {
