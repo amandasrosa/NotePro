@@ -91,10 +91,15 @@ class NoteVC: UITableViewController {
     }
     
     fileprivate func configureTapGestureToTakePickture() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.shootPicture(sender:)))
-        tap.delegate = self
-        tap.numberOfTapsRequired = 1
-        self.view.addGestureRecognizer(tap)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.shootPicture(sender:)))
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.shootPicture(sender:)))
+//        tap.numberOfTapsRequired = 1
+        longPress.numberOfTapsRequired = 0
+        longPress.minimumPressDuration = 1.0
+        
+        longPress.delegate = self
+
+        self.view.addGestureRecognizer(longPress)
     }
     
     fileprivate func configureTapGestureToUsePicktureFromPhotoLibrary() {
@@ -341,6 +346,7 @@ extension NoteVC: CLLocationManagerDelegate {
 extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @objc func shootPicture(sender: UIButton) {
+        print("Test Camera")
         pickMediaFromSource(UIImagePickerControllerSourceType.camera)
     }
     
