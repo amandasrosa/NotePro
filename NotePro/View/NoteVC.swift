@@ -388,7 +388,18 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                     print("It was not possible to get the path of selected image")
                     return
                 }
-                let picture = Picture(newImage, imageURL.absoluteString!)
+                
+                var documentsUrl: URL {
+                    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                }
+                
+                let fileName = "image\(Date().hashValue).jpg"
+                let fileURL = documentsUrl.appendingPathComponent(fileName)
+                if let imageData = UIImageJPEGRepresentation(newImage, 1.0) {
+                    try? imageData.write(to: fileURL, options: .atomic)
+                }
+                
+                let picture = Picture(newImage, fileURL.absoluteString)
                 notePhotos.append(picture)
                 
                 
@@ -407,7 +418,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         
         for i in 0..<notePhotos.count {
-            let newImageView = createNewImageForPhotoScrollView(image: notePhotos[i].picture, xPosition: i, contentMode: .scaleAspectFit)
+            let newImageView = createNewImageFromPathForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
             
             photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
             photosScrollView.addSubview(newImageView)
@@ -417,6 +428,17 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     private func createNewImageForPhotoScrollView(image: UIImage, xPosition: Int, contentMode: UIViewContentMode) -> UIImageView {
         let newImageView = UIImageView()
+        newImageView.image = image
+        newImageView.contentMode = contentMode
+        let xPosition = self.view.frame.width * CGFloat(xPosition)
+        newImageView.frame = CGRect(x: xPosition, y: 0, width: view.frame.width, height: self.photosScrollView.frame.height)
+        return newImageView
+    }
+    
+    private func createNewImageFromPathForPhotoScrollView(path: String, xPosition: Int, contentMode: UIViewContentMode) -> UIImageView {
+        let newImageView = UIImageView()
+        let imageURL = URL(fileURLWithPath: path)
+        let image    = UIImage(contentsOfFile: imageURL.path)
         newImageView.image = image
         newImageView.contentMode = contentMode
         let xPosition = self.view.frame.width * CGFloat(xPosition)
