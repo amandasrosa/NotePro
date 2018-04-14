@@ -19,8 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrT-UT-Y5S">
-                                <rect key="frame" x="147" y="272" width="81" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrT-UT-Y5S">
+                                <rect key="frame" x="147" y="272" width="81" height="25"/>
                                 <state key="normal" title="Subject List"/>
                                 <connections>
                                     <segue destination="A4m-xR-1Ve" kind="show" id="SIu-Qt-1eT"/>
@@ -61,6 +61,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="NotePro" id="J3I-j1-kDH"/>
+                    <connections>
+                        <outlet property="btn1" destination="lrT-UT-Y5S" id="pmP-wp-xiM"/>
+                        <outlet property="btn2" destination="7fG-mt-x1h" id="HkR-kp-Wmt"/>
+                        <outlet property="btn3" destination="ubn-Zw-4G6" id="3ds-uC-Hfi"/>
+                        <outlet property="labelInitial" destination="ERk-Sd-nEa" id="UOp-AV-kGg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
