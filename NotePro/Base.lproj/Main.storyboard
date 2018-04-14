@@ -113,7 +113,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-5X-WtO">
-                                <rect key="frame" x="0.0" y="252" width="375" height="415"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="aED-Nq-rbB">
@@ -126,85 +126,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sf1-Yn-PQF">
-                                <rect key="frame" x="0.0" y="64" width="375" height="180"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="go1-yt-vst">
-                                        <rect key="frame" x="8" y="39" width="321" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search by title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsW-4s-YOQ">
-                                        <rect key="frame" x="8" y="10" width="115" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTp-hM-o8A">
-                                        <rect key="frame" x="337" y="39" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="OK">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0xW-Yv-Kva">
-                                        <rect key="frame" x="8" y="112" width="321" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search by keyword in description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ0-jC-Lft">
-                                        <rect key="frame" x="8" y="83" width="258" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zH0-3I-lI9">
-                                        <rect key="frame" x="144" y="150" width="86" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Sort by Date"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvD-WF-hCY">
-                                        <rect key="frame" x="316" y="150" width="51" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Expand"/>
-                                        <connections>
-                                            <action selector="expandBtnTouchUpInside:" destination="8fa-qm-egA" eventType="touchUpInside" id="maN-Fy-Nbp"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0b-ac-kni">
-                                        <rect key="frame" x="8" y="150" width="84" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Sort by Title"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfX-bs-xyo">
-                                        <rect key="frame" x="337" y="112" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="OK">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.87698341907388278" blue="0.68944923113850343" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="a9p-f0-s5e"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BmG-5X-WtO" firstAttribute="top" secondItem="Sf1-Yn-PQF" secondAttribute="bottom" constant="8" symbolic="YES" id="8W0-xg-m75"/>
                             <constraint firstItem="rQ4-os-P08" firstAttribute="bottom" secondItem="BmG-5X-WtO" secondAttribute="bottom" id="BIR-1Q-1Ni"/>
-                            <constraint firstItem="Sf1-Yn-PQF" firstAttribute="trailing" secondItem="BmG-5X-WtO" secondAttribute="trailing" id="FQj-zw-rb5"/>
+                            <constraint firstItem="BmG-5X-WtO" firstAttribute="top" secondItem="rQ4-os-P08" secondAttribute="top" id="PDF-as-xZh"/>
                             <constraint firstItem="rQ4-os-P08" firstAttribute="trailing" secondItem="BmG-5X-WtO" secondAttribute="trailing" id="ZYl-ZS-ByN"/>
-                            <constraint firstItem="Sf1-Yn-PQF" firstAttribute="top" secondItem="KWs-Gh-1SW" secondAttribute="topMargin" id="lNV-rN-Bwc"/>
                             <constraint firstItem="BmG-5X-WtO" firstAttribute="leading" secondItem="rQ4-os-P08" secondAttribute="leading" id="p6h-RI-zbp"/>
-                            <constraint firstItem="Sf1-Yn-PQF" firstAttribute="leading" secondItem="BmG-5X-WtO" secondAttribute="leading" id="rGe-g9-FJN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rQ4-os-P08"/>
                     </view>
@@ -216,8 +144,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="expandBtn" destination="mvD-WF-hCY" id="IzW-nc-e25"/>
-                        <outlet property="optionsView" destination="Sf1-Yn-PQF" id="m3b-uk-iPN"/>
                         <outlet property="tableView" destination="BmG-5X-WtO" id="CqB-jb-jj8"/>
                     </connections>
                 </viewController>
