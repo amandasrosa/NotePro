@@ -29,6 +29,7 @@ class NoteVC: UITableViewController {
     private var subjectPickerView: SubjectPickerView?
     private var userLocation: CLLocationCoordinate2D?
     private var notePhotos = [Picture]()
+    private var defaultUIImageView: UIImageView?
     
     @objc var lastChosenMediaType: String?
 
@@ -55,6 +56,8 @@ class NoteVC: UITableViewController {
     fileprivate func initScreen() {
         setDefaultDate()
         createSubjectPicker(self.subjectField)
+        defaultUIImageView = createNewImageForPhotoScrollView(image: UIImage(named: "informativeImage2")!, xPosition: 0, contentMode: .scaleAspectFill)
+        photosScrollView.addSubview(defaultUIImageView!)
     }
     
     fileprivate func prepareToEditNote() {
@@ -378,17 +381,28 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
     
     private func loadImagesToPhotosScrollView() {
+        if notePhotos.count > 0 {
+            if let defaultUIImageView = defaultUIImageView {
+                defaultUIImageView.removeFromSuperview();
+            }
+        }
+        
         for i in 0..<notePhotos.count {
-            let newImageView = UIImageView()
-            newImageView.image = notePhotos[i].picture
-            newImageView.contentMode = .scaleAspectFit
-            let xPosition = self.view.frame.width * CGFloat(i)
-            newImageView.frame = CGRect(x: xPosition, y: 0, width: self.photosScrollView.frame.width, height: self.photosScrollView.frame.height)
+            let newImageView = createNewImageForPhotoScrollView(image: notePhotos[i].picture, xPosition: i, contentMode: .scaleAspectFit)
             
             photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
             photosScrollView.addSubview(newImageView)
             newImageView.setNeedsDisplay()
         }
+    }
+    
+    private func createNewImageForPhotoScrollView(image: UIImage, xPosition: Int, contentMode: UIViewContentMode) -> UIImageView {
+        let newImageView = UIImageView()
+        newImageView.image = image
+        newImageView.contentMode = contentMode
+        let xPosition = self.view.frame.width * CGFloat(xPosition)
+        newImageView.frame = CGRect(x: xPosition, y: 0, width: view.frame.width, height: self.photosScrollView.frame.height)
+        return newImageView
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
