@@ -175,7 +175,7 @@ class DatabaseController: NSObject {
     func selectNotes() -> [Note] {
         openDatabase()
         var notes: [Note] = []
-        let query = "SELECT * FROM NOTE ORDER BY TITLE"
+        let query = "SELECT NOTE_ID, TITLE, DESCRIPTION, DATETIME, LATITUDE, LONGITUDE, SUBJECT_ID FROM NOTE ORDER BY TITLE"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
             while sqlite3_step(statement) == SQLITE_ROW {
@@ -433,7 +433,7 @@ class DatabaseController: NSObject {
     
     func updateNote(_ note: Note) {
         openDatabase()
-        let update = "UPDATE NOTE SET TITLE = ?, DESCRIPTION = ?, DATETIME = ?, LATITUDE = ?, LONGITUDE = ?, SUBJECT_ID = ?) " +
+        let update = "UPDATE NOTE SET TITLE = ?, DESCRIPTION = ?, DATETIME = ?, LATITUDE = ?, LONGITUDE = ?, SUBJECT_ID = ? " +
         "WHERE NOTE_ID = \(note.noteId);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, update, -1, &statement, nil) == SQLITE_OK {
@@ -452,6 +452,8 @@ class DatabaseController: NSObject {
                 return
             }
             sqlite3_finalize(statement)
+        } else {
+            print("Database error: \(sqlite3_errmsg(database)!)")
         }
         closeDatabase()
     }
