@@ -55,7 +55,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
                 let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
-                    CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row - numberOfExtraCells]);
+                    CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row - self.numberOfExtraCells]);
                     CoreFacade.shared.fetchNoteList(self.subject)
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
