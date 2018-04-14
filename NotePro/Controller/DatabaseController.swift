@@ -522,13 +522,33 @@ class DatabaseController: NSObject {
     
     // MARK: Auxiliaries
     
-    func getAddressFromGeocodeCoordinate(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?, Error?) -> ())  {
+    func getAddressFromGeocodeCoordinate(_ latitude: Double, _ longitude: Double, _ completion: @escaping (String?, Error?) -> ())  {
         CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { placemarks, error in
             guard let placemark = placemarks?.first, error == nil else {
                 completion(nil, error)
                 return
             }
-            completion(placemark, nil)
+            var address = ""
+            if let street = placemark.thoroughfare {
+                address += street
+            }
+            if let complement = placemark.subThoroughfare {
+                address += address.isEmpty ? complement : " - \(complement)"
+            }
+            if let city = placemark.locality {
+                address += address.isEmpty ? city : " - \(city)"
+            }
+            if let state = placemark.administrativeArea {
+                address += address.isEmpty ? state : " - \(state)"
+            }
+            if let country = placemark.country {
+                address += address.isEmpty ? country : " - \(country)"
+            }
+            if let postalCode = placemark.postalCode {
+                address += address.isEmpty ? postalCode : " - \(postalCode)"
+            }
+            print("address: \(address)")
+            completion(address, nil)
         }
     }
     

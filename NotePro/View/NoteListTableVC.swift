@@ -8,10 +8,14 @@
 
 import UIKit
 
-class NoteListTableVC: UITableViewController {
+class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var optionsView: UIView!
+    @IBOutlet weak var expandBtn: UIButton!
+    
     private let cellNameAndId: String = String(describing: NoteViewCell.self)
     public var subject: Subject?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +25,10 @@ class NoteListTableVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        expandBtn.titleLabel?.text = "Expand"
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(UINib(nibName: cellNameAndId, bundle: nil), forCellReuseIdentifier: cellNameAndId)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableList),
@@ -41,7 +49,7 @@ class NoteListTableVC: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
@@ -62,15 +70,15 @@ class NoteListTableVC: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return CoreFacade.shared.notes.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rawCell = tableView.dequeueReusableCell(withIdentifier: cellNameAndId, for: indexPath)
         
         guard let cell = rawCell as? NoteViewCell else {
@@ -82,7 +90,7 @@ class NoteListTableVC: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showNoteDetails", sender: tableView.cellForRow(at: indexPath))
     }
 
@@ -105,22 +113,14 @@ class NoteListTableVC: UITableViewController {
         }    
     }
     */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    @IBAction func expandBtnTouchUpInside(_ sender: UIButton) {
+        guard let label = expandBtn.titleLabel else {
+            print("Button label is invalid")
+            return
+        }
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -152,5 +152,43 @@ class NoteListTableVC: UITableViewController {
         }
         subject = subjectFromNote
     }
+}
 
+extension UIView {
+    
+    func slideY(_ y: CGFloat) {
+        
+        let x = self.frame.origin.x
+        
+        let height = self.frame.height
+        let width = self.frame.width
+        
+        UIView.animate(withDuration: 1.0, animations: {
+            self.frame = CGRect(x: x, y: y, width: width, height: height)
+        })
+    }
+}
+
+extension UIView {
+    func animateTo(frame: CGRect, withDuration duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
+        guard let _ = superview else {
+            return
+        }
+        
+        let xScale = frame.size.width / self.frame.size.width
+        let yScale = frame.size.height / self.frame.size.height
+        let x = frame.origin.x + (self.frame.width * xScale) * self.layer.anchorPoint.x
+        let y = frame.origin.y + (self.frame.height * yScale) * self.layer.anchorPoint.y
+        
+        UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: {
+            self.layer.position = CGPoint(x: x, y: y)
+            self.transform = self.transform.scaledBy(x: xScale, y: yScale)
+        }, completion: completion)
+    }
+    
+    func animateY(y: CGFloat, withDuration duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
+        let frame = CGRect(x: self.frame.origin.x, y: y, width: self.frame.width, height: self.frame.height)
+        
+        animateTo(frame: frame, withDuration: duration, completion: completion)
+    }
 }
