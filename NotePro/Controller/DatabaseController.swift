@@ -211,7 +211,7 @@ class DatabaseController: NSObject {
         return notes
     }
     
-    func selectNotesByTitle(_ search: String, _ subject: Subject?) -> [Note] {
+    func selectNotesByTitle(_ search: String, _ subject: Subject?, _ usingImagePath: Bool) -> [Note] {
         openDatabase()
         var notes: [Note] = []
         var query = "SELECT * FROM NOTE "
@@ -233,7 +233,12 @@ class DatabaseController: NSObject {
                 let location = CLLocationCoordinate2DMake(latitude, longitude)
                 let subject = selectSubjectById(subjectId)
                 let datetime = stringToDate(datetimeString)
-                let pictures = selectPicturesByNoteId(noteId, false)
+                var pictures: [Picture] = []
+                if usingImagePath {
+                    pictures = selectPicturePathsByNoteId(noteId, false)
+                } else {
+                    pictures = selectPicturesByNoteId(noteId, false)
+                }
                 
                 notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
             }
@@ -246,7 +251,7 @@ class DatabaseController: NSObject {
         return notes
     }
     
-    func selectNotesByKeyword(_ search: String, _ subject: Subject?) -> [Note] {
+    func selectNotesByKeyword(_ search: String, _ subject: Subject?, _ usingImagePath: Bool) -> [Note] {
         openDatabase()
         var notes: [Note] = []
         var query = "SELECT * FROM NOTE "
@@ -268,7 +273,12 @@ class DatabaseController: NSObject {
                 let location = CLLocationCoordinate2DMake(latitude, longitude)
                 let subject = selectSubjectById(subjectId)
                 let datetime = stringToDate(datetimeString)
-                let pictures = selectPicturesByNoteId(noteId, false)
+                var pictures: [Picture] = []
+                if usingImagePath {
+                    pictures = selectPicturePathsByNoteId(noteId, false)
+                } else {
+                    pictures = selectPicturesByNoteId(noteId, false)
+                }
                 
                 notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
             }

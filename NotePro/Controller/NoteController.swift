@@ -67,7 +67,11 @@ internal class NoteController {
             databaseController.addNote(note)
         } else {
             databaseController.updateNote(note)
-            updatePhotos(note)
+            if usingImagePath {
+                updatePhotoPaths(note)
+            } else {
+                updatePhotos(note)
+            }
         }
         fetchNotes(note.subject, true)
     }
@@ -138,10 +142,10 @@ internal class NoteController {
         }
     }
     public func searchNoteByTitle(_ search: String, _ subject: Subject?) {
-        noteList = databaseController.selectNotesByTitle(search, subject)
+        noteList = databaseController.selectNotesByTitle(search, subject, usingImagePath)
     }
     public func searchNoteByKeyword(_ search: String, _ subject: Subject?) {
-        noteList = databaseController.selectNotesByKeyword(search, subject)
+        noteList = databaseController.selectNotesByKeyword(search, subject, usingImagePath)
     }
     
 }
