@@ -71,6 +71,7 @@ class SubjectVC: UIViewController, UITextFieldDelegate, HSBColorPickerDelegate {
     
     func HSBColorColorPickerTouched(sender: HSBColorPicker, color: UIColor, point: CGPoint, state: UIGestureRecognizerState) {
         colorView.backgroundColor = color
+        updateSaveButtonState()
     }
     
     // MARK: - Navigation
