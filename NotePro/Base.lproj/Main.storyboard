@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,21 +27,27 @@
                                     <segue destination="A4m-xR-1Ve" kind="show" id="SIu-Qt-1eT"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERk-Sd-nEa">
-                                <rect key="frame" x="149" y="181" width="76" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERk-Sd-nEa">
+                                <rect key="frame" x="141.5" y="153.5" width="91" height="21.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Welcome!">
+                                        <attributes>
+                                            <font key="NSFont" size="17" name="Chalkduster"/>
+                                            <font key="NSOriginalFont" size="17" name="Chalkduster"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fG-mt-x1h">
-                                <rect key="frame" x="154" y="359" width="68" height="30"/>
+                                <rect key="frame" x="154" y="350.5" width="68" height="30"/>
                                 <state key="normal" title="New Note"/>
                                 <connections>
                                     <segue destination="Adh-Op-1C8" kind="show" identifier="addNote" id="ZBn-YD-GVS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubn-Zw-4G6">
-                                <rect key="frame" x="157" y="444" width="62" height="30"/>
+                                <rect key="frame" x="157" y="442" width="62" height="30"/>
                                 <state key="normal" title="Note List"/>
                                 <connections>
                                     <segue destination="8fa-qm-egA" kind="show" identifier="showAllNotes" id="xZQ-q7-LaG"/>
@@ -50,13 +57,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerX" secondItem="lrT-UT-Y5S" secondAttribute="centerX" id="DtE-Wn-E29"/>
-                            <constraint firstItem="7fG-mt-x1h" firstAttribute="top" secondItem="lrT-UT-Y5S" secondAttribute="bottom" constant="57" id="S7N-P2-3tP"/>
-                            <constraint firstItem="ERk-Sd-nEa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="117" id="aBk-9I-Lkd"/>
-                            <constraint firstItem="ubn-Zw-4G6" firstAttribute="top" secondItem="7fG-mt-x1h" secondAttribute="bottom" constant="55" id="g6v-j3-qf4"/>
-                            <constraint firstItem="lrT-UT-Y5S" firstAttribute="top" secondItem="ERk-Sd-nEa" secondAttribute="bottom" constant="70" id="i9X-iv-NFD"/>
+                            <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H12-H8-0e3"/>
+                            <constraint firstItem="7fG-mt-x1h" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="S7N-P2-3tP"/>
+                            <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.45" id="aBk-9I-Lkd"/>
+                            <constraint firstItem="ubn-Zw-4G6" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.25" id="g6v-j3-qf4"/>
+                            <constraint firstItem="lrT-UT-Y5S" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.75" id="i9X-iv-NFD"/>
                             <constraint firstItem="7fG-mt-x1h" firstAttribute="centerX" secondItem="ubn-Zw-4G6" secondAttribute="centerX" id="iYb-Mf-Z8D"/>
                             <constraint firstItem="lrT-UT-Y5S" firstAttribute="centerX" secondItem="7fG-mt-x1h" secondAttribute="centerX" id="uBS-h2-ANI"/>
-                            <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wm6-K8-Df9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -460,7 +467,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="BCo-0i-RXc"/>
+        <segue reference="ZBn-YD-GVS"/>
         <segue reference="xZQ-q7-LaG"/>
     </inferredMetricsTieBreakers>
 </document>
