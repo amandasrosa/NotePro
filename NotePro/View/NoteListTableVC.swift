@@ -14,6 +14,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     private let sortCellNameAndId: String = String(describing: SortViewCell.self)
     private let noteCellNameAndId: String = String(describing: NoteViewCell.self)
     private var selectedNoteIntex: Int?
+    private var numberOfExtraCells = 3
     public var subject: Subject?
     
     override func viewDidLoad() {
@@ -50,11 +51,11 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        if indexPath.row > 2 {
+        if indexPath.row >= numberOfExtraCells {
             let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
                 let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
-                    CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row]);
+                    CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row - numberOfExtraCells]);
                     CoreFacade.shared.fetchNoteList(self.subject)
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -78,7 +79,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CoreFacade.shared.notes.count + 3
+        return CoreFacade.shared.notes.count + numberOfExtraCells
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,7 +126,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 print("Error while retrieving cell \(noteCellNameAndId)")
                 return rawCell
             }
-            cell.configureCell(CoreFacade.shared.notes[indexPath.row - 3])
+            cell.configureCell(CoreFacade.shared.notes[indexPath.row - numberOfExtraCells])
             
             return cell
         }
@@ -149,14 +150,14 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.row > 2 {
+        if indexPath.row >= numberOfExtraCells {
             return indexPath
         }
         return nil
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row > 2 {
+        if indexPath.row >= numberOfExtraCells {
             return true
         }
         return false
@@ -174,7 +175,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             
             if let selectedNoteIntex = selectedNoteIntex {
-                destination.note = CoreFacade.shared.notes[selectedNoteIntex - 3]
+                destination.note = CoreFacade.shared.notes[selectedNoteIntex - numberOfExtraCells]
                 self.selectedNoteIntex = nil
             } else { //new note
                 if let subject = subject {
