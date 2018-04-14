@@ -69,7 +69,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             
             return [delete]
         }
-        return nil
+        return []
     }
 
     // MARK: - Table view data source
