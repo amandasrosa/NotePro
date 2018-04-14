@@ -205,6 +205,13 @@ class NoteVC: UITableViewController {
             let dateTime = dateField.text,
             let userLocation = self.userLocation {
             
+            if title.isEmpty || description.isEmpty {
+                let alert = UIAlertController(title: "Alert", message: "Title and description must be provided!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            
             guard let dateTimeToObject = DateUtil.convertStringToDate(dateTime, .medium, .short) else {
                 print("Error to parse the date")
                 return
