@@ -176,6 +176,12 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             if let selectedNoteIntex = selectedNoteIntex {
                 destination.note = CoreFacade.shared.notes[selectedNoteIntex - 3]
                 self.selectedNoteIntex = nil
+            } else { //new note
+                if let subject = subject {
+                    destination.subject = subject
+                } else {
+                    print("Error to get the subject to create a new note")
+                }
             }
             destination.backSegue = "unwindNotesOfSubject"
         default:

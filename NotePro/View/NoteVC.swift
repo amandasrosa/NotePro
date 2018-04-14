@@ -21,6 +21,7 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var photosScrollView: UIScrollView!
     
     public var note: Note?
+    public var subject: Subject?
     public var backSegue: String?
     
     private let datePickerView: UIDatePicker = UIDatePicker()
@@ -65,6 +66,11 @@ class NoteVC: UITableViewController {
             dateField.text = DateUtil.convertDateToString(note.dateTime, .medium, .short)
             notePhotos = note.photos
             loadImagesToPhotosScrollView()
+        }
+        
+        if let subject = subject {
+            subjectPickerView?.selectedSubject = subject
+            subjectField.text = subject.subject
         }
     }
     
