@@ -35,13 +35,18 @@ class NoteVC: UITableViewController {
         CoreFacade.shared.fetchSubjectList()
         determineUserCurrentLocation(locationManager)
         configureTapGestures()
+        initScreen()
+        prepareToEditNote()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        initScreen()
-        prepareToEditNote()
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        loadImagesToPhotosScrollView()
+        photosScrollView.setNeedsDisplay()
+        self.view.setNeedsDisplay()
     }
     
     // MARK: - Init and Configure Screen
@@ -184,7 +189,6 @@ class NoteVC: UITableViewController {
     
     // MARK: - Save Note
     @IBAction func saveNote(_ sender: UIBarButtonItem) {
-        print("Prepare to Save Note")
         if let title = titleField.text,
             let description = descriptionField.text,
             let subject = subjectPickerView?.selectedSubject,
@@ -206,7 +210,6 @@ class NoteVC: UITableViewController {
             upsertNode.setPhotos(notePhotos)
             CoreFacade.shared.saveNote(upsertNode)
             self.note = upsertNode
-            print("Note saved")
             self.performSegue(withIdentifier: "unwindNotesOfSubject", sender: self)
         } else {
             print("Error to get informations")
@@ -347,26 +350,12 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                     return
                 }
                 notePhotos.append(Picture(newImage))
-//                addNewImageToPhotosScrollView(newImage: newImage)
-                loadImagesToPhotosScrollView()
                 
             } else {
                 print("Error to compare kUTTypeImage")
             }
         }
         picker.dismiss(animated: true, completion: nil)
-    }
-    
-    private func addNewImageToPhotosScrollView(newImage: UIImage) {
-        let newImageView = UIImageView()
-        newImageView.image = newImage
-        newImageView.contentMode = .scaleAspectFit
-        let xPosition = self.view.frame.width * CGFloat(notePhotos.count - 1)
-        newImageView.frame = CGRect(x: xPosition, y: 0, width: self.photosScrollView.frame.width, height: self.photosScrollView.frame.height)
-        
-        photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(notePhotos.count)
-        photosScrollView.addSubview(newImageView)
-        photosScrollView.setNeedsDisplay()
     }
     
     private func loadImagesToPhotosScrollView() {
@@ -379,6 +368,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             
             photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
             photosScrollView.addSubview(newImageView)
+            newImageView.setNeedsDisplay()
         }
     }
     

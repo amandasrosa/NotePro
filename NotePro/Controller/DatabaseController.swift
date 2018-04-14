@@ -390,11 +390,12 @@ class DatabaseController: NSObject {
     }
     
     func addPicture(_ noteId: Int, _ picture: UIImage) {
+        openDatabase()
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             let imageData = UIImageJPEGRepresentation(picture, 100.0)!
-            let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+            let strBase64 = imageData.base64EncodedString()
             
             sqlite3_bind_text(statement, 1, strBase64, -1, nil)
             
@@ -403,8 +404,10 @@ class DatabaseController: NSObject {
             }
             sqlite3_finalize(statement)
         } else {
-            print("INSERT picture statement could not be prepared.")
+            
+            print("INSERT picture statement could not be prepared. \(sqlite3_errmsg(statement))")
         }
+        closeDatabase()
     }
 
     // MARK: Updates
