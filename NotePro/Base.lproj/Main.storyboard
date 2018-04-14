@@ -394,6 +394,7 @@
                         <outlet property="subjectField" destination="IUd-yZ-rB0" id="92e-f1-DoJ"/>
                         <outlet property="titleField" destination="JtV-cZ-eAP" id="vD8-EI-xoz"/>
                         <segue destination="70t-WK-m5v" kind="unwind" identifier="unwindNotesOfSubject" unwindAction="unwindToNoteListWithSender:" id="4Di-7c-hYW"/>
+                        <segue destination="70t-WK-m5v" kind="unwind" identifier="unwindToMenuView" unwindAction="unwindToMenuViewWithSender:" id="DlG-q2-F2D"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O9N-zL-fhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -453,7 +454,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="BCo-0i-RXc"/>
+        <segue reference="ZBn-YD-GVS"/>
         <segue reference="xZQ-q7-LaG"/>
     </inferredMetricsTieBreakers>
 </document>

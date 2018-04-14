@@ -21,6 +21,7 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var photosScrollView: UIScrollView!
     
     public var note: Note?
+    public var backSegue: String?
     
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let locationManager = CLLocationManager()
@@ -210,7 +211,13 @@ class NoteVC: UITableViewController {
             upsertNode.setPhotos(notePhotos)
             CoreFacade.shared.saveNote(upsertNode)
             self.note = upsertNode
-            self.performSegue(withIdentifier: "unwindNotesOfSubject", sender: self)
+            
+            if let backSegue = backSegue {
+                self.performSegue(withIdentifier: backSegue, sender: self)
+            } else {
+                print("Error to get the backSegue")
+            }
+            
         } else {
             print("Error to get informations")
         }

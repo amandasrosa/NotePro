@@ -136,6 +136,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 return
             }
             destination.note = CoreFacade.shared.notes[index]
+            destination.backSegue = "unwindNotesOfSubject"
         default:
             break
         }
