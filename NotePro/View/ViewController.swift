@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var labelInitial: UILabel!
+    @IBOutlet var btn1: UIButton!
+    @IBOutlet var btn2: UIButton!
+    @IBOutlet var btn3: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -18,6 +23,10 @@ class ViewController: UIViewController {
         UIGraphicsEndImageContext()
         self.view.backgroundColor = UIColor(patternImage: image)
         
+        labelInitial.font = UIFont(name:"chalkduster", size: 25.0)
+        btn1.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
+        btn2.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
+        btn3.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
         CoreFacade.shared.initDatabase()
     }
 
