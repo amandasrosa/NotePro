@@ -13,15 +13,18 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var mapView: MKMapView!
     let annotation = MKPointAnnotation()
-    //let note: Note
+    var location: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mapView.delegate = self
         
-        //annotation.coordinate = CLLocationCoordinate2D(latitude: note.latitude, longitude: note.longitude)
-        annotation.coordinate = CLLocationCoordinate2D(latitude:  43.773263, longitude: -79.335923)
+        if let location = location {
+            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        } else {
+            print("Error to set the note location")
+        }
        
         mapView.addAnnotation(annotation)
         

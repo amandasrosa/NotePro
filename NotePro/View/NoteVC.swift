@@ -233,6 +233,12 @@ class NoteVC: UITableViewController {
                 return
             }
             destination.subject = subjectPickerView?.selectedSubject
+        case "showMap":
+            guard let destination = segue.destination as? MapVC else {
+                print("Destination isn't a MapVC")
+                return
+            }
+            destination.location = userLocation
         default:
             break
         }
