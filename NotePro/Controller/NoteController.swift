@@ -13,7 +13,7 @@ internal class NoteController {
     private let databaseController: DatabaseController
     private var subject: Subject?
     private var originalNoteList: [Note]
-    
+    private var usingImagePath = false
     internal fileprivate(set) var noteList: [Note] {
         didSet {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNOTIFICATION_NOTE_LIST_CHANGED), object: nil)
@@ -48,15 +48,16 @@ internal class NoteController {
     }
     
     internal func getNotesBySubject(_ subject: Subject) -> [Note] {
-        return databaseController.selectNotesBySubject(subject)
+        return databaseController.selectNotesBySubject(subject, usingImagePath)
     }
     
-    internal func fetchNotes(_ subject: Subject?) {
+    internal func fetchNotes(_ subject: Subject?, _ usingImagePath: Bool = false) {
+        self.usingImagePath = usingImagePath
         self.subject = subject
         if let subject = subject {
-            noteList = databaseController.selectNotesBySubject(subject)
+            noteList = databaseController.selectNotesBySubject(subject, usingImagePath)
         } else {
-            noteList = databaseController.selectNotes()
+            noteList = databaseController.selectNotes(usingImagePath)
         }
         originalNoteList = noteList
     }
@@ -82,6 +83,25 @@ internal class NoteController {
             let index = picturesInDB.index(of: photo)
             if index == nil { // if photo ins't in db, insert it
                 databaseController.addPicture(note.noteId, photo.picture)
+            } else { // if photo is in db, remove it from the list
+                picturesInDB.remove(at: index!)
+            }
+        }
+        for picture in picturesInDB { // remaining pictures are to be deleted
+            guard let pictureId = picture.pictureId else {
+                print("PictureId does not exist")
+                return
+            }
+            databaseController.deletePicture(pictureId)
+        }
+    }
+    
+    public func updatePhotoPaths(_ note: Note) {
+        var picturesInDB = databaseController.selectPicturePathsByNoteId(note.noteId)
+        for photo in note.photos {
+            let index = picturesInDB.index(of: photo)
+            if index == nil { // if photo ins't in db, insert it
+                databaseController.addPicturePath(note.noteId, photo.path)
             } else { // if photo is in db, remove it from the list
                 picturesInDB.remove(at: index!)
             }
