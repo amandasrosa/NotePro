@@ -218,7 +218,7 @@ class DatabaseController: NSObject {
         if subject == nil {
             query += "WHERE TITLE LIKE '%\(search)%' ORDER BY TITLE"
         } else {
-            query += "WHERE SUBJECT_ID = \(subject!.subjectId) TITLE LIKE '%\(search)%' ORDER BY TITLE"
+            query += "WHERE SUBJECT_ID = \(subject!.subjectId) AND TITLE LIKE '%\(search)%' ORDER BY TITLE"
         }
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
@@ -253,7 +253,7 @@ class DatabaseController: NSObject {
         if subject == nil {
             query += "WHERE DESCRIPTION LIKE '%\(search)%' ORDER BY TITLE"
         } else {
-            query += "WHERE SUBJECT_ID = \(subject!.subjectId) DESCRIPTION LIKE '%\(search)%' ORDER BY TITLE"
+            query += "WHERE SUBJECT_ID = \(subject!.subjectId) AND DESCRIPTION LIKE '%\(search)%' ORDER BY TITLE"
         }
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
