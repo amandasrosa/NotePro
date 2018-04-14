@@ -143,7 +143,7 @@ class DatabaseController: NSObject {
         return subjectObj
     }
     
-    func selectNotesBySubject(_ subject: Subject) -> [Note] {
+    func selectNotesBySubject(_ subject: Subject, _ usingImagePath: Bool) -> [Note] {
         openDatabase()
         var notes: [Note] = []
         let query = "SELECT * FROM NOTE WHERE SUBJECT_ID = \(subject.subjectId) ORDER BY TITLE"
@@ -160,8 +160,12 @@ class DatabaseController: NSObject {
                 let location = CLLocationCoordinate2DMake(latitude, longitude)
                 let subject = selectSubjectById(subjectId)
                 let datetime = stringToDate(datetimeString)
-                let pictures = selectPicturesByNoteId(noteId, false)
-                
+                var pictures: [Picture] = []
+                if usingImagePath {
+                    pictures = selectPicturePathsByNoteId(noteId, false)
+                } else {
+                    pictures = selectPicturesByNoteId(noteId, false)
+                }
                 notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
             }
             sqlite3_finalize(statement)
@@ -173,7 +177,7 @@ class DatabaseController: NSObject {
         
     }
     
-    func selectNotes() -> [Note] {
+    func selectNotes(_ usingImagePath: Bool) -> [Note] {
         openDatabase()
         var notes: [Note] = []
         let query = "SELECT NOTE_ID, TITLE, DESCRIPTION, DATETIME, LATITUDE, LONGITUDE, SUBJECT_ID FROM NOTE ORDER BY TITLE"
@@ -190,8 +194,12 @@ class DatabaseController: NSObject {
                 let location = CLLocationCoordinate2DMake(latitude, longitude)
                 let subject = selectSubjectById(subjectId)
                 let datetime = stringToDate(datetimeString)
-                let pictures = selectPicturesByNoteId(noteId, false)
-                
+                var pictures: [Picture] = []
+                if usingImagePath {
+                    pictures = selectPicturePathsByNoteId(noteId, false)
+                } else {
+                    pictures = selectPicturesByNoteId(noteId, false)
+                }
                 notes.append(Note(noteId, title, description, subject!, datetime, location, pictures))
             }
             sqlite3_finalize(statement)
@@ -302,9 +310,40 @@ class DatabaseController: NSObject {
                 let pictureId = Int(sqlite3_column_int(statement, 0))
                 let noteId = Int(sqlite3_column_int(statement, 1))
                 let strBase64 = String(cString: sqlite3_column_text(statement, 2))
+                print("Retrieving image id \(pictureId) from noteId \(noteId) with size \(strBase64.count)")
+                if (strBase64.isEmpty) {
+                    print("Image could not be retrieved!")
+                    continue
+                }
                 let dataDecoded:Data = Data(base64Encoded: strBase64)!
                 let picture = UIImage(data: dataDecoded as Data)!
                 pictures.append(Picture(pictureId, noteId, picture))
+            }
+            sqlite3_finalize(statement)
+        } else {
+            print("Failed to return rows from table Picture")
+        }
+        if singleExecution {
+            closeDatabase()
+        }
+        return pictures
+    }
+    
+    func selectPicturePathsByNoteId(_ noteId: Int, _ singleExecution: Bool = true) -> [Picture] {
+        openDatabase()
+        var pictures: [Picture] = []
+        let query = "SELECT * FROM PICTURE WHERE NOTE_ID = \(noteId)"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, query, -1, &statement, nil) == SQLITE_OK {
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let pictureId = Int(sqlite3_column_int(statement, 0))
+                let noteId = Int(sqlite3_column_int(statement, 1))
+                let path = String(cString: sqlite3_column_text(statement, 2))
+                if (path.isEmpty) {
+                    print("Image could not be retrieved!")
+                    continue
+                }
+                pictures.append(Picture(pictureId, noteId, path))
             }
             sqlite3_finalize(statement)
         } else {
@@ -373,11 +412,17 @@ class DatabaseController: NSObject {
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             for p in pictures {
-                let imageData = UIImageJPEGRepresentation(p.picture, 100.0)!
-                let strBase64 = imageData.base64EncodedString()
-                
-                sqlite3_bind_text(statement, 1, strBase64, -1, nil)
-                
+                if p.path.isEmpty {
+                    let imageData = UIImageJPEGRepresentation(p.picture, 100.0)!
+                    let strBase64 = imageData.base64EncodedString()
+                    if (strBase64.isEmpty) {
+                        print("Image could not be converted!")
+                        continue
+                    }
+                    sqlite3_bind_text(statement, 1, strBase64, -1, nil)
+                } else {
+                    sqlite3_bind_text(statement, 1, p.path, -1, nil)
+                }
                 if sqlite3_step(statement) != SQLITE_DONE {
                     print("Error inserting picture")
                 }
@@ -397,8 +442,28 @@ class DatabaseController: NSObject {
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             let imageData = UIImageJPEGRepresentation(picture, 100.0)!
             let strBase64 = imageData.base64EncodedString()
-            
+            if (strBase64.isEmpty) {
+                print("Image could not be converted!")
+            }
             sqlite3_bind_text(statement, 1, strBase64, -1, nil)
+            
+            if sqlite3_step(statement) != SQLITE_DONE {
+                print("Error inserting picture")
+            }
+            sqlite3_finalize(statement)
+        } else {
+            
+            print("INSERT picture statement could not be prepared. \(sqlite3_errmsg(statement))")
+        }
+        closeDatabase()
+    }
+    
+    func addPicturePath(_ noteId: Int, _ path: String) {
+        openDatabase()
+        let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
+        var statement:OpaquePointer? = nil
+        if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
+            sqlite3_bind_text(statement, 1, path, -1, nil)
             
             if sqlite3_step(statement) != SQLITE_DONE {
                 print("Error inserting picture")

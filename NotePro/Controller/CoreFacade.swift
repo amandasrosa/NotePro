@@ -37,8 +37,8 @@ public class CoreFacade {
         return self.subjectController.fetchSubjects()
     }
     
-    public func fetchNoteList(_ subject: Subject?) {
-        return self.noteController.fetchNotes(subject)
+    public func fetchNoteList(_ subject: Subject?, _ usingImagePath: Bool = false) {
+        return self.noteController.fetchNotes(subject, usingImagePath)
     }
     
     public func initDatabase() {
