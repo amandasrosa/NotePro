@@ -49,22 +49,25 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
-                CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row]);
-                CoreFacade.shared.fetchNoteList(self.subject)
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+        if indexPath.row > 2 {
+            let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+                let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
+                    CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row]);
+                    CoreFacade.shared.fetchNoteList(self.subject)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
+                self.performSegue(withIdentifier: "addNote", sender: indexPath)
+            }
+            edit.backgroundColor = UIColor.blue
+            
+            return [delete]
         }
-        
-        let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexPath) in
-            self.performSegue(withIdentifier: "addNote", sender: indexPath)
-        }
-        edit.backgroundColor = UIColor.blue
-        
-        return [delete, edit]
+        return nil
     }
 
     // MARK: - Table view data source
@@ -128,7 +131,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0, 1:
             guard let cell = tableView.cellForRow(at: indexPath) as? SearchViewCell else {
