@@ -35,7 +35,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableList),
                                                name: NSNotification.Name(rawValue: kNOTIFICATION_NOTE_LIST_CHANGED), object: nil)
         
-        CoreFacade.shared.fetchNoteList(subject)
+        CoreFacade.shared.fetchNoteList(subject, true)
     }
     
     @objc func updateTableList() {
@@ -56,7 +56,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this note?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
                     CoreFacade.shared.deleteNote(CoreFacade.shared.notes[indexPath.row - self.numberOfExtraCells]);
-                    CoreFacade.shared.fetchNoteList(self.subject)
+                    CoreFacade.shared.fetchNoteList(self.subject, true)
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
@@ -178,11 +178,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 destination.note = CoreFacade.shared.notes[selectedNoteIntex - numberOfExtraCells]
                 self.selectedNoteIntex = nil
             } else { //new note
-                if let subject = subject {
-                    destination.subject = subject
-                } else {
-                    print("Error to get the subject to create a new note")
-                }
+                destination.subject = subject
             }
             destination.backSegue = "unwindNotesOfSubject"
         default:
