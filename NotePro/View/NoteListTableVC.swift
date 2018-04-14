@@ -13,6 +13,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     private let searchCellNameAndId: String = String(describing: SearchViewCell.self)
     private let sortCellNameAndId: String = String(describing: SortViewCell.self)
     private let noteCellNameAndId: String = String(describing: NoteViewCell.self)
+    private var selectedNoteIntex: Int?
     public var subject: Subject?
     
     override func viewDidLoad() {
@@ -142,6 +143,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         case 2:
             break
         default:
+            selectedNoteIntex = indexPath.row
             performSegue(withIdentifier: "showNoteDetails", sender: indexPath)
         }
     }
@@ -170,11 +172,11 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 print("Destination isn't a NoteVC")
                 return
             }
-            guard let index = tableView.indexPathForSelectedRow?.row else {
-                print("Invalid index")
-                return
+            
+            if let selectedNoteIntex = selectedNoteIntex {
+                destination.note = CoreFacade.shared.notes[selectedNoteIntex - 3]
+                self.selectedNoteIntex = nil
             }
-            destination.note = CoreFacade.shared.notes[index - 3]
             destination.backSegue = "unwindNotesOfSubject"
         default:
             break
