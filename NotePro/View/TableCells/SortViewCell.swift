@@ -9,6 +9,8 @@
 import UIKit
 
 class SortViewCell: UITableViewCell {
+    var titleOrder = false
+    var dateOrder = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,11 +22,13 @@ class SortViewCell: UITableViewCell {
     }
     
     @IBAction func sortByTitle(_ sender: UIButton) {
-        CoreFacade.shared.sortNoteByTitle()
+        CoreFacade.shared.sortNoteByTitle(titleOrder)
+        titleOrder = !titleOrder
     }
     
     @IBAction func sortByDate(_ sender: UIButton) {
-        CoreFacade.shared.sortNoteByDate()
+        CoreFacade.shared.sortNoteByDate(dateOrder)
+        dateOrder = !dateOrder
     }
     
 }

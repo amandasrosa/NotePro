@@ -95,15 +95,27 @@ internal class NoteController {
         }
     }
     
-    public func sortNoteByTitle() {
-        noteList = noteList.sorted(by: {
-            $0.title > $1.title
-        })
+    public func sortNoteByTitle(_ order: Bool) {
+        if order {
+            noteList = noteList.sorted(by: {
+                $0.title > $1.title
+            })
+        } else {
+            noteList = noteList.sorted(by: {
+                $0.title < $1.title
+            })
+        }
     }
-    public func sortNoteByDate() {
-        noteList = noteList.sorted(by: {
-            $0.dateTime > $1.dateTime
-        })
+    public func sortNoteByDate(_ order: Bool) {
+        if order {
+            noteList = noteList.sorted(by: {
+                $0.dateTime > $1.dateTime
+            })
+        } else {
+            noteList = noteList.sorted(by: {
+                $0.dateTime < $1.dateTime
+            })
+        }
     }
     public func searchNoteByTitle(_ search: String, _ subject: Subject?) {
         noteList = databaseController.selectNotesByTitle(search, subject)
