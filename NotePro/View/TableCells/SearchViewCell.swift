@@ -13,7 +13,7 @@ class SearchViewCell: UITableViewCell {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var heigthConstraint: NSLayoutConstraint!
     var completionHandler: ((String)->Void)?
-    var isExpanded = false
+    public var isExpanded = false
     {
         didSet
         {
@@ -33,9 +33,6 @@ class SearchViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-        backgroundColor = UIColor.white
     }
     
     public func setLabel(_ text: String) {

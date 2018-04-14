@@ -10,10 +10,9 @@ import UIKit
 
 class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var optionsView: UIView!
-    @IBOutlet weak var expandBtn: UIButton!
-    
-    private let cellNameAndId: String = String(describing: NoteViewCell.self)
+    private let searchCellNameAndId: String = String(describing: SearchViewCell.self)
+    private let sortCellNameAndId: String = String(describing: SortViewCell.self)
+    private let noteCellNameAndId: String = String(describing: NoteViewCell.self)
     public var subject: Subject?
     
     override func viewDidLoad() {
@@ -25,11 +24,11 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        expandBtn.titleLabel?.text = "Expand"
-        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: cellNameAndId, bundle: nil), forCellReuseIdentifier: cellNameAndId)
+        tableView.register(UINib(nibName: searchCellNameAndId, bundle: nil), forCellReuseIdentifier: searchCellNameAndId)
+        tableView.register(UINib(nibName: sortCellNameAndId, bundle: nil), forCellReuseIdentifier: sortCellNameAndId)
+        tableView.register(UINib(nibName: noteCellNameAndId, bundle: nil), forCellReuseIdentifier: noteCellNameAndId)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableList),
                                                name: NSNotification.Name(rawValue: kNOTIFICATION_NOTE_LIST_CHANGED), object: nil)
@@ -75,50 +74,87 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CoreFacade.shared.notes.count
+        return CoreFacade.shared.notes.count + 3
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let rawCell = tableView.dequeueReusableCell(withIdentifier: cellNameAndId, for: indexPath)
-        
-        guard let cell = rawCell as? NoteViewCell else {
-            print("Error while retrieving cell \(cellNameAndId)")
-            return rawCell
+        switch indexPath.row {
+        case 0:
+            let rawCell = tableView.dequeueReusableCell(withIdentifier: searchCellNameAndId, for: indexPath)
+            
+            guard let cell = rawCell as? SearchViewCell else {
+                print("Error while retrieving cell \(searchCellNameAndId)")
+                return rawCell
+            }
+            cell.setLabel("Search by Title:")
+            cell.setCallback { (text) in
+                CoreFacade.shared.searchNoteByTitle(text, self.subject)
+            }
+            
+            return cell
+        case 1:
+            let rawCell = tableView.dequeueReusableCell(withIdentifier: searchCellNameAndId, for: indexPath)
+            
+            guard let cell = rawCell as? SearchViewCell else {
+                print("Error while retrieving cell \(searchCellNameAndId)")
+                return rawCell
+            }
+            cell.setLabel("Search by Keyword:")
+            cell.setCallback { (text) in
+                CoreFacade.shared.searchNoteByKeyword(text, self.subject)
+            }
+            
+            return cell
+        case 2:
+            let rawCell = tableView.dequeueReusableCell(withIdentifier: sortCellNameAndId, for: indexPath)
+            
+            guard let cell = rawCell as? SortViewCell else {
+                print("Error while retrieving cell \(sortCellNameAndId)")
+                return rawCell
+            }
+            
+            return cell
+        default:
+            let rawCell = tableView.dequeueReusableCell(withIdentifier: noteCellNameAndId, for: indexPath)
+            
+            guard let cell = rawCell as? NoteViewCell else {
+                print("Error while retrieving cell \(noteCellNameAndId)")
+                return rawCell
+            }
+            cell.configureCell(CoreFacade.shared.notes[indexPath.row - 3])
+            
+            return cell
         }
-        cell.configureCell(CoreFacade.shared.notes[indexPath.row])
         
-        return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "showNoteDetails", sender: tableView.cellForRow(at: indexPath))
-    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-    
-    @IBAction func expandBtnTouchUpInside(_ sender: UIButton) {
-        guard let label = expandBtn.titleLabel else {
-            print("Button label is invalid")
-            return
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0, 1:
+            guard let cell = tableView.cellForRow(at: indexPath) as? SearchViewCell else {
+                print("Error while retrieving cell \(searchCellNameAndId)")
+                return
+            }
+            cell.isExpanded = !cell.isExpanded
+        case 2:
+            break
+        default:
+            performSegue(withIdentifier: "showNoteDetails", sender: indexPath)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.row > 2 {
+            return indexPath
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row > 2 {
+            return true
+        }
+        return false
     }
     
     // MARK: - Navigation
@@ -135,7 +171,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 print("Invalid index")
                 return
             }
-            destination.note = CoreFacade.shared.notes[index]
+            destination.note = CoreFacade.shared.notes[index - 3]
             destination.backSegue = "unwindNotesOfSubject"
         default:
             break
@@ -152,44 +188,5 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             return
         }
         subject = subjectFromNote
-    }
-}
-
-extension UIView {
-    
-    func slideY(_ y: CGFloat) {
-        
-        let x = self.frame.origin.x
-        
-        let height = self.frame.height
-        let width = self.frame.width
-        
-        UIView.animate(withDuration: 1.0, animations: {
-            self.frame = CGRect(x: x, y: y, width: width, height: height)
-        })
-    }
-}
-
-extension UIView {
-    func animateTo(frame: CGRect, withDuration duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        guard let _ = superview else {
-            return
-        }
-        
-        let xScale = frame.size.width / self.frame.size.width
-        let yScale = frame.size.height / self.frame.size.height
-        let x = frame.origin.x + (self.frame.width * xScale) * self.layer.anchorPoint.x
-        let y = frame.origin.y + (self.frame.height * yScale) * self.layer.anchorPoint.y
-        
-        UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: {
-            self.layer.position = CGPoint(x: x, y: y)
-            self.transform = self.transform.scaledBy(x: xScale, y: yScale)
-        }, completion: completion)
-    }
-    
-    func animateY(y: CGFloat, withDuration duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        let frame = CGRect(x: self.frame.origin.x, y: y, width: self.frame.width, height: self.frame.height)
-        
-        animateTo(frame: frame, withDuration: duration, completion: completion)
     }
 }

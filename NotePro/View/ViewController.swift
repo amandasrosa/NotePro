@@ -20,7 +20,23 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func unwindToMenuView(sender: UIStoryboardSegue) {
+        
+    }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier ?? "" {
+        case "addNote":
+            guard let destination = segue.destination as? NoteVC else {
+                print("Destination isn't a NoteVC")
+                return
+            }
+            destination.backSegue = "unwindToMenuView"
+        default:
+            break
+        }
+    }
 
 }
 
