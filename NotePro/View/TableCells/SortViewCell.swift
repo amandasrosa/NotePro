@@ -17,9 +17,6 @@ class SortViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-        backgroundColor = UIColor.white
     }
     
     @IBAction func sortByTitle(_ sender: UIButton) {

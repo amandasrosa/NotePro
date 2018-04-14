@@ -42,6 +42,7 @@
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
+                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 <constraints>
                     <constraint firstItem="9E4-js-kgI" firstAttribute="leading" secondItem="HeB-cx-XXB" secondAttribute="leading" id="0dl-v6-PO2"/>
                     <constraint firstItem="9E4-js-kgI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="1j6-Hx-xnA"/>

@@ -6,7 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,25 +21,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPW-EV-bTo">
-                        <rect key="frame" x="180" y="6" width="94" height="30"/>
+                        <rect key="frame" x="193" y="6" width="94" height="30"/>
                         <state key="normal" title="Sorty by Date"/>
                         <connections>
                             <action selector="sortByDate:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="O74-nn-shB"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G0O-IG-MeJ">
-                        <rect key="frame" x="56" y="6" width="84" height="30"/>
+                        <rect key="frame" x="38" y="6" width="84" height="30"/>
                         <state key="normal" title="Sort by Title"/>
                         <connections>
                             <action selector="sortByTitle:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yqk-aS-TIz"/>
                         </connections>
                     </button>
                 </subviews>
+                <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="sPW-EV-bTo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="00O-Hd-ySc"/>
-                    <constraint firstItem="sPW-EV-bTo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="20" id="14t-gE-yjy"/>
+                    <constraint firstItem="sPW-EV-bTo" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" multiplier="1.5" id="14t-gE-yjy"/>
                     <constraint firstItem="G0O-IG-MeJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="SV7-aT-T9G"/>
-                    <constraint firstItem="G0O-IG-MeJ" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-20" id="a5q-hV-rRU"/>
+                    <constraint firstItem="G0O-IG-MeJ" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" multiplier="0.5" id="a5q-hV-rRU"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

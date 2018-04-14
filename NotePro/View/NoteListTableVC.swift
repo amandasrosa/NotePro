@@ -74,7 +74,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CoreFacade.shared.notes.count
+        return CoreFacade.shared.notes.count + 3
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,6 +105,15 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             
             return cell
+        case 2:
+            let rawCell = tableView.dequeueReusableCell(withIdentifier: sortCellNameAndId, for: indexPath)
+            
+            guard let cell = rawCell as? SortViewCell else {
+                print("Error while retrieving cell \(sortCellNameAndId)")
+                return rawCell
+            }
+            
+            return cell
         default:
             let rawCell = tableView.dequeueReusableCell(withIdentifier: noteCellNameAndId, for: indexPath)
             
@@ -112,36 +121,41 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 print("Error while retrieving cell \(noteCellNameAndId)")
                 return rawCell
             }
-            cell.configureCell(CoreFacade.shared.notes[indexPath.row])
+            cell.configureCell(CoreFacade.shared.notes[indexPath.row - 3])
             
             return cell
         }
         
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "showNoteDetails", sender: tableView.cellForRow(at: indexPath))
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0, 1:
+            guard let cell = tableView.cellForRow(at: indexPath) as? SearchViewCell else {
+                print("Error while retrieving cell \(searchCellNameAndId)")
+                return
+            }
+            cell.isExpanded = !cell.isExpanded
+        case 2:
+            break
+        default:
+            performSegue(withIdentifier: "showNoteDetails", sender: indexPath)
+        }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.row > 2 {
+            return indexPath
+        }
+        return nil
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row > 2 {
+            return true
+        }
+        return false
     }
-    */
     
     // MARK: - Navigation
     
@@ -157,7 +171,7 @@ class NoteListTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 print("Invalid index")
                 return
             }
-            destination.note = CoreFacade.shared.notes[index]
+            destination.note = CoreFacade.shared.notes[index - 3]
         default:
             break
         }
