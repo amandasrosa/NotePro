@@ -376,7 +376,7 @@ class DatabaseController: NSObject {
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             
-            sqlite3_bind_text(statement, 1, subject.subject, -1, nil)
+            sqlite3_bind_text(statement, 1, subject.subject, -1, SQLITE_TRANSIENT)
             sqlite3_bind_text(statement, 2, colorText, -1, nil)
             
             if sqlite3_step(statement) != SQLITE_DONE {
@@ -397,9 +397,9 @@ class DatabaseController: NSObject {
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
             
             let dateString = dateToString(note.dateTime)
-            sqlite3_bind_text(statement, 1, note.title, -1, nil)
-            sqlite3_bind_text(statement, 2, note.description, -1, nil)
-            sqlite3_bind_text(statement, 3, dateString, -1, nil)
+            sqlite3_bind_text(statement, 1, note.title, -1, SQLITE_TRANSIENT)
+            sqlite3_bind_text(statement, 2, note.description, -1, SQLITE_TRANSIENT)
+            sqlite3_bind_text(statement, 3, dateString, -1, SQLITE_TRANSIENT)
             sqlite3_bind_double(statement, 4, (note.location?.latitude)!)
             sqlite3_bind_double(statement, 5, (note.location?.longitude)!)
             sqlite3_bind_int(statement, 6, Int32(note.subject.subjectId))
