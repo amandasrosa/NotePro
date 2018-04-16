@@ -38,6 +38,7 @@
 		1690676A20667C4A009B659F /* NoteProUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690676920667C4A009B659F /* NoteProUITests.swift */; };
 		16F2BCF12072AE5E006DA059 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F2BCF02072AE5E006DA059 /* ColorPicker.swift */; };
 		16F2BCF32072B9F8006DA059 /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F2BCF22072B9F8006DA059 /* NoteVC.swift */; };
+		DE039F3B20850C6C006E5B7D /* MapAllNotesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE039F3A20850C6C006E5B7D /* MapAllNotesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		1690676B20667C4A009B659F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16F2BCF02072AE5E006DA059 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		16F2BCF22072B9F8006DA059 /* NoteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
+		DE039F3A20850C6C006E5B7D /* MapAllNotesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAllNotesVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				16F2BCF22072B9F8006DA059 /* NoteVC.swift */,
 				16393850206C52D70081323F /* TableCells */,
 				11074D74207821F000BBEBD6 /* MapVC.swift */,
+				DE039F3A20850C6C006E5B7D /* MapAllNotesVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				163BEA9D2069810C005D23E4 /* CoreFacade.swift in Sources */,
 				163BEA922069740D005D23E4 /* SubjectListTableVC.swift in Sources */,
 				163BEA982069780B005D23E4 /* Subject.swift in Sources */,
+				DE039F3B20850C6C006E5B7D /* MapAllNotesVC.swift in Sources */,
 				16F2BCF32072B9F8006DA059 /* NoteVC.swift in Sources */,
 				16393847206C35FC0081323F /* NoteViewCell.swift in Sources */,
 				163BEA952069744C005D23E4 /* SubjectViewCell.swift in Sources */,

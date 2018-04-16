@@ -19,6 +19,7 @@ class NoteVC: UITableViewController {
     @IBOutlet weak var subjectField: UITextField!
     @IBOutlet weak var dateField: UITextField!
     @IBOutlet weak var photosScrollView: UIScrollView!
+    @IBOutlet weak var readItButton: UIButton!
     
     public var note: Note?
     public var subject: Subject?
@@ -26,10 +27,12 @@ class NoteVC: UITableViewController {
     
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let locationManager = CLLocationManager()
+    private let spk = AVSpeechSynthesizer()
     private var subjectPickerView: SubjectPickerView?
     private var userLocation: CLLocationCoordinate2D?
     private var notePhotos = [Picture]()
     private var defaultUIImageView: UIImageView?
+    
     
     @objc var lastChosenMediaType: String?
 
@@ -39,7 +42,6 @@ class NoteVC: UITableViewController {
         determineUserCurrentLocation(locationManager)
         configureTapGestures()
         initScreen()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,6 +55,18 @@ class NoteVC: UITableViewController {
         prepareToEditNote()
     }
     
+    override func viewWillDisappear(_ animated : Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParentViewController {
+            spk.stopSpeaking(at: .word)
+        }
+    }
+    
+    fileprivate func setDefaultDate() {
+        self.dateField.text = DateUtil.convertDateToString(Date(), .medium, .short)
+    }
+    
     fileprivate func prepareToEditNote() {
         if let note = note {
             titleField.text = note.title
@@ -63,6 +77,12 @@ class NoteVC: UITableViewController {
             dateField.text = DateUtil.convertDateToString(note.dateTime, .medium, .short)
             notePhotos = note.photos
             loadImagesToPhotosScrollView()
+        }
+
+        if titleField.text!.isEmpty && descriptionField.text!.isEmpty {
+            readItButton.isHidden = true
+        } else {
+            readItButton.isHidden = false
         }
         
         if notePhotos.count <= 0 {
@@ -80,10 +100,6 @@ class NoteVC: UITableViewController {
         photosScrollView.addSubview(defaultUIImageView!)
         photosScrollView.setNeedsDisplay()
         self.view.setNeedsDisplay()
-    }
-    
-    fileprivate func setDefaultDate() {
-        self.dateField.text = DateUtil.convertDateToString(Date(), .medium, .short)
     }
     
     fileprivate func configureTapGestures() {
@@ -247,6 +263,14 @@ class NoteVC: UITableViewController {
         }
     }
     
+    @IBAction func readNoteTitleAndDescription(_ sender: UIButton) {
+        let voice = AVSpeechSynthesisVoice(language: "en-ca")
+        let textToRead = "Title: \(titleField.text!). Description: \(descriptionField.text!)"
+        let toSay = AVSpeechUtterance(string: textToRead)
+        toSay.voice = voice
+        spk.speak(toSay)
+    }
+    
     // MARK: - Navigation
     fileprivate func performSegueToReturnBack()  {
         if let nav = self.navigationController {
@@ -257,6 +281,8 @@ class NoteVC: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        
         switch segue.identifier ?? "" {
         case "unwindNotesOfSubject":
             guard let destination = segue.destination as? NoteListTableVC else {
@@ -356,6 +382,7 @@ extension NoteVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.userLocation = locations[0].coordinate
+        print("lat: \(userLocation?.latitude) | long: \(userLocation?.longitude)")
         
         if self.userLocation != nil {
             locationManager.stopUpdatingLocation();
@@ -493,6 +520,8 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion:nil)
     }
+    
+
 }
 
 // MARK: - Gesture Delegate

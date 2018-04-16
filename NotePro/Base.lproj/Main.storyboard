@@ -53,6 +53,14 @@
                                     <segue destination="8fa-qm-egA" kind="show" identifier="showAllNotes" id="xZQ-q7-LaG"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOs-dD-a8s" userLabel="MapAllNotes">
+                                <rect key="frame" x="109" y="434" width="96" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Map All Notes"/>
+                                <connections>
+                                    <segue destination="DfN-7J-l5N" kind="show" id="mPQ-et-UXr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -164,6 +172,35 @@
             </objects>
             <point key="canvasLocation" x="2029.5999999999999" y="133.5832083958021"/>
         </scene>
+        <!--Map All NotesVC-->
+        <scene sceneID="2Ii-eA-DAd">
+            <objects>
+                <viewController id="DfN-7J-l5N" customClass="MapAllNotesVC" customModule="NotePro" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LWH-GQ-hJ3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gbU-1f-Mn9">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gbU-1f-Mn9" firstAttribute="leading" secondItem="zbT-NL-wxP" secondAttribute="leading" id="7cj-1k-N3T"/>
+                            <constraint firstItem="gbU-1f-Mn9" firstAttribute="top" secondItem="zbT-NL-wxP" secondAttribute="top" id="FiX-UP-1uS"/>
+                            <constraint firstItem="gbU-1f-Mn9" firstAttribute="trailing" secondItem="zbT-NL-wxP" secondAttribute="trailing" id="U0J-15-ehI"/>
+                            <constraint firstItem="zbT-NL-wxP" firstAttribute="bottom" secondItem="gbU-1f-Mn9" secondAttribute="bottom" id="zpq-ei-Vzy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zbT-NL-wxP"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="gbU-1f-Mn9" id="yAB-NU-ncd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="prb-FK-bAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="129" y="920"/>
+        </scene>
         <!--New Subject-->
         <scene sceneID="evh-yv-p5O">
             <objects>
@@ -249,7 +286,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="obz-ZU-5Jr">
-                            <rect key="frame" x="0.0" y="572" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="597" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Show Map"/>
                             <connections>
@@ -329,12 +366,33 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="25" id="XRB-7v-0IQ">
+                                        <rect key="frame" x="0.0" y="428" width="320" height="25"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="right" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XRB-7v-0IQ" id="r0j-4C-FOH">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-JM-xT2">
+                                                    <rect key="frame" x="256" y="-3" width="48" height="30"/>
+                                                    <state key="normal" title="Read it"/>
+                                                    <connections>
+                                                        <action selector="readNoteTitleAndDescription:" destination="Adh-Op-1C8" eventType="touchUpInside" id="er6-wA-Lhl"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AAU-JM-xT2" firstAttribute="centerY" secondItem="r0j-4C-FOH" secondAttribute="centerY" id="EM9-8u-5VA"/>
+                                                <constraint firstAttribute="trailing" secondItem="AAU-JM-xT2" secondAttribute="trailing" constant="16" id="O61-xW-N0D"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Subject" id="fuc-uc-jCk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Fb4-gm-pKT">
-                                        <rect key="frame" x="0.0" y="456" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="481" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fb4-gm-pKT" id="skL-uw-Z6f">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -362,7 +420,7 @@
                             <tableViewSection headerTitle="Date" id="eUl-w1-PGu">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="uw6-Rj-Lrm">
-                                        <rect key="frame" x="0.0" y="528" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="553" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uw6-Rj-Lrm" id="Tt1-r9-j6x">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -404,6 +462,7 @@
                         <outlet property="dateField" destination="3TM-me-jod" id="Rv8-dQ-H4Q"/>
                         <outlet property="descriptionField" destination="Okb-eY-e0d" id="JKa-Z9-6lY"/>
                         <outlet property="photosScrollView" destination="EeP-6c-Ujo" id="xRg-R1-R2e"/>
+                        <outlet property="readItButton" destination="AAU-JM-xT2" id="T18-ip-riF"/>
                         <outlet property="subjectField" destination="IUd-yZ-rB0" id="92e-f1-DoJ"/>
                         <outlet property="titleField" destination="JtV-cZ-eAP" id="vD8-EI-xoz"/>
                         <segue destination="70t-WK-m5v" kind="unwind" identifier="unwindNotesOfSubject" unwindAction="unwindToNoteListWithSender:" id="4Di-7c-hYW"/>
@@ -413,7 +472,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O9N-zL-fhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="70t-WK-m5v" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1990" y="881"/>
+            <point key="canvasLocation" x="1989.375" y="880.9859154929577"/>
         </scene>
         <!--MapVC-->
         <scene sceneID="wDf-dv-fgs">
