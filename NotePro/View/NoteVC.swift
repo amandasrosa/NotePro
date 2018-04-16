@@ -39,25 +39,18 @@ class NoteVC: UITableViewController {
         determineUserCurrentLocation(locationManager)
         configureTapGestures()
         initScreen()
-        prepareToEditNote()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
-    override func viewDidLayoutSubviews() {
-        loadImagesToPhotosScrollView()
-        photosScrollView.setNeedsDisplay()
-        self.view.setNeedsDisplay()
-    }
-    
     // MARK: - Init and Configure Screen
     fileprivate func initScreen() {
         setDefaultDate()
         createSubjectPicker(self.subjectField)
-        defaultUIImageView = createNewImageForPhotoScrollView(image: UIImage(named: "default")!, xPosition: 0, contentMode: .scaleAspectFill)
-        photosScrollView.addSubview(defaultUIImageView!)
+        prepareToEditNote()
     }
     
     fileprivate func prepareToEditNote() {
@@ -72,10 +65,21 @@ class NoteVC: UITableViewController {
             loadImagesToPhotosScrollView()
         }
         
+        if notePhotos.count <= 0 {
+            setDefaultUIImage()
+        }
+        
         if let subject = subject {
             subjectPickerView?.selectedSubject = subject
             subjectField.text = subject.subject
         }
+    }
+    
+    fileprivate func setDefaultUIImage() {
+        defaultUIImageView = createNewImageForPhotoScrollView(image: UIImage(named: "default")!, xPosition: 0, contentMode: .scaleAspectFill)
+        photosScrollView.addSubview(defaultUIImageView!)
+        photosScrollView.setNeedsDisplay()
+        self.view.setNeedsDisplay()
     }
     
     fileprivate func setDefaultDate() {
@@ -410,6 +414,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                 let imageName = "notePotho\(Int((Date().timeIntervalSince1970 * 1000.0).rounded())).png"
                 saveImage(imageName: imageName, image: newImage)
                 
+                loadImagesToPhotosScrollView()
             } else {
                 print("Error to compare kUTTypeImage")
             }
@@ -433,23 +438,23 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
     
     private func loadImagesToPhotosScrollView() {
+        
         if notePhotos.count > 0 {
-            if let defaultUIImageView = defaultUIImageView {
-                defaultUIImageView.removeFromSuperview();
-            }
+            defaultUIImageView?.removeFromSuperview()
         }
         
-        if notePhotos.count > photosScrollView.subviews.count {
-            for i in 0..<notePhotos.count {
-                let newImageView = createNewImageForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
-                
-                photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
-                photosScrollView.addSubview(newImageView)
-                newImageView.setNeedsDisplay()
-                
-                tableView.reloadData()
-            }
+        for i in 0..<notePhotos.count {
+            let newImageView = createNewImageForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
+            photosScrollView.contentSize.width = self.view.frame.width * CGFloat(i + 1)
+            photosScrollView.addSubview(newImageView)
+            newImageView.setNeedsDisplay()
+            
+            tableView.reloadData()
         }
+
+        photosScrollView.setNeedsDisplay()
+        self.view.setNeedsDisplay()
+
     }
     
     private func createNewImageForPhotoScrollView(image: UIImage, xPosition: Int, contentMode: UIViewContentMode) -> UIImageView {
