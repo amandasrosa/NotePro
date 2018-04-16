@@ -431,7 +431,7 @@ class DatabaseController: NSObject {
                     }
                     sqlite3_bind_text(statement, 1, strBase64, -1, nil)
                 } else {
-                    sqlite3_bind_text(statement, 1, p.path, -1, nil)
+                    sqlite3_bind_text(statement, 1, p.path, -1, SQLITE_TRANSIENT)
                 }
                 if sqlite3_step(statement) != SQLITE_DONE {
                     print("Error inserting picture")
@@ -473,7 +473,7 @@ class DatabaseController: NSObject {
         let insert = "INSERT INTO PICTURE (NOTE_ID, PICTURE) VALUES (\(noteId), ?);"
         var statement:OpaquePointer? = nil
         if sqlite3_prepare_v2(database, insert, -1, &statement, nil) == SQLITE_OK {
-            sqlite3_bind_text(statement, 1, path, -1, nil)
+            sqlite3_bind_text(statement, 1, path, -1, SQLITE_TRANSIENT)
             
             if sqlite3_step(statement) != SQLITE_DONE {
                 print("Error inserting picture")
