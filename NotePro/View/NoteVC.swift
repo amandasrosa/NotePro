@@ -265,7 +265,7 @@ class NoteVC: UITableViewController {
     
     @IBAction func readNoteTitleAndDescription(_ sender: UIButton) {
         let voice = AVSpeechSynthesisVoice(language: "en-ca")
-        let textToRead = "Title: \(titleField.text!). Description: \(descriptionField.text!)"
+        let textToRead = "Title: \(titleField.text!); Description: \(descriptionField.text!)"
         let toSay = AVSpeechUtterance(string: textToRead)
         toSay.voice = voice
         spk.speak(toSay)

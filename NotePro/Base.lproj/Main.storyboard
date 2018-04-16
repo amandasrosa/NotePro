@@ -55,7 +55,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOs-dD-a8s" userLabel="MapAllNotes">
                                 <rect key="frame" x="112" y="443" width="96" height="30"/>
-                                <state key="normal" title="Map All Notes"/>
+                                <state key="normal" title="Notes on Map"/>
                                 <connections>
                                     <segue destination="DfN-7J-l5N" kind="show" id="mPQ-et-UXr"/>
                                 </connections>
