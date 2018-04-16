@@ -56,7 +56,7 @@ class NoteVC: UITableViewController {
     fileprivate func initScreen() {
         setDefaultDate()
         createSubjectPicker(self.subjectField)
-        defaultUIImageView = createNewImageForPhotoScrollView(image: UIImage(named: "informativeImage2")!, xPosition: 0, contentMode: .scaleAspectFill)
+        defaultUIImageView = createNewImageForPhotoScrollView(image: UIImage(named: "default")!, xPosition: 0, contentMode: .scaleAspectFill)
         photosScrollView.addSubview(defaultUIImageView!)
     }
     
