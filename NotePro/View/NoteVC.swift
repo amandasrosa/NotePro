@@ -66,6 +66,7 @@ class NoteVC: UITableViewController {
             descriptionField.text = note.description
             subjectPickerView?.selectedSubject = note.subject
             subjectField.text = note.subject.subject
+            datePickerView.date = note.dateTime
             dateField.text = DateUtil.convertDateToString(note.dateTime, .medium, .short)
             notePhotos = note.photos
             loadImagesToPhotosScrollView()
