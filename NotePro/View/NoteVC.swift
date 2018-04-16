@@ -92,8 +92,6 @@ class NoteVC: UITableViewController {
     
     fileprivate func configureTapGestureToTakePickture() {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.shootPicture(sender:)))
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.shootPicture(sender:)))
-//        tap.numberOfTapsRequired = 1
         longPress.numberOfTapsRequired = 0
         longPress.minimumPressDuration = 1.0
         
@@ -376,7 +374,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         lastChosenMediaType = info[UIImagePickerControllerMediaType] as? String
         if let mediaType = lastChosenMediaType {
             if mediaType == (kUTTypeImage as NSString) as String {
@@ -384,30 +382,30 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                     print("It was not possible to get selected image")
                     return
                 }
-                guard let imageURL = info[UIImagePickerControllerReferenceURL] as? NSURL else {
-                    print("It was not possible to get the path of selected image")
-                    return
-                }
-                
-                var documentsUrl: URL {
-                    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                }
-                
-                let fileName = "image\(Date().hashValue).jpg"
-                let fileURL = documentsUrl.appendingPathComponent(fileName)
-                if let imageData = UIImageJPEGRepresentation(newImage, 1.0) {
-                    try? imageData.write(to: fileURL, options: .atomic)
-                }
-                
-                let picture = Picture(newImage, fileURL.absoluteString)
-                notePhotos.append(picture)
-                
+
+                let imageName = "notePotho\(Int((Date().timeIntervalSince1970 * 1000.0).rounded())).png"
+                saveImage(imageName: imageName, image: newImage)
                 
             } else {
                 print("Error to compare kUTTypeImage")
             }
         }
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func saveImage(imageName: String, image: UIImage){
+        let fileManager = FileManager.default
+        let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
+        print(imagePath)
+        let data = UIImagePNGRepresentation(image)
+        fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
+        let picture = Picture(image, imageName)
+        notePhotos.append(picture)
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
     
     private func loadImagesToPhotosScrollView() {
@@ -418,7 +416,7 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         
         for i in 0..<notePhotos.count {
-            let newImageView = createNewImageFromPathForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
+            let newImageView = createNewImageForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
             
             photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
             photosScrollView.addSubview(newImageView)
@@ -435,15 +433,28 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         return newImageView
     }
     
-    private func createNewImageFromPathForPhotoScrollView(path: String, xPosition: Int, contentMode: UIViewContentMode) -> UIImageView {
+    private func createNewImageForPhotoScrollView(path: String, xPosition: Int, contentMode: UIViewContentMode) -> UIImageView {
         let newImageView = UIImageView()
-        let imageURL = URL(fileURLWithPath: path)
-        let image    = UIImage(contentsOfFile: imageURL.path)
+        guard let image = getImage(imageName: path) else {
+            print("Error loading image")
+            return newImageView
+        }
         newImageView.image = image
         newImageView.contentMode = contentMode
         let xPosition = self.view.frame.width * CGFloat(xPosition)
         newImageView.frame = CGRect(x: xPosition, y: 0, width: view.frame.width, height: self.photosScrollView.frame.height)
         return newImageView
+    }
+    
+    func getImage(imageName: String) -> UIImage? {
+        let fileManager = FileManager.default
+        let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
+        if fileManager.fileExists(atPath: imagePath){
+            return UIImage(contentsOfFile: imagePath)
+        }else{
+            print("Error loading image")
+            return nil
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
