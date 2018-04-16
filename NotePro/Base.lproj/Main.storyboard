@@ -20,15 +20,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrT-UT-Y5S">
-                                <rect key="frame" x="147" y="272" width="81" height="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrT-UT-Y5S">
+                                <rect key="frame" x="119.5" y="206" width="81" height="30"/>
                                 <state key="normal" title="Subject List"/>
                                 <connections>
                                     <segue destination="A4m-xR-1Ve" kind="show" id="SIu-Qt-1eT"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERk-Sd-nEa">
-                                <rect key="frame" x="114.5" y="131.5" width="91" height="21.5"/>
+                                <rect key="frame" x="114.5" y="115.5" width="91" height="21.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Welcome!">
                                         <attributes>
@@ -40,22 +40,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fG-mt-x1h">
-                                <rect key="frame" x="126" y="301" width="68" height="30"/>
+                                <rect key="frame" x="126" y="285" width="68" height="30"/>
                                 <state key="normal" title="New Note"/>
                                 <connections>
                                     <segue destination="Adh-Op-1C8" kind="show" identifier="addNote" id="ZBn-YD-GVS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubn-Zw-4G6">
-                                <rect key="frame" x="129" y="380" width="62" height="30"/>
+                                <rect key="frame" x="129" y="364" width="62" height="30"/>
                                 <state key="normal" title="Note List"/>
                                 <connections>
                                     <segue destination="8fa-qm-egA" kind="show" identifier="showAllNotes" id="xZQ-q7-LaG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOs-dD-a8s" userLabel="MapAllNotes">
-                                <rect key="frame" x="109" y="434" width="96" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOs-dD-a8s" userLabel="MapAllNotes">
+                                <rect key="frame" x="112" y="443" width="96" height="30"/>
                                 <state key="normal" title="Map All Notes"/>
                                 <connections>
                                     <segue destination="DfN-7J-l5N" kind="show" id="mPQ-et-UXr"/>
@@ -64,14 +63,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="sOs-dD-a8s" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="7fn-VF-wDm"/>
+                            <constraint firstItem="sOs-dD-a8s" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.45" id="7y5-GJ-WrR"/>
                             <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerX" secondItem="lrT-UT-Y5S" secondAttribute="centerX" id="DtE-Wn-E29"/>
                             <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H12-H8-0e3"/>
-                            <constraint firstItem="7fG-mt-x1h" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="S7N-P2-3tP"/>
-                            <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.45" id="aBk-9I-Lkd"/>
-                            <constraint firstItem="ubn-Zw-4G6" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.25" id="g6v-j3-qf4"/>
-                            <constraint firstItem="lrT-UT-Y5S" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.75" id="i9X-iv-NFD"/>
+                            <constraint firstItem="7fG-mt-x1h" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.95" id="S7N-P2-3tP"/>
+                            <constraint firstItem="7fG-mt-x1h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SDd-sT-2Du"/>
+                            <constraint firstItem="ERk-Sd-nEa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.4" id="aBk-9I-Lkd"/>
+                            <constraint firstItem="ubn-Zw-4G6" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.2" id="g6v-j3-qf4"/>
+                            <constraint firstItem="lrT-UT-Y5S" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.7" id="i9X-iv-NFD"/>
                             <constraint firstItem="7fG-mt-x1h" firstAttribute="centerX" secondItem="ubn-Zw-4G6" secondAttribute="centerX" id="iYb-Mf-Z8D"/>
                             <constraint firstItem="lrT-UT-Y5S" firstAttribute="centerX" secondItem="7fG-mt-x1h" secondAttribute="centerX" id="uBS-h2-ANI"/>
+                            <constraint firstItem="ubn-Zw-4G6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v7F-ns-Vo3"/>
+                            <constraint firstItem="lrT-UT-Y5S" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vOS-Ry-Qa7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -80,6 +84,7 @@
                         <outlet property="btn1" destination="lrT-UT-Y5S" id="pmP-wp-xiM"/>
                         <outlet property="btn2" destination="7fG-mt-x1h" id="HkR-kp-Wmt"/>
                         <outlet property="btn3" destination="ubn-Zw-4G6" id="3ds-uC-Hfi"/>
+                        <outlet property="btn4" destination="sOs-dD-a8s" id="5Fk-sn-wyd"/>
                         <outlet property="labelInitial" destination="ERk-Sd-nEa" id="UOp-AV-kGg"/>
                     </connections>
                 </viewController>

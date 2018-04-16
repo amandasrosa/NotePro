@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet var btn1: UIButton!
     @IBOutlet var btn2: UIButton!
     @IBOutlet var btn3: UIButton!
+    @IBOutlet var btn4: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class ViewController: UIViewController {
         btn1.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
         btn2.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
         btn3.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
+        btn4.titleLabel?.font =  UIFont(name:"chalkduster", size: 20)
         CoreFacade.shared.initDatabase()
     }
 
