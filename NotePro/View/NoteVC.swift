@@ -270,6 +270,29 @@ class NoteVC: UITableViewController {
             break
         }
      }
+    
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 && photosScrollView.subviews.count > 1 {
+            return 20
+        } else {
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 0 && notePhotos.count > 1 {
+            let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20))
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20))
+            label.textAlignment = .center
+            label.textColor = UIColor.darkGray
+            label.text = "Number of pictures: \(notePhotos.count)"
+            footerView.addSubview(label)
+            return footerView
+        }
+        return nil
+    }
 }
 
 // MARK: - Subject Picker View
@@ -416,12 +439,16 @@ extension NoteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             }
         }
         
-        for i in 0..<notePhotos.count {
-            let newImageView = createNewImageForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
-            
-            photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
-            photosScrollView.addSubview(newImageView)
-            newImageView.setNeedsDisplay()
+        if notePhotos.count > photosScrollView.subviews.count {
+            for i in 0..<notePhotos.count {
+                let newImageView = createNewImageForPhotoScrollView(path: notePhotos[i].path, xPosition: i, contentMode: .scaleAspectFit)
+                
+                photosScrollView.contentSize.width = photosScrollView.frame.width * CGFloat(i + 1)
+                photosScrollView.addSubview(newImageView)
+                newImageView.setNeedsDisplay()
+                
+                tableView.reloadData()
+            }
         }
     }
     
